@@ -5,7 +5,7 @@
 
     @forelse ($posts as $post)
     <a href="{{ route('posts.show', $post->id) }}">
-        {{ $post->title }}
+        {{ $post->title }} ({{ $post->comments->count() }})
     </a>
         <hr>
     @empty

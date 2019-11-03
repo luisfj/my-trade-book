@@ -20,3 +20,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('posts', 'Posts\PostController');
 Route::post('comment', 'Posts\CommentController@store')->name('comment.store');
+
+Route::get('notifications', 'Notifications\NotificationController@notifications')->name('notifications');
+Route::put('notification-read', 'Notifications\NotificationController@markAsRead');
+Route::put('notification-read-all', 'Notifications\NotificationController@markAllAsRead');

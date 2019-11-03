@@ -31,6 +31,18 @@
         <button type="submit" class="btn btn-primary">Enviar</button>
     </div>
 </form>
+
 @else
 <p>Precisa estar logado para fazer comentários. <a href="{{ route("login") }}">Clique aqui para entrar</a></p>
 @endif
+
+<hr>
+<h3>Comentários ({{ $post->comments->count() }})</h3>
+@forelse ($post->comments as $comment)
+        <p>
+            <b>{{ $comment->author->name }} comentou: </b>
+               <u> {{ $comment->title }}</u> - {{ $comment->body }}
+        </p>
+@empty
+<p>Nenhum Comentário Cadastrado</p>
+@endforelse
