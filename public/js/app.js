@@ -1907,7 +1907,7 @@ __webpack_require__.r(__webpack_exports__);
     markAllAsRead: function markAllAsRead() {
       var _this = this;
 
-      this.$message('confirm', 'teste', 'mess', function () {
+      this.$message('confirm', 'Confirmação', 'Tem certeza que deseja marcar todas como lidas?', function () {
         _this.$store.dispatch('markAllAsRead');
       });
     }

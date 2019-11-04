@@ -34,7 +34,7 @@ export default {
 
     methods: {
         markAllAsRead() {
-            this.$message('confirm', 'teste', 'mess', () =>{
+            this.$message('confirm', 'Confirmação', 'Tem certeza que deseja marcar todas como lidas?', () =>{
                 this.$store.dispatch('markAllAsRead')
             })
         }

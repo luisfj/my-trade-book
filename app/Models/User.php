@@ -25,7 +25,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'role', 'remember_token',
     ];
 
     /**
@@ -43,5 +43,13 @@ class User extends Authenticatable
 
     public function comments(){
         return $this->hasMany(Comment::class);
+    }
+
+    public function is_super_admin(){
+        return $this->role == 'super_admin';
+    }
+
+    public function is_admin(){
+        return $this->role == 'super_admin' || $this->role == 'admin';
     }
 }
