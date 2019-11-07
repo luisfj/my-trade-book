@@ -1,6 +1,7 @@
 <template>
     <li class="nav-item dropdown">
-        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a id="navbarDropdown" v-bind:class="{ 'text-danger': notifications.length > 0 }" class="nav-link dropdown-toggle"
+            href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Notificações ({{ notifications.length }})<span class="caret"></span>
         </a>
 

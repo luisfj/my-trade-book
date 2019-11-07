@@ -8,6 +8,7 @@ require('./bootstrap');
 import store from './store/store'
 
 import message from './helpers/alerts/alerts'
+import BootstrapVue from 'bootstrap-vue'
 
 window.Vue = require('vue');
 
@@ -19,7 +20,7 @@ const plugin = {
 };
 
 Vue.use(plugin);
-
+Vue.use(BootstrapVue)
 
 /**
  * The following block of code may be used to automatically register your
