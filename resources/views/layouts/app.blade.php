@@ -22,7 +22,9 @@
 <body>
     <div id="app" class="wrapper">
         @include('layouts.side-bar')
-        <div id="content">
+
+        <div id="content" class="{{ Auth::check() ? '' : 'active' }}">
+
             @include('layouts.top-bar')
 
             <main class="py-4">

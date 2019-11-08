@@ -1,13 +1,15 @@
+
 <nav id="topbar" class="navbar navbar-expand-md navbar-dark bg-primary shadow-md">
+
     <div class="container">
 
-        <div class="navbar-brand">
+        <div class="navbar-brand {{ Auth::check() ? '' : 'hidde-me' }}">
             <button type="button" id="sidebarCollapse" class="navbar-toggler">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
         </div>
-        <a id="brand-app-name" class="navbar-brand text-danger hidde-me" href="{{ url('/') }}">
+    <a id="brand-app-name" class="navbar-brand text-danger {{ Auth::check() ? 'hidde-me' : '' }}" href="{{ url('/') }}">
             {{ config('app.name', 'Laravel') }}
         </a>
 
