@@ -10,7 +10,7 @@
         <hr class="bg-danger">
         <li class="active">
             <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
-            <ul class="collapse list-unstyled" id="homeSubmenu">
+            <ul class="collapse list-unstyled show" id="homeSubmenu">
                 <li>
                     <a href="{{ route('posts.index') }}">Posts</a>
                 </li>
@@ -63,6 +63,10 @@
         <li>
             <a href="#">About</a>
         </li>
+        <li>
+            <a href="#"  v-b-modal.modal-reportar-problema>Reportar Problema</a>
+        </li>
     </ul>
 
 </nav>
+@include('modulos.bugs-report.modal-reportar-problema')
