@@ -45,6 +45,10 @@ class User extends Authenticatable
         return $this->hasMany(Comment::class);
     }
 
+    public function bugs(){
+        return $this->hasMany(Bugs::class,'autor_id');
+    }
+
     public function is_super_admin(){
         return $this->role == 'super_admin';
     }

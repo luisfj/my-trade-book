@@ -18,6 +18,7 @@ mix.js([
    .sass('resources/sass/app.scss', 'public/css')
    .styles([
         'resources/css/sidebar.css',
-        'resources/css/bootstrap.min.css'
+        'resources/css/bootstrap.min.css',
+        'resources/css/custom.css'
     ], 'public/css/all.css')
     .copyDirectory('resources/img', 'public/img');

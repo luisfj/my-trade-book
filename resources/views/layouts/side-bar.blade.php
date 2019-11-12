@@ -64,9 +64,13 @@
             <a href="#">About</a>
         </li>
         <li>
-            <a href="#"  v-b-modal.modal-reportar-problema>Reportar Problema</a>
+            <a href="#"  v-b-modal.modal-reportar-problema>Informar Erro/Melhoria</a>
+        </li>
+        <li>
+        <a href="{{ route('comunicacao.index') }}">Painel de Comunicação</a>
         </li>
     </ul>
 
 </nav>
-@include('modulos.bugs-report.modal-reportar-problema')
+<!--@ include('modulos.bugs-report.modal-reportar-problema')-->
+<bugsmodal :useradmin="{{ Auth::check() && Auth::User()->is_admin() ? 'true' : 'false' }}"></bugsmodal>
