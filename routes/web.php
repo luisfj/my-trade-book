@@ -19,16 +19,25 @@ Auth::routes();
 
 
 Route::middleware('super.admin')->prefix('sa')->group(function () {
-
+    Route::post('userUpdateRole', 'Admin\UsersController@updateRole')->name('users.update.role');
 });
 
 Route::middleware('admin')->prefix('ad')->group(function () {
+    Route::get('users', 'Admin\UsersController@index')->name('users.index');
 
+    Route::get('perfis', 'Admin\PerfilInvestidorController@index')->name('perfil.index');
+    Route::get('perfil-edit/{id}', 'Admin\PerfilInvestidorController@edit')->name('perfil.edit');
+    Route::get('perfil', 'Admin\PerfilInvestidorController@add')->name('perfil.add');
+    Route::put('perfil-edit/{id}', 'Admin\PerfilInvestidorController@update')->name('perfil.update');
+    Route::post('perfil', 'Admin\PerfilInvestidorController@create')->name('perfil.create');
+    Route::delete('perfil/{id}', 'Admin\PerfilInvestidorController@delete')->name('perfil.delete');
 });
 
 Route::middleware('auth')->group(function () {
     Route::get('/home', 'HomeController@index')->name('home');
     Route::post('comment', 'Posts\CommentController@store')->name('comment.store');
+    Route::get('profile', 'Configuracoes\ProfileController@index')->name('profile.index');
+    Route::put('profile', 'Configuracoes\ProfileController@update')->name('profile.update');
     Route::get('configuracoes', 'Configuracoes\ConfiguracoesController@index')->name('configuracoes.index');
     Route::put('configuracoes', 'Configuracoes\ConfiguracoesController@update')->name('configuracoes.update');
 

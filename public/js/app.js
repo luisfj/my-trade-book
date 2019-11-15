@@ -1936,7 +1936,8 @@ __webpack_require__.r(__webpack_exports__);
       descricao: '',
       mensagem: '',
       bug_edit: undefined,
-      is_resolvido: false
+      is_resolvido: false,
+      modificou: false
     };
   },
   created: function created() {
@@ -1957,7 +1958,6 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    addMessage: function addMessage() {},
     addBug: function addBug() {
       var _this2 = this;
 
@@ -1985,6 +1985,7 @@ __webpack_require__.r(__webpack_exports__);
       this.$store.dispatch('addBug', head).then(function (res) {
         _this2.limparTela();
 
+        _this2.modificou = true;
         _this2.success = [res.data];
       })["catch"](function (error) {
         console.log(error);
@@ -2016,6 +2017,7 @@ __webpack_require__.r(__webpack_exports__);
         _this3.mensagem = '';
         _this3.success = [res.data.success];
         _this3.bug_edit = res.data.bug;
+        _this3.modificou = true;
       })["catch"](function (error) {
         console.log(error);
         this.errors = [error];
@@ -2034,6 +2036,7 @@ __webpack_require__.r(__webpack_exports__);
         console.log(res);
         _this4.success = [res.data.success];
         _this4.bug_edit = res.data.bug;
+        _this4.modificou = true;
       })["catch"](function (error) {
         console.log(error);
         this.errors = [error];
@@ -2047,6 +2050,14 @@ __webpack_require__.r(__webpack_exports__);
       this.descricao = '';
       this.mensagem = '';
       this.bug_edit = undefined;
+      this.modificou = false;
+    },
+    hidden: function hidden() {
+      if (this.modificou && window.location.pathname.includes('painel-comunicacao')) {
+        location.reload();
+      }
+
+      this.limparTela();
     }
   }
 });
@@ -66345,7 +66356,7 @@ var render = function() {
         "footer-bg-variant": "secondary",
         "footer-text-variant": "light"
       },
-      on: { hidden: _vm.limparTela },
+      on: { hidden: _vm.hidden },
       scopedSlots: _vm._u([
         {
           key: "modal-footer",

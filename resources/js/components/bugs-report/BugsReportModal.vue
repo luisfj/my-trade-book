@@ -8,7 +8,7 @@
         body-text-variant="light"
         footer-bg-variant="secondary"
         footer-text-variant="light"
-        @hidden="limparTela">
+        @hidden="hidden">
 
         <div class="alert alert-success" v-if="success.length">
             <b v-for="msg in success" v-bind:key="msg">{{ msg }}</b>
@@ -92,14 +92,15 @@ export default {
     data: function(){
      //   tipolist: ['Bug', 'Melhoria'],
      return{
-        errors: [],
-        success: [],
-        pagina: window.location.pathname,
-        tipo: 'Bug',
-        descricao: '',
-        mensagem: '',
-        bug_edit: undefined,
-        is_resolvido:false
+        errors      : [],
+        success     : [],
+        pagina      : window.location.pathname,
+        tipo        : 'Bug',
+        descricao   : '',
+        mensagem    : '',
+        bug_edit    : undefined,
+        is_resolvido: false,
+        modificou   : false
         }
     },
 
@@ -120,9 +121,6 @@ export default {
     },
 
     methods: {
-        addMessage(){
-
-        },
         addBug() {
             this.errors = [];
             this.success = [];
@@ -144,6 +142,7 @@ export default {
             //this.$message('confirm', 'Confirmação', 'Tem certeza que deseja marcar todas como lidas?', () =>{
                 this.$store.dispatch('addBug', head).then((res) => {
                     this.limparTela()
+                    this.modificou = true
                     this.success = [res.data]
                 }).catch(function (error) {
                     console.log(error)
@@ -172,6 +171,7 @@ export default {
                     this.mensagem = ''
                     this.success = [res.data.success]
                     this.bug_edit = res.data.bug
+                    this.modificou = true
                 }).catch(function (error) {
                     console.log(error)
                     this.errors = [error]
@@ -190,6 +190,7 @@ export default {
                     console.log(res)
                     this.success = [res.data.success]
                     this.bug_edit = res.data.bug
+                    this.modificou = true
                 }).catch(function (error) {
                     console.log(error)
                     this.errors = [error]
@@ -204,7 +205,15 @@ export default {
             this.descricao = ''
             this.mensagem  = ''
             this.bug_edit  = undefined
+            this.modificou = false
         },
+        hidden(){
+            if(this.modificou && window.location.pathname.includes('painel-comunicacao')){
+                location.reload()
+            }
+
+            this.limparTela()
+        }
 
     }
 }

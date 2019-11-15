@@ -28,10 +28,10 @@
                 <a href="#pageAdminSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Admin</a>
                 <ul class="collapse list-unstyled" id="pageAdminSubmenu">
                     <li>
-                        <a href="#">Page 1</a>
+                        <a href="{{ route('users.index') }}">Usuários</a>
                     </li>
                     <li>
-                        <a href="#">Page 2</a>
+                        <a href="{{ route('perfil.index') }}">Perfil de Investidor</a>
                     </li>
                     <li>
                         <a href="#">Page 3</a>
