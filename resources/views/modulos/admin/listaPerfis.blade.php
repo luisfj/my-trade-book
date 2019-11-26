@@ -1,18 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    @if(session('success'))
-    <div class="alert alert-success">
-        <b>{{ session('success')['messages'] }}</b>
-    </div>
-    @endif
-
-    @if(session('error'))
-    <div class="alert alert-danger">
-        <b>{{ session('error')['messages'] }}</b>
-    </div>
-    @endif
-
     <div class="row">
         <div class="col-lg-9 col-md-9 col-sm-12"><h1>Listagem dos perfis de investidor</h1></div>
         <div class="col-lg-2 offset-lg-1 col-md-2 offset-md-1 col-sm-12" style="width:100px !important;">
@@ -43,7 +31,7 @@
                         <td>{{ $perfil->isAtivo() }}</td>
                         <td>
                             <a href="{{ route('perfil.edit', $perfil->id) }}">
-                                <i class="material-icons md-light md-18">edit</i>
+                                <i class="material-icons text-info md-18">edit</i>
                             </a>
 -
                             <a href="#" onclick="
@@ -70,7 +58,7 @@
                                     }
                                 })
                                 ">
-                                <i class="material-icons md-light md-18 text-danger">delete_outline</i>
+                                <i class="material-icons md-18 text-danger">delete_outline</i>
                             </a>
 
                             <form id="delete-perfil-form-{{ $perfil->id }}" action="{{ route('perfil.delete', $perfil->id) }}" method="POST" style="display: none;">
@@ -80,7 +68,7 @@
                         </td>
                     </tr>
                 @empty
-                    <th scope="row">Nenhum Erro/Melhoria Cadastrado</th>
+                    <th scope="row">Nenhum Perfil Cadastrado</th>
                 @endforelse
         </tbody>
       </table>

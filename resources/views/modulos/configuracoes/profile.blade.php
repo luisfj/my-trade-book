@@ -1,12 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    @if(session('success'))
-    <div class="alert alert-success">
-        <b>{{ session('success')['messages'] }}</b>
-    </div>
-    @endif
-
     <h1 class="text-active">Profile</h1>
     <hr class="bg-warning">
 

@@ -1,12 +1,12 @@
 <template>
     <a href="#" @click="showModal(metodo, obj_edit)">
-        <i class="material-icons" :class="[mdsize, color]">{{ icon }}</i>
+        <i class="material-icons" :class="[mdsize, color]">{{ icon }}</i> <span :class="[textcolor]">{{ text ? text : '' }}</span>
     </a>
 </template>
 
 <script>
 export default {
-    props : ['obj_edit', 'metodo', 'icon', 'color', 'mdsize'],
+    props : ['obj_edit', 'metodo', 'icon', 'color', 'mdsize', 'text', 'textcolor'],
     computed: {
         comment() {
            // return this.notification.data.comment;

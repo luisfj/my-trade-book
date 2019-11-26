@@ -34,7 +34,7 @@
                         <a href="{{ route('perfil.index') }}">Perfil de Investidor</a>
                     </li>
                     <li>
-                        <a href="#">Page 3</a>
+                        <a href="{{ route('posts.index') }}">Posts/Enquetes</a>
                     </li>
                 </ul>
             </li>

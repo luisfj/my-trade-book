@@ -32,7 +32,7 @@
                         </li>
                     @endif
                 @else
-                    <notifications></notifications>
+                    <notifications :urlpanel='{!! json_encode(route('notifications.panel')) !!}'></notifications>
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             {{ Auth::user()->name }} <span class="caret"></span>
@@ -61,6 +61,7 @@
                             </form>
                         </div>
                     </li>
+                    <notificacaomodal :useradmin="{{ Auth::check() && Auth::User()->is_admin() ? 'true' : 'false' }}"></notificacaomodal>
                 @endguest
             </ul>
         </div>

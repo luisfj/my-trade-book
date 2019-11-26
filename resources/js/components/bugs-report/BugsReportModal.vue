@@ -67,18 +67,20 @@
 
         <template v-slot:modal-footer="{ cancel, ok }">
             <!-- Emulate built in modal footer ok and cancel button actions -->
-            <b-button style="width: 200px;" v-if="bug_edit && !bug_edit.data_verificacao" size="sm" variant="info"  @click.prevent="marcarComoLida">
-                Marcar como verificada
-            </b-button>
-            <b-button style="width: 80px;" size="sm" variant="danger" @click="cancel()">
-                Cancelar
-            </b-button>
-            <b-button style="width: 100px;" v-if="bug_edit" size="sm" variant="warning"  @click.prevent="addMensagem">
-                Add Message
-            </b-button>
-            <b-button style="width: 80px;" v-else size="sm" variant="success"  @click.prevent="addBug">
-                OK
-            </b-button>
+            <b-button-group class="mx-1">
+                <b-button style="width: 200px;" v-if="bug_edit && !bug_edit.data_verificacao" size="sm" variant="info"  @click.prevent="marcarComoLida">
+                    Marcar como verificada
+                </b-button>
+                <b-button style="width: 80px;" size="sm" variant="danger" @click="cancel()">
+                    Cancelar
+                </b-button>
+                <b-button style="width: 100px;" v-if="bug_edit" size="sm" variant="warning"  @click.prevent="addMensagem">
+                    Add Message
+                </b-button>
+                <b-button style="width: 80px;" v-else size="sm" variant="success"  @click.prevent="addBug">
+                    OK
+                </b-button>
+            </b-button-group>
 
         </template>
     </b-modal>

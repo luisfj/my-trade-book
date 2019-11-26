@@ -31,6 +31,12 @@ Route::middleware('admin')->prefix('ad')->group(function () {
     Route::put('perfil-edit/{id}', 'Admin\PerfilInvestidorController@update')->name('perfil.update');
     Route::post('perfil', 'Admin\PerfilInvestidorController@create')->name('perfil.create');
     Route::delete('perfil/{id}', 'Admin\PerfilInvestidorController@delete')->name('perfil.delete');
+
+    Route::get('posts', 'Posts\PostController@index')->name('posts.index');
+    Route::get('post-show/{id}', 'Posts\PostController@show')->name('posts.show');
+    Route::put('post-show/{id}', 'Posts\PostController@update')->name('posts.update');
+    Route::get('post', function () { return view('modulos.admin.adicionarPostEnquete'); })->name('posts.add');
+    Route::post('post', 'Posts\PostController@create')->name('posts.create');
 });
 
 Route::middleware('auth')->group(function () {
@@ -41,10 +47,12 @@ Route::middleware('auth')->group(function () {
     Route::get('configuracoes', 'Configuracoes\ConfiguracoesController@index')->name('configuracoes.index');
     Route::put('configuracoes', 'Configuracoes\ConfiguracoesController@update')->name('configuracoes.update');
 
-    Route::resource('posts', 'Posts\PostController');
+    Route::get('painel-notificacoes', 'Notifications\NotificationController@painelNotificacoes')->name('notifications.panel');
     Route::get('notifications', 'Notifications\NotificationController@notifications')->name('notifications');
     Route::put('notification-read', 'Notifications\NotificationController@markAsRead');
     Route::put('notification-read-all', 'Notifications\NotificationController@markAllAsRead');
+    Route::get('notification/post/{idnotification}', 'Notifications\NotificationController@getPostFromNotification');
+    Route::put('enquete/votar', 'Posts\VotacaoController@votarEnquete');
 
     Route::get('bugs', 'Bugs\BugController@index')->name('bugs');
     Route::get('bug-show', 'Bugs\BugController@show')->name('bug.show');

@@ -53,6 +53,10 @@ class User extends Authenticatable
         return $this->hasMany(Bugs::class,'autor_id');
     }
 
+    public function votos_computados(){
+        return $this->hasMany(VotoUser::class,'user_id');
+    }
+
     public function is_super_admin(){
         return $this->role == 'super_admin';
     }

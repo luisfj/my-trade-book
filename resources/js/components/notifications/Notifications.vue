@@ -12,8 +12,10 @@
             :key="notification.id"
             :notification="notification"></notification>
 
-            <a class="dropdown-item" href="#" @click.prevent="markAllAsRead">
-                Limpar Notificações
+            <div class="dropdown-divider"></div>
+
+            <a class="dropdown-item" :href="urlpanel">
+                Painel de Notificações
             </a>
         </div>
     </li>
@@ -22,7 +24,10 @@
 <script>
 
 export default {
+    props : ['urlpanel'],
+    mounted(){
 
+    },
     created() {
         this.$store.dispatch('loadNotifications')
     },

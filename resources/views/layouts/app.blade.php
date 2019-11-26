@@ -29,7 +29,19 @@
 
             @include('layouts.top-bar')
             <div class="container">
+                    @if(session('success'))
+                    <div class="alert alert-success">
+                        <b>{{ session('success')['messages'] }}</b>
+                    </div>
+                    @endif
+                    @if(session('error'))
+                    <div class="alert alert-danger">
+                        <b>{{ session('error')['messages'] }}</b>
+                    </div>
+                    @endif
+
                 @yield('content')
+                <div class="mb-5"></div>
             </div>
 
         </div>
@@ -37,5 +49,8 @@
 
      <!--Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+
+    @yield('page-script')
+
 </body>
 </html>

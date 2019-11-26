@@ -1,8 +1,9 @@
 <template>
     <div>
         <a class="dropdown-item" href="#">
-            <span @click.prevent="markAsRead(notification.id)">Lida</span>
-            {{ comment && comment.author ? comment.author.name : 'noa' }} comentou {{ comment ? comment.title : 'no' }}
+            <span @click.prevent="markAsRead(notification)">
+                {{ post ? post.tipo == 'E' ? 'Vote: ' + post.title : 'Msg: ' + post.title : '--Sem Obj--' }}
+            </span>
         </a>
     </div>
 </template>
@@ -11,14 +12,14 @@
 export default {
     props : ['notification'],
     computed: {
-        comment() {
-            return this.notification.data.comment;
+        post() {
+            return this.notification.data.post;
         }
     },
 
     methods: {
-        markAsRead(idNotification){
-            this.$store.dispatch('markAsRead', {id: idNotification})
+        markAsRead(notification){
+            bus.$emit('editarNotificacao', notification);
         }
     }
 }

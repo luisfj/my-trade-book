@@ -9,7 +9,7 @@ import store from './store/store'
 
 import message from './helpers/alerts/alerts'
 import BootstrapVue from 'bootstrap-vue'
-//import moment from 'moment'
+import moment from 'moment'
 
 window.Vue = require('vue');
 
@@ -22,6 +22,19 @@ const plugin = {
 
 Vue.use(plugin);
 Vue.use(BootstrapVue);
+
+
+Vue.filter('formatDate', function(value) {
+  if (value) {
+    return moment(String(value)).format('DD/MM/YYYY')
+  }
+});
+Vue.filter('formatDateTime', function(value) {
+    if (value) {
+      return moment(String(value)).format('DD/MM/YYYY hh:mm')
+    }
+});
+
 
 /**
  * The following block of code may be used to automatically register your
@@ -37,6 +50,7 @@ Vue.use(BootstrapVue);
 //Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('notifications', require('./components/notifications/Notifications.vue').default);
 Vue.component('notification', require('./components/notifications/Notification.vue').default);
+Vue.component('notificacaomodal', require('./components/notifications/NotificacaoModal.vue').default);
 Vue.component('bugsmodal', require('./components/bugs-report/BugsReportModal.vue').default);
 Vue.component('icon-a-link', require('./components/helpers/IconALink.vue').default);
 
