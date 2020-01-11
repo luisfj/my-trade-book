@@ -10,6 +10,7 @@ import store from './store/store'
 import message from './helpers/alerts/alerts'
 import BootstrapVue from 'bootstrap-vue'
 import moment from 'moment'
+import VueGoogleCharts from 'vue-google-charts'
 
 window.Vue = require('vue');
 
@@ -22,6 +23,7 @@ const plugin = {
 
 Vue.use(plugin);
 Vue.use(BootstrapVue);
+Vue.use(VueGoogleCharts)
 
 
 Vue.filter('formatDate', function(value) {
@@ -32,6 +34,12 @@ Vue.filter('formatDate', function(value) {
 Vue.filter('formatDateTime', function(value) {
     if (value) {
       return moment(String(value)).format('DD/MM/YYYY hh:mm')
+    }
+});
+Vue.filter('formatarMoeda', function(value) {
+    if (value) {
+        let val = (value/1).toFixed(2).replace('.', ',')
+        return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
     }
 });
 
@@ -53,6 +61,10 @@ Vue.component('notification', require('./components/notifications/Notification.v
 Vue.component('notificacaomodal', require('./components/notifications/NotificacaoModal.vue').default);
 Vue.component('bugsmodal', require('./components/bugs-report/BugsReportModal.vue').default);
 Vue.component('icon-a-link', require('./components/helpers/IconALink.vue').default);
+Vue.component('importacao-de-arquivo', require('./components/operacoes/ImportacaoDeArquivo.vue').default);
+Vue.component('fechamento-mensal-grid', require('./components/charts/fechamento-mes/FechamentoMensalGrid.vue').default);
+Vue.component('fechamento-grafico-barras', require('./components/charts/fechamento-mes/FechamentoGraficoBarras.vue').default);
+Vue.component('evolucao-saldo-fechamento-grafico', require('./components/charts/fechamento-mes/EvolucaoSaldoFechamentoGrafico.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

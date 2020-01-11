@@ -1,7 +1,44 @@
-.material-icons.md-18 { font-size: 18px; }
-.material-icons.md-24 { font-size: 24px; }
-.material-icons.md-36 { font-size: 36px; }
-.material-icons.md-48 { font-size: 48px; }
+.material-icons.md-18 { font-size: 18px; vertical-align: middle; }
+.material-icons.md-24 { font-size: 24px; vertical-align: middle; }
+.material-icons.md-36 { font-size: 36px; vertical-align: middle; }
+.material-icons.md-48 { font-size: 48px; vertical-align: middle; }
 .custom-control-input:disabled ~ .custom-control-label {
     color: #f8f9fa !important;
+}
+
+.table-jan, .table-jan>th, .table-jan>td {
+    background-color: #745b6e;
+}
+.table-fev, .table-fev>th, .table-fev>td {
+    background-color: #636363;
+}
+.table-mar, .table-mar>th, .table-mar>td {
+    background-color: #57695e;
+}
+.table-abr, .table-abr>th, .table-abr>td {
+    background-color: #3f5c3e;
+}
+.table-mai, .table-mai>th, .table-mai>td {
+    background-color: #607785;
+}
+.table-jun, .table-jun>th, .table-jun>td {
+    background-color: #5a5936;
+}
+.table-jul, .table-jul>th, .table-jul>td {
+    background-color: #5d5077;
+}
+.table-ago, .table-ago>th, .table-ago>td {
+    background-color: #776a6a;
+}
+.table-set, .table-set>th, .table-set>td {
+    background-color: #4e4e4e;
+}
+.table-out, .table-out>th, .table-out>td {
+    background-color: #443b57;
+}
+.table-nov, .table-nov>th, .table-nov>td {
+    background-color: #694754;
+}
+.table-dez, .table-dez>th, .table-dez>td {
+    background-color: #777350;
 }

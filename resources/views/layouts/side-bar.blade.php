@@ -12,13 +12,17 @@
             <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
             <ul class="collapse list-unstyled show" id="homeSubmenu">
                 <li>
-                    <a href="{{ route('posts.index') }}">Posts</a>
+                    <a href="{{ route('operacao.index') }}">Operações</a>
                 </li>
                 <li>
-                    <a href="#">Home 2</a>
+                    <a href="{{ route('conta.corretora.index') }}">Corretora (Contas)</a>
                 </li>
                 <li>
-                    <a href="#">Home 3</a>
+                    <a href="{{ route('transacoes.index') }}">Transações em Conta</a>
+                </li>
+
+                <li>
+                    <a href="{{ route('operacao.importar') }}">Importar Operações</a>
                 </li>
             </ul>
         </li>
@@ -34,7 +38,16 @@
                         <a href="{{ route('perfil.index') }}">Perfil de Investidor</a>
                     </li>
                     <li>
+                        <a href="{{ route('moeda.index') }}">Moedas</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('corretora.index') }}">Corretoras</a>
+                    </li>
+                    <li>
                         <a href="{{ route('posts.index') }}">Posts/Enquetes</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('instrumento.index') }}">Instrumentos</a>
                     </li>
                 </ul>
             </li>
@@ -45,10 +58,10 @@
                 <a href="#pageSuperAdminSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Extra Admin</a>
                 <ul class="collapse list-unstyled" id="pageSuperAdminSubmenu">
                     <li>
-                        <a href="#">Page 1</a>
+                        <a href="{{ route('conta.fechamento.index') }}">Contas de Fechamento</a>
                     </li>
                     <li>
-                        <a href="#">Page 2</a>
+                        <a href="{{ route('fechamento.mes.show') }}">Fechamento Mês</a>
                     </li>
                     <li>
                         <a href="#">Page 3</a>

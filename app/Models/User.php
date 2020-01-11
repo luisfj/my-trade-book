@@ -53,6 +53,14 @@ class User extends Authenticatable
         return $this->hasMany(Bugs::class,'autor_id');
     }
 
+    public function contasCorretora(){
+        return $this->hasMany(ContaCorretora::class, 'usuario_id');
+    }
+
+    public function operacoes(){
+        return $this->hasMany(Operacoes::class, 'usuario_id');
+    }
+
     public function votos_computados(){
         return $this->hasMany(VotoUser::class,'user_id');
     }

@@ -23,7 +23,7 @@ class BugController extends Controller
     }
 
     public function index(){
-        $bugs = Auth::user()->bugs()->paginate(5);
+        $bugs = Auth::user()->bugs()->paginate(10);
 
         return response()->json(compact('bugs'));
     }
