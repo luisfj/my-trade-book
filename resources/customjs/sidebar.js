@@ -17,7 +17,7 @@ $(document).ready(function () {
             autoUnmask: true,
             allowMinus: true,
             removeMaskOnSubmit: true,
-            unmaskAsNumber: true,
+            unmaskAsNumber: false,
             groupSeparator: '',
             autoGroup: false,
             digits: 2,

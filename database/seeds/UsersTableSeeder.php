@@ -18,10 +18,10 @@ class UsersTableSeeder extends Seeder
             'role'      => 'super_admin',
             'password'  => bcrypt('xpt467')
         ]);
-        User::create([
+        /*User::create([
             'name'      => 'Carlos',
             'email'     => 'carlos@gmail.com',
             'password'  => bcrypt('12345678')
-        ]);
+        ]);*/
     }
 }

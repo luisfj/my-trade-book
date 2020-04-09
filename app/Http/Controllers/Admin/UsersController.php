@@ -39,4 +39,16 @@ class UsersController extends Controller
 
         return redirect()->route('users.index');
     }
+
+    public function loginComOutroUsuario(Request $request){
+        if(!Auth::User()->is_super_admin())
+            throw new Exception("Não possui autorização!");
+
+        $user = $this->users_tb->find($request->user_id);
+
+        Auth::login($user);
+
+        return redirect()->route('home');
+    }
+
 }

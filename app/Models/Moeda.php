@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Moeda extends Model
 {
     protected $fillable = [
-        'nome', 'sigla'
+        'nome', 'sigla', 'sifrao'
     ];
 
     public function getFullNameAttribute()

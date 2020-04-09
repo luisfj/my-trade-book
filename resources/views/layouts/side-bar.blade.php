@@ -12,17 +12,19 @@
             <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
             <ul class="collapse list-unstyled show" id="homeSubmenu">
                 <li>
-                    <a href="{{ route('operacao.index') }}">Operações</a>
-                </li>
-                <li>
-                    <a href="{{ route('conta.corretora.index') }}">Corretora (Contas)</a>
-                </li>
-                <li>
-                    <a href="{{ route('transacoes.index') }}">Transações em Conta</a>
-                </li>
-
-                <li>
                     <a href="{{ route('operacao.importar') }}">Importar Operações</a>
+                </li>
+                <li>
+                    <a href="{{ route('operacao.index') }}">Lista de Operações</a>
+                </li>
+                <li>
+                    <a href="{{ route('registros.importacoes.index') }}">Registros de Importações</a>
+                </li>
+                <li>
+                    <a href="{{ route('conta.corretora.index') }}">Lista de Corretora (Contas)</a>
+                </li>
+                <li>
+                    <a href="{{ route('transacoes.index') }}">Lista de Depósitos/Saques</a>
                 </li>
             </ul>
         </li>

@@ -3,21 +3,51 @@
 @section('content')
 
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
 
+        <div class="col-md-2 marb-10 noPadding-with-lr-5 fs13">
+            <div class="card marb-5 altura-min-100p">
+                {{-- <div class="card-header">Dashboard</div> --}}
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    You are logged in!
+                    @include('modulos.dashboards.resumos.resumoGeral')
                 </div>
             </div>
         </div>
+
+        <div class="col-md-5 marb-10 noPadding-with-lr-5">
+            <div class="card marb-5 altura-min-100p">
+                {{-- <div class="card-header">Dashboard</div> --}}
+                <div class="card-body">
+                    @include('modulos.dashboards.resumos.estatisticasAvancadas')
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-5 marb-10 noPadding-with-lr-5">
+            <div class="card marb-5 altura-min-100p">
+                <div class="card-body">
+                    @include('modulos.dashboards.operacoes.evolucaoAnualDoSaldo')
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-7 marb-10 noPadding-with-lr-5">
+            <div class="card marb-5 altura-min-100p">
+                {{-- <div class="card-header">Dashboard</div> --}}
+                <div class="card-body">
+                    @include('modulos.dashboards.operacoes.tradeATradeMensal')
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-5 marb-10 noPadding-with-lr-5">
+            <div class="card marb-5 altura-min-100p">
+                {{-- <div class="card-header">Dashboard</div> --}}
+                <div class="card-body">
+                    @include('modulos.dashboards.operacoes.evolucaoMensalDoSaldo')
+                </div>
+            </div>
+        </div>
+
     </div>
 
 @endsection

@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 class DepositoEmConta extends Model
 {
     protected $fillable = [
-        'tipo', 'ticket', 'data', 'codigo_transacao', 'valor', 'conta_id', 'contraparte_id'
+        'tipo', 'ticket', 'data', 'codigo_transacao', 'valor', 'conta_id', 'contraparte_id', 'registro_importacao_id'
     ];
 
     public function conta(){

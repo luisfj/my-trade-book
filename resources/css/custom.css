@@ -42,3 +42,251 @@
 .table-dez, .table-dez>th, .table-dez>td {
     background-color: #777350;
 }
+
+/* Css's dos charts do google implementar se necessarios
+svg rect {
+    fill: transparent !important;
+}
+
+g text {
+    fill: #f8f9fa !important;
+}
+
+ Fim dos Css's dos charts*/
+/*CSS de classes uteis*/
+.text-center {
+    text-align: center !important;
+}
+.text-right {
+    text-align: right !important;
+}
+.fs10 {
+    font-size: 10px !important;
+}
+.fs11 {
+    font-size: 11px !important;
+}
+.fs12 {
+    font-size: 12px !important;
+}
+.fs13 {
+    font-size: 13px !important;
+}
+.fs14 {
+    font-size: 14px !important;
+}
+.fs15 {
+    font-size: 15px !important;
+}
+.fs16 {
+    font-size: 16px !important;
+}
+.fs18 {
+    font-size: 18px !important;
+}
+.fs20 {
+    font-size: 20px !important;
+}
+.fs22 {
+    font-size: 22px !important;
+}
+.fs24 {
+    font-size: 24px !important;
+}
+.fbold {
+    font-weight: bold !important;
+}
+
+.marb-0 {
+    margin-bottom: 0px !important;
+}
+.marb-5 {
+    margin-bottom: 5px !important;
+}
+.marb-10 {
+    margin-bottom: 10px !important;
+}
+.marb-15 {
+    margin-bottom: 15px !important;
+}
+.marb-20 {
+    margin-bottom: 20px !important;
+}
+.marb-25 {
+    margin-bottom: 25px !important;
+}
+.mar-0 {
+    margin: 0px !important;
+}
+.mar-5 {
+    margin: 5px !important;
+}
+.mar-10 {
+    margin: 10px !important;
+}
+.mar-15 {
+    margin: 15px !important;
+}
+.mar-20 {
+    margin: 20px !important;
+}
+.mar-25 {
+    margin: 25px !important;
+}
+.altura-100p{
+    height: 100% !important;
+}
+.altura-min-100p{
+    min-height: 100% !important;
+}
+.padt-20 {
+    padding-top: 20px;
+}
+.padt-25 {
+    padding-top: 25px;
+}
+.padb-5 {
+    padding-bottom: 5px !important;
+}
+.padl-15 {
+    padding-left: 15px !important;
+}
+.padr-5 {
+    padding-right: 5px !important;
+}
+.padr-10 {
+    padding-right: 10px !important;
+}
+.padr-15 {
+    padding-right: 15px !important;
+}
+.padlr-15 {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+}
+.noPadding {
+    padding: 0px 0px 0px 0px !important;
+}
+.noPadding-tbr {
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+    padding-right: 0px !important;
+}
+.noPadding-tbl {
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+    padding-left: 0px !important;
+}
+.noPadding-tlr {
+    padding-top: 0px !important;
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+}
+.noPadding-blr {
+    padding-bottom: 0px !important;
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+}
+.noPadding-tb {
+    padding-bottom: 0px !important;
+    padding-top: 0px !important;
+}
+.noPadding-lr {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+.noPadding-top {
+    padding-top: 0px !important;
+}
+.noPadding-bottom {
+    padding-bottom: 0px !important;
+}
+.noPadding-left {
+    padding-left: 0px !important;
+}
+.noPadding-right {
+    padding-right: 0px !important;
+}
+.noPadding-with-lr-5 {
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+    padding-right: 5px !important;
+    padding-left: 5px !important;
+}
+.label-filtros-dash-md5 {
+    margin-top: -15px !important;
+    padding-left: 10px !important;
+    max-width: 450px !important;
+}
+.label-filtros-dash-md7 {
+    margin-top: -15px !important;
+    padding-left: 10px !important;
+    max-width: 700px !important;
+}
+.hr3 {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, transparent, #777, transparent);
+}
+.hr3-success {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, transparent, #62c462, transparent);
+}
+.hr3-info {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, transparent, #6cb2eb, transparent);
+}
+.hr3-info2 {
+     border: 0;
+     height: 1px;
+     background-image: linear-gradient(to right, transparent, #5bc0de, transparent);
+ }
+.hr3-danger {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, transparent, #ee5f5b, transparent);
+}
+.hr3-warning {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, transparent, #f89406, transparent);
+}
+.back-success-light{
+    background-color: #c3e6cb !important;
+}
+.back-danger-light{
+    background-color: #f5c6cb !important;
+}
+.pontilhado {
+    border-bottom: 1px dotted #626060;
+}
+/*Fim CSS de classes uteis*/
+
+/*Inicio CSS tabela scroll com cabeçalho fixo*/
+.table-scroll tbody {
+    position: absolute;
+    overflow-y: scroll;
+    height: 120px;
+}
+
+.table-scroll tr {
+    width: 99%;
+    table-layout: fixed;
+    display: inline-table;
+}
+
+.table-scroll thead > tr > th {
+    border: none;
+}
+/*Fim CSS tabela scroll com cabeçalho fixo*/
+/* Configuração do scrool do site para dark*/
+::-webkit-scrollbar { width: 8px; height: 3px;}
+::-webkit-scrollbar-button {  background-color: #666; }
+::-webkit-scrollbar-track {  background-color: #646464;}
+::-webkit-scrollbar-track-piece { background-color: #000;}
+::-webkit-scrollbar-thumb { height: 50px; background-color: #666; border-radius: 3px;}
+::-webkit-scrollbar-corner { background-color: #646464;}
+::-webkit-resizer { background-color: #666;}
+/* FIM Configuração do scrool do site para dark*/

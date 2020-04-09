@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\DatasHelper;
 use App\Helpers\ValoresHelper;
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,7 +12,8 @@ class Operacoes extends Model
         'account', 'corretoranome', 'alavancagem', 'ticket', 'abertura', 'fechamento',
         'precoentrada', 'precosaida', 'tipo', 'lotes', 'comissao', 'impostos', 'swap',
         'resultadobruto', 'resultado', 'pips', 'importacao', 'moeda_id', 'instrumento_id',
-        'conta_corretora_id', 'usuario_id'];
+        'conta_corretora_id', 'usuario_id', 'tempo_operacao_dias', 'tempo_operacao_horas',
+        'mep', 'men', 'registro_importacao_id'];
 
     public function instrumento(){
         return $this->belongsTo(Instrumento::class, 'instrumento_id');
@@ -23,6 +25,10 @@ class Operacoes extends Model
 
     public function contaCorretora(){
         return $this->belongsTo(ContaCorretora::class, 'conta_corretora_id');
+    }
+
+    public function registroImportacao(){
+        return $this->belongsTo(RegistroImportacao::class, 'registro_importacao_id');
     }
 
     public function usuario(){
@@ -98,6 +104,21 @@ class Operacoes extends Model
 
     public function getResultadoFormatadoAttribute(){
         $dep = ValoresHelper::converterValorParaPadrao($this->resultado);
+        return $dep;
+    }
+
+    public function getAberturaFormatadoAttribute(){
+        $dep = DatasHelper::formatarDataSemHoras($this->abertura);
+        return $dep;
+    }
+
+    public function getFechamentoFormatadoAttribute(){
+        $dep = DatasHelper::formatarDataSemHoras($this->fechamento);
+        return $dep;
+    }
+
+    public function getDuracaoTradeFormatadoAttribute(){
+        $dep = DatasHelper::formatarTempoDeTrade($this->tempo_operacao_dias, $this->tempo_operacao_horas);
         return $dep;
     }
 }

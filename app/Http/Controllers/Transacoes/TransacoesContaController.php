@@ -38,6 +38,8 @@ class TransacoesContaController extends Controller
             if(!$conta_id){
                 $data_inicial = date('Y-m-01');
                 $data_final = date('Y-m-t');
+                $conta_padrao = $this->contaService->buscaContaPadraoDoUsuarioLogado();
+                $conta_id = $conta_padrao ? $conta_padrao->id : $conta_id;
             }
         }
 
@@ -72,35 +74,57 @@ class TransacoesContaController extends Controller
     public function editar(int $transacao_id){
         try {
             $transacao = $this->service->getById($transacao_id);
-            $conta_lista = $this->contaService->selectBoxList();
 
-            $contraparte_lista = $this->contaService->selectBoxList($transacao->conta_id);
-
-            return view('modulos.transacoesConta.editarTransacao', compact(['conta_lista', 'contraparte_lista', 'transacao']));
+            return response()->json(compact(['transacao']));
         } catch (\Throwable $th) {
-            return redirect()->back()->with('error', [
-                'messages' => $th->getMessage(),
-            ])->withInput();
+            $erro = null;
+            $errors = $th;
+            if(isset($th->errorInfo) && is_array($th->errorInfo) && count($th->errorInfo) >= 3)
+                $erro = $th->errorInfo[2];
+            return response()->json(['error' => ($erro ? $erro : $errors)]);
         }
     }
 
     public function atualizar(Request $request, int $transacao_id){
         try {
-            $dados = $request->except(['_token', '_method']);
-            DB::beginTransaction();
-            $transacao = $this->service->atualizaTransacao($dados, $transacao_id);
+            $dados = $request->except(['_token', '_method', 'conta_id']);
 
-            $conta_id = $transacao->conta->id;
+            DB::beginTransaction();
+            $this->service->atualizaTransacao($dados, $transacao_id);
             DB::commit();
-            return redirect()->route('transacoes.index')->with('success', [
-                'messages' => 'Instrumento atualizado com sucesso!',
-            ])->with(compact(['conta_id']));
+
+            session()->flash('success', [
+                'messages' => 'Transação atualizada com sucesso!',
+            ]);
+            return response()->json(['success' => 'Adicionado']);
         } catch (\Throwable $th) {
             DB::rollback();
-            dd($th);
-            return redirect()->back()->with('error', [
-                'messages' => $th->getMessage(),
-            ])->withInput();
+            $erro = null;
+            $errors = $th;
+            if(isset($th->errorInfo) && is_array($th->errorInfo) && count($th->errorInfo) >= 3)
+                $erro = $th->errorInfo[2];
+            return response()->json(['error' => ($erro ? $erro : $errors)]);
+        }
+    }
+
+    public function salvar(Request $request){
+        try {
+            $dados = $request->except(['_token', '_method']);
+            DB::beginTransaction();
+            $transacao = $this->service->adicionarTransferencia($dados);
+            DB::commit();
+            session()->flash('success', [
+                'messages' => 'Transação adicionada com sucesso!',
+            ]);
+
+            return response()->json(['success' => 'Adicionado']);
+        } catch (\Throwable $th) {
+            DB::rollback();
+            $erro = null;
+            $errors = $th;
+            if(isset($th->errorInfo) && is_array($th->errorInfo) && count($th->errorInfo) >= 3)
+                $erro = $th->errorInfo[2];
+            return response()->json(['error' => ($erro ? $erro : $errors)]);
         }
     }
 }

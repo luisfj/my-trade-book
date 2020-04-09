@@ -1,5 +1,7 @@
 {
+    "/js/Chart.min.js": "/js/Chart.min.js",
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
+    "/js/jquery-dateformat.min.js": "/js/jquery-dateformat.min.js",
     "/css/all.css": "/css/all.css"
 }

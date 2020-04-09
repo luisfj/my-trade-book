@@ -25,7 +25,9 @@
 
 <script>
 import { importarArquivo as importarMT4 } from '../../services/importacaoMt4';
+import { importarArquivo as importarMT5 } from '../../services/importacaoMt5';
 import { isMt4File as isMt4File } from '../../services/importacaoMt4';
+import { isMt5File as isMt5File } from '../../services/importacaoMt5';
 
 export default {
     data: function(){
@@ -67,18 +69,26 @@ export default {
                 this.errors.push('Selecione um arquivo para importar!');
                 return true;
             }
+            try{
+                var html = $.parseHTML( this.text );
+                var importou = 0;
 
-            var html = $.parseHTML( this.text );
-            var importou = 0;
+                if(isMt4File(html)){
+                    this.corretora = importarMT4(html,  this.header, this.closedTrades, this.openTrades, this.transferencias)
+                    importou = 1;
+                } else if(isMt5File(html)){
+                    this.corretora = importarMT5(html,  this.header, this.closedTrades, this.openTrades, this.transferencias)
+                    importou = 1;
+                }
 
-            if(isMt4File(html)){
-                this.corretora = importarMT4(html,  this.header, this.closedTrades, this.openTrades, this.transferencias)
-                importou = 1;
-            }
+                if (!importou) {
+                    this.errors.push('Selecione um arquivo válido!');
+                    return true;
+                }
 
-            if (!importou) {
-                this.errors.push('Selecione um arquivo válido!');
-                return true;
+            } catch (e) {
+                this.errors.push(e.message);
+                return;
             }
 
             let head =
@@ -89,8 +99,9 @@ export default {
                     closedTrades:   this.closedTrades
                 }
 
-
             this.$store.dispatch('importarArquivos', head).then((res) => {
+                console.log(res);
+                console.log(res.data);
                 if(res.data.error)
                     this.errors = [res.data.error]
                 else
@@ -101,8 +112,6 @@ export default {
                 this.errors = [error]
                 this.text = '';
             });
-
-
         }
     }
 };

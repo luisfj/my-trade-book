@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-lg-9 col-md-9 col-sm-12"><h1>Listagem dos perfis de investidor</h1></div>
         <div class="col-lg-2 offset-lg-1 col-md-2 offset-md-1 col-sm-12" style="width:100px !important;">
-            <a class="btn btn-success form-control" href="{{ route('perfil.add') }}">
+            <a class="btn btn-success form-control" href="#" data-toggle="modal" data-target="#addPerfilModal">
                 <i class="material-icons md-light md-24">add_circle_outline</i>
             </a>
         </div>
@@ -30,7 +30,8 @@
                         <td>{{ $perfil->descricao }}</td>
                         <td>{{ $perfil->isAtivo() }}</td>
                         <td>
-                            <a href="{{ route('perfil.edit', $perfil->id) }}">
+                            <a href="#" data-toggle="modal" data-target="#editPerfilModal"
+                                data-url-edit="{{route("perfil.get.json", $perfil->id)}}">
                                 <i class="material-icons text-info md-18">edit</i>
                             </a>
 -
@@ -73,4 +74,8 @@
         </tbody>
       </table>
       {{ $perfis->links() }}
+      @include('modulos.admin.modais.perfil')
+
 @endsection
+
+

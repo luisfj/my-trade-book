@@ -29,12 +29,6 @@ class CorretoraController extends Controller
         return view('modulos.admin.listaCorretoras', compact('corretoras'));
     }
 
-    public function add(){
-        $moedas_list = $this->moeda_tb->selectBoxList();
-
-        return view('modulos.admin.adicionarCorretora', compact('moedas_list'));
-    }
-
     public function edit($id){
         if(!Auth::user()->is_admin())
             throw new Exception("Sem autorização!");
@@ -50,7 +44,7 @@ class CorretoraController extends Controller
         }
         $moedas_list = $this->moeda_tb->selectBoxList();
 
-        return view('modulos.admin.editarCorretora', compact(['corretora', 'moedas_list']));
+        return response()->json(compact(['corretora', 'moedas_list']));
     }
 
     public function update(Request $request, $id){
@@ -64,11 +58,11 @@ class CorretoraController extends Controller
                     'messages' => 'Não existe uma corretora com este id no sistema!',
                 ]);
 
-                return redirect()->route('corretora.index');
+                return redirect()->back();
             }
 
             $dados = $request->all();
-            array_splice($dados, 0, 2);
+            //array_splice($dados, 0, 2);
 
             $corretora->update($dados);
 
@@ -76,12 +70,12 @@ class CorretoraController extends Controller
                 'messages' => 'Corretora atualizada com sucesso!',
             ]);
 
-            return redirect()->route('corretora.index');
+            return redirect()->back();
         } catch (\Throwable $th) {
             session()->flash('error', [
                 'messages' => $th->getMessage(),
             ]);
-            return redirect()->route('corretora.update', $id);
+            return redirect()->back();
         }
     }
 
@@ -90,7 +84,7 @@ class CorretoraController extends Controller
             throw new Exception("Sem autorização!");
         try{
             $dados = $request->all();
-            array_splice($dados, 0, 1);
+            //array_splice($dados, 0, 1);
 
             $this->corretora_tb->create($dados);
 
@@ -98,12 +92,12 @@ class CorretoraController extends Controller
                 'messages' => 'Corretora criada com sucesso!',
             ]);
 
-            return redirect()->route('corretora.index');
+            return redirect()->back();
         } catch (\Throwable $th) {
             session()->flash('error', [
                 'messages' => $th->getMessage(),
             ]);
-            return redirect()->route('corretora.add');
+            return redirect()->back();
         }
     }
 
@@ -131,5 +125,11 @@ class CorretoraController extends Controller
             ]);
         }
         return redirect()->route('corretora.index');
+    }
+
+    public function buscarSelectBoxList(){
+        $corretoras_list = $this->corretora_tb->selectBoxList();
+
+        return response()->json(compact(['corretoras_list']));
     }
 }

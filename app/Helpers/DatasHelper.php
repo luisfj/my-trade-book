@@ -8,6 +8,29 @@ use Illuminate\Support\Str;
 
 class DatasHelper
 {
+    static function formatarDataSemHoras($mes_ano){
+        if(!$mes_ano) return $mes_ano;
+
+        $dt = date('d/m/Y', strtotime($mes_ano));
+
+        return $dt;
+    }
+
+    static function formatarDataComHoras($mes_ano){
+        if(!$mes_ano) return $mes_ano;
+
+        $dt = date('d/m/Y H:i:s', strtotime($mes_ano));
+
+        return $dt;
+    }
+
+    static function formatarTempoDeTrade($horas, $tempo){
+        if(!$tempo && !$horas) return $tempo;
+        if(!$horas)
+            return $tempo;
+        return $horas . ' d, ' . $tempo;
+    }
+
     static function converterMesAnoParaData($mes_ano){
         if(!$mes_ano || !Str::contains($mes_ano, '-'))
             return $mes_ano;

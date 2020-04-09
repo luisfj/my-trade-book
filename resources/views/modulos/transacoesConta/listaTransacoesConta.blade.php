@@ -4,7 +4,8 @@
     <div class="row">
         <div class="col-lg-9 col-md-9 col-sm-12"><h1>Listagem das Transações em Conta</h1></div>
         <div class="col-lg-2 offset-lg-1 col-md-2 offset-md-1 col-sm-12" style="width:100px !important;">
-            <a class="btn btn-success form-control" href="{{ route('conta.corretora.add') }}">
+            <a class="btn btn-success form-control" href="#"
+                data-conta_id="{{$conta_id}}" data-toggle="modal" data-target="#addModal">
                 <i class="material-icons md-light md-24">add_circle_outline</i>
             </a>
         </div>
@@ -51,37 +52,38 @@
           <tr>
             <th scope="col">Tipo</th>
             <th scope="col">Data</th>
+            <th scope="col">Conta</th>
             <th scope="col">Ticket</th>
             <th scope="col">Código da Transacao</th>
-            <th scope="col">Conta</th>
-            <th scope="col">Contraparte</th>
             <th scope="col">Valor</th>
             <th scope="col">Ações</th>
           </tr>
         </thead>
         <tbody>
                 @forelse ($transacoes as $indexKey => $transacao)
-                    <tr class="table-primary {{ ($transacao->valor > 0) ? 'text-success' : (($transacao->valor < 0) ? 'text-warning' : '') }}">
+                    <tr class="table-primary {{ ($transacao->tipo == 'D') ? 'text-success' : (($transacao->tipo == 'S') ? 'text-warning' : '') }}">
                         <th scope="row">
-                            @if($transacao->valor > 0)
+                            @if($transacao->tipo == 'D')
                                 <i class="material-icons md-18">save_alt</i>
-                            @elseif($transacao->valor < 0)
+                                Depósito
+                            @elseif($transacao->tipo == 'S')
                                 <i class="material-icons md-18 text-warning">reply_all</i>
+                                Saque
                             @endif
                         </th>
                         <td>{{ date('d/m/Y H:i:s', strtotime($transacao->data)) }}</td>
+                        <td>{{ Str::limit($transacao->conta->pluck_name, 80) }}</td>
                         <td>{{ $transacao->ticket }}</td>
                         <td>{{ Str::limit($transacao->codigo_transacao, 16) }}</td>
-                        <td>{{ Str::limit($transacao->conta->pluck_name, 20) }}</td>
-                        <td>{{ $transacao->contraparte ? Str::limit($transacao->contraparte->pluck_name, 16) : '' }}</td>
-                        <td class="{{ ($transacao->valor > 0) ? 'text-success' : (($transacao->valor < 0) ? 'text-warning' : '') }}">
+                        <td>
                             {{ $transacao->valor }}
                         </td>
                         <td>
-                            <a href="{{ route('transacao.edit', $transacao->id) }}">
+                            <a href="#" data-toggle="modal"  data-target="#editModal"
+                                data-url-edit="{{ route('transacao.edit', $transacao->id) }}">
                                 <i class="material-icons text-info md-18">edit</i>
                             </a>
--
+
                             <a href="#" onclick="
                             swal({
                                     title: 'Confirma a exclusão da transação?',
@@ -123,4 +125,5 @@
                 @endforelse
         </tbody>
       </table>
+      @include('modulos.transacoesConta.modais.saquesERetiradas')
 @endsection

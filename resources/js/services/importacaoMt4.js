@@ -47,7 +47,7 @@ export const importarArquivo = (html, header, closedTrades, openTrades, transfer
                     : posicao;
 
         if(posicao == 'HEAD'){// é o cabeçalho
-            var head = service.createCabecalho(val_ticket, val_abertura, val_tipo, val_contratos, val_instrumento);
+            var head = service.createCabecalho(val_ticket, val_abertura, val_tipo, val_contratos, val_instrumento, 'MT4');
             header.push(head);
         } else if(posicao == 'CLOSED') { //são operações fechadas
             if(val_tipo == 'balance'){

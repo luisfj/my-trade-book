@@ -19,11 +19,7 @@ class InstrumentoController extends Controller
     {
         $instrumentos = $this->service->getAll();
 
-        return view('modulos.trade.listaInstrumentos', compact('instrumentos'));
-    }
-
-    public function add(){
-        return view('modulos.trade.adicionarInstrumento');
+        return view('modulos.admin.listaInstrumentos', compact('instrumentos'));
     }
 
     public function edit($id){
@@ -35,15 +31,15 @@ class InstrumentoController extends Controller
                 'messages' => 'Não existe um instrumento com este id no sistema!',
             ]);
 
-            return redirect()->route('instrumento.index');
+            return redirect()->back();
         }
-        return view('modulos.trade.editarInstrumento', compact('instrumento'));
+        return response()->json(compact('instrumento'));
     }
 
     public function update(Request $request, $id){
         try{
             $dados = $request->all();
-            array_splice($dados, 0, 2);
+            //array_splice($dados, 0, 2);
 
             $this->service->update($dados, $id);
 
@@ -51,19 +47,19 @@ class InstrumentoController extends Controller
                 'messages' => 'Instrumento atualizado com sucesso!',
             ]);
 
-            return redirect()->route('instrumento.index');
+            return redirect()->back();
         } catch (\Throwable $th) {
             session()->flash('error', [
                 'messages' => $th->getMessage(),
             ]);
-            return redirect()->route('instrumento.update', $id);
+            return redirect()->back();
         }
     }
 
     public function create(Request $request){
         try{
             $dados = $request->all();
-            array_splice($dados, 0, 1);
+            //array_splice($dados, 0, 1);
 
             $this->service->create($dados);
 
@@ -71,12 +67,12 @@ class InstrumentoController extends Controller
                 'messages' => 'Instrumento criado com sucesso!',
             ]);
 
-            return redirect()->route('instrumento.index');
+            return redirect()->back();
         } catch (\Throwable $th) {
             session()->flash('error', [
                 'messages' => $th->getMessage(),
             ]);
-            return redirect()->route('instrumento.add');
+            return redirect()->back();
         }
     }
 

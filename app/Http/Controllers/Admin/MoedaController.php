@@ -18,7 +18,7 @@ class MoedaController extends Controller
 
     public function index(){
         if(!Auth::user()->is_admin())
-            throw new Exception("Sem autorização!");
+            throw new \Exception("Sem autorização!");
 
         $moedas = $this->moeda_tb
             ->orderBy('nome', 'asc')->paginate(10);
@@ -26,13 +26,9 @@ class MoedaController extends Controller
         return view('modulos.admin.listaMoedas', compact('moedas'));
     }
 
-    public function add(){
-        return view('modulos.admin.adicionarMoeda');
-    }
-
     public function edit($id){
         if(!Auth::user()->is_admin())
-            throw new Exception("Sem autorização!");
+            throw new \Exception("Sem autorização!");
 
         $moeda = $this->moeda_tb->find($id);
 
@@ -41,10 +37,10 @@ class MoedaController extends Controller
                 'messages' => 'Não existe uma moeda com este id no sistema!',
             ]);
 
-            return redirect()->route('moeda.index');
+            return redirect()->back();
         }
 
-        return view('modulos.admin.editarMoeda', compact('moeda'));
+        return response()->json(compact('moeda'));
     }
 
     public function update(Request $request, $id){
@@ -58,11 +54,11 @@ class MoedaController extends Controller
                     'messages' => 'Não existe uma moeda com este id no sistema!',
                 ]);
 
-                return redirect()->route('moeda.index');
+                return redirect()->back();
             }
 
             $dados = $request->all();
-            array_splice($dados, 0, 2);
+            //array_splice($dados, 0, 2);
 
             $moeda->update($dados);
 
@@ -70,21 +66,21 @@ class MoedaController extends Controller
                 'messages' => 'Moeda atualizada com sucesso!',
             ]);
 
-            return redirect()->route('moeda.index');
+            return redirect()->back();
         } catch (\Throwable $th) {
             session()->flash('error', [
                 'messages' => $th->getMessage(),
             ]);
-            return redirect()->route('moeda.update', $id);
+            return redirect()->back();
         }
     }
 
     public function create(Request $request){
         if(!Auth::user()->is_admin())
-            throw new Exception("Sem autorização!");
+            throw new \Exception("Sem autorização!");
         try{
             $dados = $request->all();
-            array_splice($dados, 0, 1);
+            //array_splice($dados, 0, 1);
 
             $this->moeda_tb->create($dados);
 
@@ -92,18 +88,18 @@ class MoedaController extends Controller
                 'messages' => 'Moeda criada com sucesso!',
             ]);
 
-            return redirect()->route('moeda.index');
+            return redirect()->back();
         } catch (\Throwable $th) {
             session()->flash('error', [
                 'messages' => $th->getMessage(),
             ]);
-            return redirect()->route('moeda.add');
+            return redirect()->back();
         }
     }
 
     public function delete($id){
         if(!Auth::user()->is_admin())
-            throw new Exception("Sem autorização!");
+            throw new \Exception("Sem autorização!");
 
         try{
             $moeda = $this->moeda_tb->find($id);
@@ -131,6 +127,11 @@ class MoedaController extends Controller
             ]);
         }
         return redirect()->route('moeda.index');
+    }
 
+    public function buscarSelectBoxList(){
+        $moedas_list = $this->moeda_tb->selectBoxList();
+
+        return response()->json(compact(['moedas_list']));
     }
 }

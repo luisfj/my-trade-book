@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\PerfilInvestidor;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,7 +20,7 @@ class PerfilInvestidorController extends Controller
 
     public function index(){
         if(!Auth::user()->is_admin())
-            throw new Exception("Sem autorização!");
+            throw new \Exception("Sem autorização!");
 
         $perfis = $this->perfis_tb
             ->orderBy('nome', 'asc')
@@ -28,9 +29,6 @@ class PerfilInvestidorController extends Controller
         return view('modulos.admin.listaPerfis', compact('perfis'));
     }
 
-    public function add(){
-        return view('modulos.admin.adicionarPerfil');
-    }
 
     public function edit($id){
         $perfil = $this->perfis_tb->find($id);
@@ -43,10 +41,10 @@ class PerfilInvestidorController extends Controller
             return redirect()->route('perfil.index');
         }
 
-        return view('modulos.admin.editarPerfil', compact('perfil'));
+        return redirect()->route('perfil.index');
     }
 
-    public function update(Request $request, $id){
+    public function getJson($id){
         $perfil = $this->perfis_tb->find($id);
 
         if(!$perfil){
@@ -57,8 +55,22 @@ class PerfilInvestidorController extends Controller
             return redirect()->route('perfil.index');
         }
 
+        return response()->json(compact('perfil'));
+    }
+
+    public function update(Request $request, $id){
+        $perfil = $this->perfis_tb->find($id);
+
+        if(!$perfil){
+            session()->flash('error', [
+                'messages' => 'Não existe um perfil com este id no sistema!',
+            ]);
+
+            return redirect()->back();
+        }
+
         $dados = $request->all();
-        array_splice($dados, 0, 2);
+        //array_splice($dados, 0, 2);
 
         $perfil->update($dados);
 
@@ -66,7 +78,7 @@ class PerfilInvestidorController extends Controller
             'messages' => 'Perfil atualizado com sucesso!',
         ]);
 
-        return redirect()->route('perfil.index');
+        return redirect()->back();
     }
 
     public function create(Request $request){
@@ -80,7 +92,7 @@ class PerfilInvestidorController extends Controller
             'messages' => 'Perfil criado com sucesso!',
         ]);
 
-        return redirect()->route('perfil.index');
+        return redirect()->back();
     }
 
     public function delete($id){

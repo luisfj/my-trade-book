@@ -48,12 +48,37 @@ class ContaCorretoraService
         return $this->repository->with('corretora')->with('moeda')->where('usuario_id', Auth::user()->id)->findOrFail($id);
     }
 
+    public function buscaContaPadraoDoUsuarioLogado()
+    {
+        $conta = $this->repository->where('usuario_id', Auth::user()->id)->where('padrao', true)->first();
+        return $conta;
+    }
+
     public function getByIdOrFirst($conta_id)
     {
         $conta = $this->repository->where('usuario_id', Auth::user()->id)->find($conta_id);
         if($conta)
             return $conta;
         return $this->getAllByUser()->first();
+    }
+
+    public function atualizaContaCorretoraPadrao($contaCorretora)
+    {
+        foreach ($this->getAllByUser() as $conta) {
+            $conta->update(['padrao' => $contaCorretora && $conta->id == $contaCorretora->id]);
+        }
+    }
+
+    public function getTotalDepositos($contaCorretora)
+    {
+        $conta = $this->repository->where('usuario_id', Auth::user()->id)->find($contaCorretora);
+        return $conta->transacoes()->where('tipo', 'D')->sum('valor');
+    }
+
+    public function getTotalSaques($contaCorretora)
+    {
+        $conta = $this->repository->where('usuario_id', Auth::user()->id)->find($contaCorretora);
+        return $conta->transacoes()->where('tipo', 'S')->sum('valor');
     }
 
     public function getByCodigoOrCreate($codigo, $corretora, $currency)

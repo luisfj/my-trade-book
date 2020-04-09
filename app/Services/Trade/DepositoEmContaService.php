@@ -52,7 +52,7 @@ class DepositoEmContaService
 
     public function getById($id)
     {
-        $dep =  $this->repository->with('conta')->with('contraparte')->findOrFail($id);
+        $dep =  $this->repository->with('conta.corretora')->findOrFail($id);
         if($dep == null || $dep->conta->usuario_id != Auth::user()->id)
             throw new Exception('Transferêcia inválida!');
         return $dep;
@@ -60,7 +60,7 @@ class DepositoEmContaService
 
     public function getByContaTicket($conta_id, $ticket)
     {
-        $dep =  $this->repository->with('conta')->with('contraparte')
+        $dep =  $this->repository->with('conta.corretora')
             ->where('ticket', $ticket)
             ->where('conta_id', $conta_id)->first();
         if($dep != null && $dep->conta->usuario_id != Auth::user()->id)
@@ -68,18 +68,48 @@ class DepositoEmContaService
         return $dep;
     }
 
-    public function adicionarSeNaoExistir($ticket, $data, $codigo, $valor, $conta_obj)
+    public function adicionarTransferencia($dados)
     {
-        $deposito = $conta_obj->transacoes()->where('ticket', $ticket)->find();
+        $conta_obj = $this->contaService->getById($dados['conta_id']);
+        $conta_obj->transacoes()->create($dados);
+        $this->contaService->atualizarSaldoContaPorTransferencia($conta_obj, $dados['valor']);
+    }
+
+    public function adicionarSeNaoExistir($tipo, $ticket, $data, $codigo, $valor, $conta_obj, $regImport)
+    {
+        $deposito = $conta_obj->transacoes()->where('ticket', $ticket)->first();
         if(!$deposito){
-            $conta_obj->transacoes()->findOrCreate(
-                ['ticket' => $ticket],
-                ['data' => $data, 'codigo_transacao' => $codigo, 'valor' => $valor, 'conta_id' => $conta_obj->id]
+            $conta_obj->transacoes()->create(
+                ['tipo' => $tipo,
+                 'ticket' => $ticket,
+                 'data' => $data,
+                 'codigo_transacao' => $codigo,
+                 'valor' => $valor,
+                 'conta_id' => $conta_obj->id,
+                 'registro_importacao_id' => $regImport->id]
             );
             $this->contaService->atualizarSaldoContaPorTransferencia($conta_obj, $valor);
             return true;
         }
         return false;
+    }
+
+    public function verificarSeExisteESimilar($ticket, $data, $valor, $conta_id)
+    {
+        $conta_obj = $this->contaService->getById($conta_id);
+        $deposito = $conta_obj->transacoes()->where('ticket', $ticket)->first();
+
+        if(!$deposito){
+            $deposito = $conta_obj->transacoes()
+                ->whereRaw("DATE(data) = DATE('".$data."') ")//and valor = 5.00")//aqui deve estar comparando datetime tenho que comparar date para ser correto.
+                ->where('valor', $valor)
+                ->first();
+            if($deposito){
+                return [false, $deposito];
+            }
+            return [false, null];
+        }
+        return [true, null];
     }
 
     public function removerTransacao(int $transacao_id){

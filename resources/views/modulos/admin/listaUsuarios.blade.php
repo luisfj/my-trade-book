@@ -15,6 +15,7 @@
             @if(Auth::user()->is_super_admin())
                 <th scope="col">Role</th>
                 <th scope="col">Ações</th>
+                <th scope="col">Logar</th>
             @endif
           </tr>
         </thead>
@@ -56,6 +57,13 @@
                                     @csrf
                                     <input type="hidden" id="user_id" name="user_id" value="{{ $user->id }}">
                                     <input type="hidden" class="new_role" id="new_role" name="new_role" value="user">
+                                 </form>
+                            </td>
+                            <td>
+                                <form id="login-form" action="{{ route('users.login.other') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" id="user_id" name="user_id" value="{{ $user->id }}">
+                                    <button type="submit" class="btn btn-info btn-sm">Login</button>
                                  </form>
                             </td>
                         @endif

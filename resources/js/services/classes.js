@@ -1,8 +1,8 @@
 module.exports = {
 
     Transferencia: class {
-        constructor(ticket, data, codigo, valor) {
-            this.tipo = 'balance';
+        constructor(ticket, data, codigo, valor, tipo = null) {
+            this.tipo = tipo == null ? 'balance' : tipo;
             this.ticket = ticket;
             this.data = data;
             this.codigo = codigo;
@@ -11,20 +11,29 @@ module.exports = {
     },
 
     Cabecalho: class {
-        constructor(conta, nome, currency, alavancagem, data) {
+        constructor(conta, nome, currency, alavancagem, data, tipo) {
             this.tipo = 'head';
             this.conta = conta;
             this.nome = nome;
             this.currency = currency;
             this.alavancagem = alavancagem;
             this.data = data;
+            this.tipo = tipo;
             this.formataDados();
         }
         formataDados() {
-            this.conta = this.conta.substr(this.conta.indexOf(':') + 2);
-            this.nome = this.nome.substr(this.nome.indexOf(':') + 2);
-            this.currency = this.currency.substr(this.currency.indexOf(':') + 2);
-            this.alavancagem = this.alavancagem.substr(this.alavancagem.indexOf(':') + 2);
+            if(this.tipo == 'MT4'){
+                this.conta = this.conta.substr(this.conta.indexOf(':') + 2);
+                this.nome = this.nome.substr(this.nome.indexOf(':') + 2);
+                this.currency = this.currency.substr(this.currency.indexOf(':') + 2);
+                this.alavancagem = this.alavancagem.substr(this.alavancagem.indexOf(':') + 2);
+            } else if(this.tipo == 'MT5'){
+                var arrConta = this.conta.split('(');
+                this.conta = arrConta[0].trim();
+                arrConta = arrConta[1].split(',');
+                this.currency = arrConta[0];
+                this.alavancagem = arrConta[1].trim();
+            }
         };
     },
     Operacao: class {

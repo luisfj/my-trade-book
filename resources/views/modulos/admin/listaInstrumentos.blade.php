@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-lg-9 col-md-9 col-sm-12"><h1>Listagem dos Instrumentos</h1></div>
         <div class="col-lg-2 offset-lg-1 col-md-2 offset-md-1 col-sm-12" style="width:100px !important;">
-            <a class="btn btn-success form-control" href="{{ route('instrumento.add') }}">
+            <a class="btn btn-success form-control" href="#" data-toggle="modal" data-target="#addModal">
                 <i class="material-icons md-light md-24">add_circle_outline</i>
             </a>
         </div>
@@ -28,7 +28,8 @@
                         <td>{{ $instrumento->nome }}</td>
                         <td>{{ $instrumento->sigla }}</td>
                         <td>
-                            <a href="{{ route('instrumento.edit', $instrumento->id) }}">
+                            <a href="#" data-toggle="modal" data-target="#editModal"
+                            data-url-edit="{{route("instrumento.edit", $instrumento->id)}}">
                                 <i class="material-icons text-info md-18">edit</i>
                             </a>
 -
@@ -70,4 +71,5 @@
                 @endforelse
         </tbody>
       </table>
+      @include('modulos.admin.modais.instrumento')
 @endsection

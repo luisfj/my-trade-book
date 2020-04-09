@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class ContaCorretora extends Model
 {
-    protected $fillable = ['identificador','entradas','saidas','saldo','dtabertura','ativa','tipo','exibirnopainel','moeda_id','corretora_id', 'usuario_id', 'operacoes_abertas', 'operacoes_fechadas'];
+    protected $fillable = ['identificador','entradas','saidas','saldo','dtabertura','ativa','tipo','exibirnopainel','moeda_id','corretora_id', 'usuario_id',
+    'operacoes_abertas', 'operacoes_fechadas', 'padrao', 'real_demo'];
 
     public function moeda(){
         return $this->belongsTo(Moeda::class, 'moeda_id');

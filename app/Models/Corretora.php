@@ -3,10 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Corretora extends Model
 {
-    protected $fillable = ['nome', 'uf', 'moeda_id'];
+    protected $fillable = ['nome', 'uf', 'moeda_id', 'usuario_id'];
 
 
     public function moeda(){
@@ -14,6 +15,7 @@ class Corretora extends Model
     }
 
     public function selectBoxList(){
-		return $this->get()->pluck('nome', 'id');
+        return $this->whereNull('usuario_id')->orWhere('usuario_id', '=', Auth::user()->id)
+            ->orderBy('nome')->get()->pluck('id', 'nome');
     }
 }

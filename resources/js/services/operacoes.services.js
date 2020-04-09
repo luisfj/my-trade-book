@@ -1,13 +1,13 @@
 const classes = require('./classes');
 
 module.exports = {
-    createTransferencia : (val_ticket, val_abertura, val_contratos, val_instrumento) => {
-        var trans = new classes.Transferencia(val_ticket, val_abertura, val_contratos, val_instrumento);
+    createTransferencia : (val_ticket, val_abertura, val_contratos, val_instrumento, tipo = null) => {
+        var trans = new classes.Transferencia(val_ticket, val_abertura, val_contratos, val_instrumento, tipo);
         return trans;
     },
 
-    createCabecalho : (conta, nome, currency, alavancagem, data) => {
-        var head = new classes.Cabecalho(conta, nome, currency, alavancagem, data);
+    createCabecalho : (conta, nome, currency, alavancagem, data, tipo) => {
+        var head = new classes.Cabecalho(conta, nome, currency, alavancagem, data, tipo);
         return head;
     },
 
