@@ -80,9 +80,7 @@
                 <b-button style="width: 80px;" v-else size="sm" variant="success"  @click.prevent="addBug">
                     OK
                 </b-button>
-                <b-button style="width: 80px;"  size="sm" variant="danger"  @click.prevent="download">
-                    Download
-                </b-button>
+
             </b-button-group>
 
         </template>
@@ -126,27 +124,7 @@ export default {
     },
 
     methods: {
-        download(){
-            axios({
-                url: 'historico-myfx',
-                method: 'GET',
-                responseType: 'blob',
-            }).then((response) => {
-                console.log(response.data)
-                console.log(new Blob([response.data]))
-                var fileURL = window.URL.createObjectURL(new Blob([response.data]));
 
-                var fileLink = document.createElement('a');
-
-                fileLink.href = fileURL;
-
-                fileLink.setAttribute('download', 'file.htm');
-
-                document.body.appendChild(fileLink);
-
-                fileLink.click();
-            });
-        },
         addBug() {
             this.errors = [];
             this.success = [];

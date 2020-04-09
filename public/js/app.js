@@ -1927,8 +1927,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['useradmin'],
   data: function data() {
@@ -1963,22 +1961,6 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    download: function download() {
-      axios({
-        url: 'historico-myfx',
-        method: 'GET',
-        responseType: 'blob'
-      }).then(function (response) {
-        console.log(response.data);
-        console.log(new Blob([response.data]));
-        var fileURL = window.URL.createObjectURL(new Blob([response.data]));
-        var fileLink = document.createElement('a');
-        fileLink.href = fileURL;
-        fileLink.setAttribute('download', 'file.htm');
-        document.body.appendChild(fileLink);
-        fileLink.click();
-      });
-    },
     addBug: function addBug() {
       var _this2 = this;
 
@@ -85146,22 +85128,7 @@ var render = function() {
                           }
                         },
                         [_vm._v("\n                OK\n            ")]
-                      ),
-                  _vm._v(" "),
-                  _c(
-                    "b-button",
-                    {
-                      staticStyle: { width: "80px" },
-                      attrs: { size: "sm", variant: "danger" },
-                      on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          return _vm.download($event)
-                        }
-                      }
-                    },
-                    [_vm._v("\n                Download\n            ")]
-                  )
+                      )
                 ],
                 1
               )
@@ -87102,7 +87069,7 @@ var render = function() {
         _c("i", { staticClass: "material-icons md-18" }, [
           _vm._v("import_export")
         ]),
-        _vm._v("\n        Importar\n    ")
+        _vm._v("\r\n        Importar\r\n    ")
       ]
     )
   ])
