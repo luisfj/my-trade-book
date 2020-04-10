@@ -12,26 +12,26 @@ class PerfilInvestidorSeeder extends Seeder
      */
     public function run()
     {
-        PerfilInvestidor::create([
+        PerfilInvestidor::firstOrCreate([
             'nome'      => 'Day Trader (Scalper)',
             'descricao'     => 'Busco operações rápidas.'
         ]);
 
-        PerfilInvestidor::create([
+        PerfilInvestidor::firstOrCreate([
             'nome'      => 'Day Trader',
             'descricao'     => 'Realizo operações que iniciam e terminam no dia.'
         ]);
 
-        PerfilInvestidor::create([
+        PerfilInvestidor::firstOrCreate([
             'nome'      => 'Swing Trader',
             'descricao'     => 'Realizo operações que duram mais que um dia.'
         ]);
 
-        PerfilInvestidor::create([
+        PerfilInvestidor::firstOrCreate([
             'nome'      => 'Position Trader',
         ]);
 
-        PerfilInvestidor::create([
+        PerfilInvestidor::firstOrCreate([
             'nome'      => 'Buy and Hold',
         ]);
     }

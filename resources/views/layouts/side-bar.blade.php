@@ -60,13 +60,7 @@
                 <a href="#pageSuperAdminSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Extra Admin</a>
                 <ul class="collapse list-unstyled" id="pageSuperAdminSubmenu">
                     <li>
-                        <a href="{{ route('conta.fechamento.index') }}">Contas de Fechamento</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('fechamento.mes.show') }}">Fechamento Mês</a>
-                    </li>
-                    <li>
-                        <a href="#">Page 3</a>
+                        <a href="{{ route('admin.index.migration') }}">MIGRATIONS</a>
                     </li>
                 </ul>
             </li>

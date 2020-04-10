@@ -17,12 +17,26 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/cache-clear/clear-cache', function() {
+    $exitCode = Artisan::call('config:clear');
+    $exitCode = Artisan::call('cache:clear');
+    $exitCode = Artisan::call('config:cache');
+    $exitCode = Artisan::call('view:clear');
+    return 'DONE'; //Return anything
+});
+
 Auth::routes();
 
 
 Route::middleware('super.admin')->prefix('sa')->group(function () {
     Route::post('userUpdateRole', 'Admin\UsersController@updateRole')->name('users.update.role');
     Route::post('userLoginOther', 'Admin\UsersController@loginComOutroUsuario')->name('users.login.other');
+
+    Route::get('adm-migration', function () { return view('modulos.adminsuper.rodarMigrations');})->name('admin.index.migration');
+
+    Route::get('adm-rodar-migration', 'Admin\UsersController@rodarMigrations')->name('admin.rodar.migration');
+    Route::get('adm-rollback-migration', 'Admin\UsersController@rollbackMigrations')->name('admin.rollback.migration');
+    Route::get('adm-seeds-migration', 'Admin\UsersController@seedsMigrations')->name('admin.seeds.migration');
 
     //Route::get(     'fechamentos-mes',           'BalancoMensal\FechamentoMesController@index')   ->name('fechamento.mes.index');
     //Route::get(     'fechamento-mes-edit/{id}', 'BalancoMensal\FechamentoMesController@edit')    ->name('fechamento.mes.edit');
