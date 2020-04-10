@@ -220,7 +220,7 @@
                     arquivo:        fileName,
                     primeiraData : buscarPrimeiraData(closedTradesMt5),
                     ultimaData : buscarUltimaData(closedTradesMt5),
-                    numeroOperacoes: $.merge(openTradesMt5, closedTradesMt5).length,
+                    numeroOperacoes: (openTradesMt5.length + closedTradesMt5.length),
                     numeroTransferencias: getTransferenciasSelecionadasMt5().length,
                     valorOperacoes: calcularTotalResultado(closedTradesMt5),
                     valorTransferencias: calcularTotalValor(getTransferenciasSelecionadasMt5())
@@ -267,6 +267,7 @@
     });
 
     function validarDadosNoSistemaMt5() {
+
         let head =
                 {
                     conta_id :      getContaSelecionada().id,
@@ -289,10 +290,13 @@
                 });
                 $('#tableTransferenciasMt5').bootstrapTable('expandAllRows');
 
-                let opers = $.merge(data.tradesAbertos, data.tradesFechados);
+                let opers = [];
 
                 openTradesMt5 = data.tradesAbertos ?? [];
                 closedTradesMt5 = data.tradesFechados ?? [];
+
+                 $.merge(opers, data.tradesAbertos);
+                 $.merge(opers, data.tradesFechados);
 
                 $('#tableOperacoesMt5').bootstrapTable('refreshOptions', {
                     data: opers
@@ -517,13 +521,13 @@
                         val_entrada, val_fechamento, val_saida, val_comissao, null, val_swap, val_resultado);
                     closedTrades.push(trade);
                 }
-            } else if(posicao == 'Posições Abertas'){//operações abertas
+            }/* else if(posicao == 'Posições Abertas'){//operações abertas
                 if(val_tipo == 'buy' || val_tipo == 'sell'){
                     var trade = createOperacao(val_tipo, val_ticket, val_abertura, val_contratos_aber, val_instrumento,
                         val_contratos, null, null, null, null, null, null);
                     openTrades.push(trade);
                 }
-            }
+            }*/
         });
         return corretora;
     };

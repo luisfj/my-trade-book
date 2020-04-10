@@ -298,8 +298,8 @@
         this.comissao = textToFloat(comissao);
         this.impostos = textToFloat(impostos);
         this.swap = textToFloat(swap);
-        this.resultado_bruto = (textToFloat(resultado) + textToFloat(swap) + textToFloat(impostos) + textToFloat(comissao)).toFixed(2);
-        this.resultado = textToFloat(resultado);
+        this.resultado = (textToFloat(resultado) + textToFloat(swap) + textToFloat(impostos) + textToFloat(comissao)).toFixed(2);
+        this.resultado_bruto = textToFloat(resultado);
         this.pontos = 0;
         this.tempo_operacao_dias = 0;
         this.tempo_operacao_horas = 0;

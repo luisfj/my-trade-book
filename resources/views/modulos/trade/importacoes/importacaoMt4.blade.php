@@ -220,7 +220,7 @@
                     arquivo:        fileName,
                     primeiraData : buscarPrimeiraData(closedTradesMt4),
                     ultimaData : buscarUltimaData(closedTradesMt4),
-                    numeroOperacoes: $.merge(openTradesMt4, closedTradesMt4).length,
+                    numeroOperacoes: (openTradesMt4.length + closedTradesMt4.length),
                     numeroTransferencias: getTransferenciasSelecionadasMt4().length,
                     valorOperacoes: calcularTotalResultado(closedTradesMt4),
                     valorTransferencias: calcularTotalValor(getTransferenciasSelecionadasMt4())
@@ -289,10 +289,13 @@
                 });
                 $('#tableTransferencias').bootstrapTable('expandAllRows');
 
-                let opers = $.merge(data.tradesAbertos, data.tradesFechados);
+                let opers = [];
 
                 openTradesMt4 = data.tradesAbertos ?? [];
                 closedTradesMt4 = data.tradesFechados ?? [];
+
+                 $.merge(opers, data.tradesAbertos);
+                 $.merge(opers, data.tradesFechados);
 
                 $('#tableOperacoes').bootstrapTable('refreshOptions', {
                     data: opers
@@ -392,13 +395,13 @@
                                         val_entrada, val_fechamento, val_saida, val_comissao, val_impostos, val_swap, val_resultado);
                         closedTrades.push(trade);
                     }
-            } else if(posicao == 'OPEN'){//operações abertas
+            }/* else if(posicao == 'OPEN'){//operações abertas
                 if(val_tipo == 'sell' || val_tipo == 'buy'){
                     var trade = createOperacao(val_tipo, val_ticket, val_abertura, val_contratos, val_instrumento,
                                     val_entrada, val_fechamento, val_saida, val_comissao, val_impostos, val_swap, val_resultado);
                     openTrades.push(trade);
                 }
-            }
+            }*/
         });
         return corretora;
     };
