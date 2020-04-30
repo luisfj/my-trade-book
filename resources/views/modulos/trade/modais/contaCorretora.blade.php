@@ -136,8 +136,6 @@
                 erros += '<li>Moeda deve ser informada</li>';
             if(!$(formulario[0].tipo).val())
                 erros += '<li>Tipo deve ser informado</li>';
-            if(!$(formulario[0].saldo).val())
-                erros += '<li>Saldo inicial deve ser informado</li>';
             if(!$(formulario[0].corretora_id).val())
                 erros += '<li>Corretora deve ser informada</li>';
             if($(formulario[0].corretora_id).val() && $(formulario[0].corretora_id).val() == -1 && !$(formulario[0].corretora_nm).val())

@@ -2,7 +2,14 @@
 
 @section('content')
     <div class="row">
-        <div class="col-lg-9 col-md-9 col-sm-12"><h1>Listagem das Contas em Corretoras</h1></div>
+        <div class="col-lg-9 col-md-9 col-sm-12">
+            <h1>
+                <span class="material-icons text-warning icon-v-bottom" style="font-size: 50px !important;">
+                    account_balance_wallet
+                </span>
+                <span>Contas em Corretoras</span>
+            </h1>
+        </div>
         <div class="col-lg-2 offset-lg-1 col-md-2 offset-md-1 col-sm-12" style="width:100px !important;">
             <a class="btn btn-success form-control" href="#" data-url-moeda-list="{{route('moeda.selectBoxList')}}"
                 data-url-corretoras-list="{{route('corretora.selectBoxList')}}" data-toggle="modal" data-target="#addModal">
@@ -20,14 +27,14 @@
             <th scope="col"></th>
             <th scope="col">Tipo Conta</th>
             <th scope="col">Corretora</th>
-            <th scope="col">Abertura</th>
-            <th scope="col">Status</th>
+            <th class="text-center" scope="col">Abertura</th>
+            <th class="text-center" scope="col">Status</th>
             <th scope="col">Tipo Corretora</th>
             <th scope="col">Moeda</th>
-            <th scope="col">Depositos</th>
-            <th scope="col">Saques</th>
-            <th scope="col">Saldo</th>
-            <th scope="col">Ações</th>
+            <th class="text-right" scope="col">Depositos</th>
+            <th class="text-right" scope="col">Saques</th>
+            <th class="text-right" scope="col">Saldo</th>
+            <th class="text-right" scope="col">Ações</th>
           </tr>
         </thead>
         <tbody>
@@ -40,16 +47,16 @@
                             {{ $conta->real_demo ? $conta->real_demo == 'D' ? 'Demo' : 'Real' : '' }}
                         </label></td>
                         <td>{{ $conta->corretora ? $conta->corretora->nome : '' }}</td>
-                        <td>{{ $conta->dtabertura }}</td>
-                        <td class='{{ $conta->ativa ? 'text-info' : 'text-warning'}}'>{{ $conta->ativa ? 'Ativa' : 'Inativa' }}</td>
+                        <td class="text-center">{{ $conta->dtabertura_formatado }}</td>
+                        <td class='{{ $conta->ativa ? 'text-info' : 'text-warning'}} text-center'>{{ $conta->ativa ? 'Ativa' : 'Inativa' }}</td>
                         <td>{{ $conta->tipo == 'C' ? 'Nacional' : 'Internacional' }}</td>
                         <td>{{ $conta->moeda ? $conta->moeda->full_name : '' }}</td>
-                        <td class="text-success">{{ $conta->entradas_formatado }}</td>
-                        <td class="text-warning">{{ $conta->saidas_formatado }}</td>
-                        <td class="{{ ($conta->saldo > 0) ? 'text-success' : (($conta->saldo < 0) ? 'text-warning' : '') }}">
+                        <td class="text-success text-right">{{ $conta->entradas_formatado }}</td>
+                        <td class="text-warning text-right">{{ $conta->saidas_formatado }}</td>
+                        <td class="{{ ($conta->saldo > 0) ? 'text-success' : (($conta->saldo < 0) ? 'text-warning' : '') }} text-right">
                             {{ $conta->saldo_formatado }}
                         </td>
-                        <td>
+                        <td class="text-right">
                             <a href="#" data-toggle="modal"  data-target="#editModal"
                                 data-url-edit="{{route("conta.corretora.edit", $conta->id)}}">
                                 <i class="material-icons text-info md-18">edit</i>

@@ -2,7 +2,14 @@
 
 @section('content')
     <div class="row">
-        <div class="col-lg-9 col-md-9 col-sm-12"><h1>Listagem das Importações</h1></div>
+        <div class="col-lg-9 col-md-9 col-sm-12">
+            <h1>
+                <span class="material-icons text-info icon-v-bottom" style="font-size: 50px !important;">
+                    low_priority
+                </span>
+                <span>Registros de Importações</span>
+            </h1>
+        </div>
     </div>
 
     <hr class="bg-warning">

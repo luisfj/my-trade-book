@@ -17,6 +17,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/termos', function () {
+    return view('termos');
+});
+
+Route::get('/google', 'Auth\LoginController@redirectToGoogleProvider')->name('login.google');
+Route::get('/callback-google', 'Auth\LoginController@handleGoogleProviderCallback');
+Route::get('/facebook', 'Auth\LoginController@redirectToFacebookProvider')->name('login.facebook');
+Route::get('/callback-facebook', 'Auth\LoginController@handleFacebookProviderCallback');
+
 Route::get('/cache-clear/clear-cache', function() {
     $exitCode = Artisan::call('config:clear');
     $exitCode = Artisan::call('cache:clear');
@@ -99,6 +108,8 @@ Route::middleware('admin')->prefix('ad')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get( '/home',        'HomeController@index')                         ->name('home');
+    Route::get( 'ajude-a-manter-essa-ideia-viva', 'HomeController@doacoes')     ->name('doacoes');
+    Route::get( 'contato',                        'HomeController@contato')     ->name('contato');
     Route::post('comment',      'Posts\CommentController@store')                ->name('comment.store');
     Route::get( 'profile',      'Configuracoes\ProfileController@index')        ->name('profile.index');
     Route::put( 'profile',      'Configuracoes\ProfileController@update')       ->name('profile.update');

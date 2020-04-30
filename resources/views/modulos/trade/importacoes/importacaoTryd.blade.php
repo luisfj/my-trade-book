@@ -6,7 +6,7 @@
 <div class="row" id="infoImpTryd">
     <div class="col-sm-5 col-md-5 col-lg-7">
         <div id="spinnerImpTryd" class="hidde-me spinner-border text-success"></div>
-        <input type="file" id="fileImpTryd" class="form-control-sm">
+        <input type="file" id="fileImpTryd" class="form-control-sm" accept=".csv">
         <button type="button" class="btn btn-sm btn-warning hidde-me" id="btnSalvarArquivoTryd"><i class="material-icons md-18">save</i> Salvar Dados Carregados</button>
     </div>
     <div class="col-sm-1 col-md-1 col-lg-1">
@@ -152,7 +152,7 @@
                     valorTransferencias: 0
                 }
 
-        $.post('/operacoes/importar', {dados: JSON.stringify(head)}, function(data) { console.log(data);
+        $.post('/operacoes/importar', {dados: JSON.stringify(head)}, function(data) {
                 if(data.error){
                     $('#spinnerImpSaveTryd').addClass('hidde-me');
                     $('#resImportTryd').removeClass('hidde-me');
@@ -370,28 +370,6 @@
         });
         return true;
     };
-
-    function converteCompraVendaEmBuySell(compraVenda) {
-        if(!compraVenda)
-            return null;
-        if(compraVenda.toLowerCase().includes('c')){
-            return 'buy';
-        }
-        if(compraVenda.toLowerCase().includes('v')){
-            return 'sell';
-        }
-        return null;
-    }
-    function converteAtivoEmSerieHistorica(instrumento) {
-        if(instrumento){
-            if(instrumento.toLowerCase().includes('wdo')){
-                return 'WDOFUT';
-            } else
-            if(instrumento.toLowerCase().includes('win'))
-                return 'WINFUT';
-        }
-        return instrumento;
-    }
 
     function dataComSegundosColumnTrydFormatter(data, row) {
         return formatarDataHoraSegundos(data);

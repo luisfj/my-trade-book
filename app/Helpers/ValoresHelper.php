@@ -35,4 +35,10 @@ class ValoresHelper
             return '';
         return str_replace('.', ',', $valor);
     }
+
+    static function converterValorParaMoeda($valor, $moeda){
+        $formato = ($moeda && $moeda->sigla ? $moeda->sigla : 'BRL');
+        $fmt = new \NumberFormatter( 'pt_BR', \NumberFormatter::CURRENCY );
+        return $fmt->formatCurrency($valor, $formato);
+    }
 }

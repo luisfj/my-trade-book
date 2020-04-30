@@ -45,12 +45,6 @@
     </div>
     <div class="col-sm-6 col-md-6 col-lg-6">
         <div class="form-group">
-            {!! Form::label('saldo', 'Saldo Inicial') !!}
-            {!! Form::text('saldo', null, ['placeholder' => 'Saldo', 'class' => 'form-control decimal-mask']) !!}
-        </div>
-    </div>
-    <div class="col-sm-6 col-md-6 col-lg-6">
-        <div class="form-group">
             {!! Form::label('corretora_id', 'Corretora') !!}
             <select class="custom-select" id="corretora_id" name="corretora_id">
                 <option selected="selected" value="">-- Selecione um Corretora --</option>

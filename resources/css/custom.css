@@ -115,6 +115,24 @@ g text {
 .marb-25 {
     margin-bottom: 25px !important;
 }
+.marr-0 {
+    margin-right: 0px !important;
+}
+.marr-5 {
+    margin-right: 5px !important;
+}
+.marr-10 {
+    margin-right: 10px !important;
+}
+.marr-15 {
+    margin-right: 15px !important;
+}
+.marr-20 {
+    margin-right: 20px !important;
+}
+.marr-25 {
+    margin-right: 25px !important;
+}
 .mar-0 {
     margin: 0px !important;
 }
@@ -163,6 +181,9 @@ g text {
 .padlr-15 {
     padding-left: 15px !important;
     padding-right: 15px !important;
+}
+.noBorder {
+    border: none !important;
 }
 .noPadding {
     padding: 0px 0px 0px 0px !important;
@@ -261,6 +282,12 @@ g text {
 }
 .pontilhado {
     border-bottom: 1px dotted #626060;
+}
+.icon-v-bottom {
+    vertical-align: text-bottom;
+}
+.icon-v-top {
+    vertical-align: text-top;
 }
 /*Fim CSS de classes uteis*/
 

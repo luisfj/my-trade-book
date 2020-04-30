@@ -9,14 +9,39 @@
             </button>
 
         </div>
-    <a id="brand-app-name" class="navbar-brand text-danger {{ Auth::check() ? 'hidde-me' : '' }}" href="{{ url('/') }}">
+        <a id="brand-app-name" class="navbar-brand text-danger" href="{{ route('home') }}">
             {{ config('app.name', 'Laravel') }}
         </a>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
-
+                @if(Auth::check())
+                <a class="btn btn-active marr-10 noBorder" href="{{ route('home')}}" style="min-width: 150px;">
+                    <span class="material-icons fs18 text-success icon-v-bottom">
+                        pie_chart
+                    </span>
+                    ESTATÍSTICAS
+                </a>
+                <a class="btn btn-active marr-10 noBorder" href="{{ route('operacao.importar')}}" style="min-width: 150px;">
+                    <span class="material-icons fs18 text-success icon-v-bottom">
+                        save_alt
+                    </span>
+                    Importar
+                </a>
+                <a class="btn btn-active marr-10 noBorder" href="{{ route('conta.corretora.index')}}" style="min-width: 150px;">
+                    <span class="material-icons fs18 text-warning icon-v-bottom">
+                        account_balance_wallet
+                    </span>
+                    Contas
+                </a>
+                <a class="btn btn-active noBorder" href="{{ route('transacoes.index')}}">
+                    <span class="material-icons fs18 text-success icon-v-bottom">
+                        attach_money
+                    </span>
+                    Depósitos e Saques
+                </a>
+                @endif
             </ul>
 
             <!-- Right Side Of Navbar -->
@@ -24,14 +49,20 @@
                 <!-- Authentication Links -->
                 @guest
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                        <a class="nav-link" href="{{ route('login') }}">Login</a>
                     </li>
                     @if (Route::has('register'))
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                            <a class="nav-link" href="{{ route('register') }}">Registrar</a>
                         </li>
                     @endif
                 @else
+                <a class="btn btn-active noBorder text-success" style="padding-top: 15px;" href="{{ route('doacoes')}}">
+                    <span class="material-icons fs18 icon-v-bottom">
+                        favorite
+                    </span>
+                    Ajude a manter essa idéia viva
+                </a>
                     <notifications :urlpanel='{!! json_encode(route('notifications.panel')) !!}'></notifications>
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

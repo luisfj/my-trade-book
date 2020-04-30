@@ -87,7 +87,7 @@ class OperacoesService
                 ->where('conta_corretora_id', $contaCorretora)
                 ->selectRaw('COUNT(id) as nrOperacoes, count(IF(resultado >= 0, 1, NULL)) as nrGains,
                         SUM(IF(resultado >= 0, resultado, 0)) as totalGainsValor, SUM(IF(resultado < 0, resultado, 0)) as totalLossesValor,
-                        sum(pips) as totalPontos,
+                        sum( (pips * REPLACE(CAST(lotes AS CHAR), ".", "") ) ) as totalPontos,
                         AVG(IF(pips >= 0, pips, NULL)) as mediaGainPontos, AVG(IF(resultado >= 0, resultado, NULL)) as mediaGainValor,
                         AVG(IF(pips < 0, pips, NULL)) as mediaLossPontos, AVG(IF(resultado < 0, resultado, NULL)) as mediaLossValor,
                         SUM(comissao + impostos + swap) as comissoesImpostos,
@@ -105,7 +105,7 @@ class OperacoesService
                 ->selectRaw('instrumento_id, COUNT(id) as nrOperacoes,
                         count(IF(resultado >= 0, 1, NULL)) as nrGains,
                         count(IF(resultado < 0, 1, NULL)) as nrLosses,
-                        sum(pips) as totalPontos,
+                        sum( (pips * REPLACE(CAST(lotes AS CHAR), ".", "") ) ) as totalPontos,
                         sum(resultado) as totalValor')->get();
     }
 

@@ -6,7 +6,7 @@
 <div class="row" id="infoImpMt4">
     <div class="col-sm-5 col-md-5 col-lg-7">
         <div id="spinnerImpMt4" class="hidde-me spinner-border text-success"></div>
-        <input type="file" id="fileImpMt4" class="form-control-sm">
+        <input type="file" id="fileImpMt4" class="form-control-sm" accept=".htm">
         <button type="button" class="btn btn-sm btn-warning hidde-me" id="btnSalvarArquivoMt4"><i class="material-icons md-18">save</i> Salvar Dados Carregados</button>
     </div>
     <div class="col-sm-1 col-md-1 col-lg-1">
@@ -226,7 +226,7 @@
                     valorTransferencias: calcularTotalValor(getTransferenciasSelecionadasMt4())
                 }
 
-        $.post('/operacoes/importar', {dados: JSON.stringify(head)}, function(data) {console.log(data);
+        $.post('/operacoes/importar', {dados: JSON.stringify(head)}, function(data) {
                 if(data.error){
                     $('#spinnerImpSaveMt4').addClass('hidde-me');
                     $('#resImportMt4').removeClass('hidde-me');

@@ -3,12 +3,35 @@
 namespace App\Models;
 
 use App\Helpers\ValoresHelper;
+use App\Helpers\DatasHelper;
 use Illuminate\Database\Eloquent\Model;
+
+use Cviebrock\EloquentSluggable\Sluggable;
 
 class ContaCorretora extends Model
 {
+    use Sluggable;
+
     protected $fillable = ['identificador','entradas','saidas','saldo','dtabertura','ativa','tipo','exibirnopainel','moeda_id','corretora_id', 'usuario_id',
-    'operacoes_abertas', 'operacoes_fechadas', 'padrao', 'real_demo'];
+            'operacoes_abertas', 'operacoes_fechadas', 'padrao', 'real_demo', 'slug'];
+
+    public function sluggable()
+    {
+        return [
+            'slug' => [
+                'source'    => 'identificador',
+                'maxLength' => 30,
+                'maxLengthKeepWords' => true,
+                'method'             => null,
+                'separator'          => '-',
+                'unique'             => true,
+                'uniqueSuffix'       => null,
+                'includeTrashed'     => false,
+                'reserved'           => null,
+                'onUpdate'           => false,
+            ]
+        ];
+    }
 
     public function moeda(){
         return $this->belongsTo(Moeda::class, 'moeda_id');
@@ -31,18 +54,23 @@ class ContaCorretora extends Model
         return $this->identificador . ($this->corretora ? ' (' . $this->corretora->nome . ')' : '');
     }
 
+    public function getDtaberturaFormatadoAttribute(){
+        $dep = DatasHelper::formatarDataSemHoras($this->dtabertura);
+        return $dep;
+    }
+
     public function getEntradasFormatadoAttribute(){
-        $dep = ValoresHelper::converterValorParaPadrao($this->entradas);
+        $dep = ValoresHelper::converterValorParaMoeda($this->entradas, $this->moeda);
         return $dep;
     }
 
     public function getSaidasFormatadoAttribute(){
-        $dep = ValoresHelper::converterValorParaPadrao($this->saidas);
+        $dep = ValoresHelper::converterValorParaMoeda($this->saidas, $this->moeda);
         return $dep;
     }
 
     public function getSaldoFormatadoAttribute(){
-        $dep = ValoresHelper::converterValorParaPadrao($this->saldo);
+        $dep = ValoresHelper::converterValorParaMoeda($this->saldo, $this->moeda);
         return $dep;
     }
 

@@ -2,7 +2,14 @@
 
 @section('content')
     <div class="row">
-        <div class="col-lg-9 col-md-9 col-sm-12"><h1>Listagem das Transações em Conta</h1></div>
+        <div class="col-lg-9 col-md-9 col-sm-12">
+            <h1>
+                <span class="material-icons text-success icon-v-bottom" style="font-size: 50px !important;">
+                    attach_money
+                </span>
+                <span>Depósitos e Saques</span>
+            </h1>
+        </div>
         <div class="col-lg-2 offset-lg-1 col-md-2 offset-md-1 col-sm-12" style="width:100px !important;">
             <a class="btn btn-success form-control" href="#"
                 data-conta_id="{{$conta_id}}" data-toggle="modal" data-target="#addModal">

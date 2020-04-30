@@ -6,7 +6,7 @@
 <div class="row" id="infoImpMt5">
     <div class="col-sm-5 col-md-5 col-lg-7">
         <div id="spinnerImpMt5" class="hidde-me spinner-border text-success"></div>
-        <input type="file" id="fileImpMt5" class="form-control-sm">
+        <input type="file" id="fileImpMt5" class="form-control-sm" accept=".html">
         <button type="button" class="btn btn-sm btn-warning hidde-me" id="btnSalvarArquivoMt5"><i class="material-icons md-18">save</i> Salvar Dados Carregados</button>
     </div>
     <div class="col-sm-1 col-md-1 col-lg-1">
@@ -78,28 +78,28 @@
 
         <div class="tab-pane fade" id="nav-import-Mt5-transferencias" role="tabpanel" aria-labelledby="nav-import-Mt5-transferencias-tab">
             <table id="tableTransferenciasMt5"
-            data-classes="table table-hover"
-            data-toggle="bootstrap-table"
-            data-detail-view="true"
-            data-detail-formatter="detalheTradeSimilarMt5Formatter"
-            data-detail-filter="detalheTradeSimilarMt5Filter"
-            data-show-footer="true"
-            data-checkbox-header="true"
-            data-click-to-select="false"
-            data-row-style="rowStyleMt5"
-            data-search="true">
-            <thead>
-                <tr>
-                    <th data-field="state" data-checkbox="true"></th>
-                    <th data-field="tipo" data-formatter="tipoColumnMt5Formatter">Tipo</th>
-                    <th data-field="dataFormatada" data-halign="center" data-align="center">Data</th>
-                    <th data-field="ticket">Ticket</th>
-                    <th data-field="codigo">Código</th>
-                    <th data-field="valor" data-formatter="valorColumnMt5Formatter" data-footer-formatter="valorTotalMt5Formatter"
-                        data-halign="right" data-align="right">Valor</th>
-                </tr>
-              </thead>
-        </table>
+                data-classes="table table-hover"
+                data-toggle="bootstrap-table"
+                data-detail-view="true"
+                data-detail-formatter="detalheTradeSimilarMt5Formatter"
+                data-detail-filter="detalheTradeSimilarMt5Filter"
+                data-show-footer="true"
+                data-checkbox-header="true"
+                data-click-to-select="false"
+                data-row-style="rowStyleMt5"
+                data-search="true">
+                <thead>
+                    <tr>
+                        <th data-field="state" data-checkbox="true"></th>
+                        <th data-field="tipo" data-formatter="tipoColumnMt5Formatter">Tipo</th>
+                        <th data-field="dataFormatada" data-halign="center" data-align="center">Data</th>
+                        <th data-field="ticket">Ticket</th>
+                        <th data-field="codigo">Código</th>
+                        <th data-field="valor" data-formatter="valorColumnMt5Formatter" data-footer-formatter="valorTotalMt5Formatter"
+                            data-halign="right" data-align="right">Valor</th>
+                    </tr>
+                </thead>
+            </table>
         </div>
     </div>
 </div>

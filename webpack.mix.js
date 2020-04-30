@@ -30,4 +30,5 @@ mix.js([
         'resources/css/custom.css'
     ], 'public/css/all.css')
     .copyDirectory('resources/img', 'public/img')
-    .copyDirectory('resources/customjs/base', 'public/js');
+    .copyDirectory('resources/customjs/base', 'public/js')
+    .copyDirectory('resources/css/base', 'public/css');

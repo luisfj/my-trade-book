@@ -5,10 +5,13 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Notifications\ResetPassword;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 class User extends Authenticatable
 {
     use Notifiable;
+    use Sluggable;
 
     /**
      * The attributes that are mass assignable.
@@ -16,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'profile_id'
+        'name', 'email', 'password', 'profile_id', 'slug'
     ];
 
     /**
@@ -25,7 +28,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'role', 'remember_token',
+        'password', 'role', 'remember_token', 'token_facebook',
     ];
 
     /**
@@ -36,6 +39,24 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function sluggable()
+    {
+        return [
+            'slug' => [
+                'source'    => 'name',
+                'maxLength' => 30,
+                'maxLengthKeepWords' => true,
+                'method'             => null,
+                'separator'          => '-',
+                'unique'             => true,
+                'uniqueSuffix'       => null,
+                'includeTrashed'     => false,
+                'reserved'           => null,
+                'onUpdate'           => false,
+            ]
+        ];
+    }
 
     public function profile(){
         return $this->belongsTo(Profile::class);
@@ -72,4 +93,10 @@ class User extends Authenticatable
     public function is_admin(){
         return $this->role == 'super_admin' || $this->role == 'admin';
     }
+
+    public function sendPasswordResetNotification($token)
+{
+    // Não esquece: use App\Notifications\ResetPassword;
+    $this->notify(new ResetPassword($token));
+}
 }

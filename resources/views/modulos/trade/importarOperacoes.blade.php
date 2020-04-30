@@ -1,7 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1 class="text-active">Importar Operações</h1>
+    <h1 class="text-active"><h1>
+        <span class="material-icons text-success icon-v-bottom" style="font-size: 50px !important;">
+            save_alt
+        </span>
+        <span>Importar Operações</span>
+    </h1>
     <hr class="bg-warning">
     <!--<importacao-de-arquivo></importacao-de-arquivo>-->
 
@@ -56,6 +61,14 @@
                     <img src="{{ asset('img/tryd.png') }}" alt="..." class="img-fluid rounded" width="100px">
                 </a>
             </li>
+            @if(Auth::check() && Auth::User()->is_admin())
+                <li class="nav-item">
+                    <a class="nav-link" id="nav-imp-myFx-lnk" data-toggle="tab" href="#nav-imp-myFx" role="tab"
+                        aria-controls="nav-imp-myFx" aria-selected="false">
+                        MyFxBook
+                    </a>
+                </li>
+            @endif
             <li class="nav-item hidde-me">
                 <a class="nav-link" id="nav-imp-default-lnk" data-toggle="tab" href="#nav-imp-default" role="tab"
                     aria-controls="nav-imp-default" aria-selected="false">
@@ -131,11 +144,11 @@
             </div>
 
             <div class="tab-pane fade" id="nav-imp-ctrader" role="tabpanel" aria-labelledby="nav-imp-ctrader-tab">
-                Em breve importação de arquivos do CTRADER
+                @include('modulos.trade.importacoes.importacaoCTrader')
             </div>
 
             <div class="tab-pane fade" id="nav-imp-ninja" role="tabpanel" aria-labelledby="nav-imp-ninja-tab">
-                Em breve importação de arquivos do NINJA
+                @include('modulos.trade.importacoes.importacaoNinja')
             </div>
 
             <div class="tab-pane fade" id="nav-imp-profit" role="tabpanel" aria-labelledby="nav-imp-profit-tab">
@@ -145,6 +158,11 @@
             <div class="tab-pane fade" id="nav-imp-tryd" role="tabpanel" aria-labelledby="nav-imp-tryd-tab">
                 @include('modulos.trade.importacoes.importacaoTryd')
             </div>
+            @if(Auth::check() && Auth::User()->is_admin())
+                <div class="tab-pane fade" id="nav-imp-myFx" role="tabpanel" aria-labelledby="nav-imp-myFx-tab">
+                    @include('modulos.trade.importacoes.importacaoMyFxBook')
+                </div>
+            @endif
 
         </div>
     </div>
@@ -248,20 +266,20 @@
         reader.onload = e => {
             callbackText(e.target.result);
         }
-
+        //reader.readAsBinaryString(file);
         reader.readAsText(file);
     }
 
-    function createTransferencia(val_ticket, val_abertura, val_contratos, val_instrumento, tipo = null) {
-        var trans = new Transferencia(val_ticket, val_abertura, val_contratos, val_instrumento, tipo);
+    function createTransferencia(val_ticket, val_abertura, val_codigo, val_valor, tipo = null) {
+        var trans = new Transferencia(val_ticket, val_abertura, val_codigo, val_valor, tipo);
         //{   //(ticket, data, codigo, valor, tipo = null)
 
         //}
         return trans;
     }
 
-    function createOperacao(tipo, ticket, abertura, contratos, instrumento, preco_entrada, fechamento, preco_saida, comissao, impostos, swap, resultado, val_mep = null, val_men = null) {
-        var operacao = new Operacao(tipo, ticket, abertura, contratos, instrumento, preco_entrada, fechamento, preco_saida, comissao, impostos, swap, resultado, val_mep, val_men);
+    function createOperacao(tipo, ticket, abertura, contratos, instrumento, preco_entrada, fechamento, preco_saida, comissao, impostos, swap, resultado, val_mep = null, val_men = null, dividePontos = null) {
+        var operacao = new Operacao(tipo, ticket, abertura, contratos, instrumento, preco_entrada, fechamento, preco_saida, comissao, impostos, swap, resultado, val_mep, val_men, dividePontos);
 
         return operacao;
     }
@@ -275,16 +293,43 @@
             return ''+val;
     }
 
+    function converteCompraVendaEmBuySell(compraVenda) {
+        if(!compraVenda)
+            return null;
+        if(compraVenda.toLowerCase().includes('c')){
+            return 'buy';
+        }
+        if(compraVenda.toLowerCase().includes('v')){
+            return 'sell';
+        }
+        return null;
+    }
+
+    function converteAtivoEmSerieHistorica(instrumento) {
+        if(instrumento){
+            if(instrumento.toLowerCase().includes('wdo')){
+                return 'WDOFUT';
+            } else
+            if(instrumento.toLowerCase().includes('win')){
+                return 'WINFUT';
+            } else
+            if(instrumento.toLowerCase().includes('es ')){
+                return 'S&P';
+            }
+        }
+        return instrumento;
+    }
+
     function Transferencia(ticket, data, codigo, valor, tipo = null) {
             this.tipo = tipo == null ? ((valor * 1) > 0 ? 'D' : 'S' ) : tipo;
             this.ticket = ticket;
-            this.data = data;
+            this.data = formatarDataParaSalvar(data);
             this.codigo = codigo;
             this.valor = valor;
             this.dataFormatada = formatarDataHora(this.data);
     }
 
-    function Operacao(tipo, ticket, abertura, contratos, instrumento, preco_entrada, fechamento, preco_saida, comissao, impostos, swap, resultado, val_mep, val_men) {
+    function Operacao(tipo, ticket, abertura, contratos, instrumento, preco_entrada, fechamento, preco_saida, comissao, impostos, swap, resultado, val_mep, val_men, dividePontos) {
         this.tipo = tipo;
         this.ticket = ticket;
         this.abertura = formatarDataParaSalvar(abertura);
@@ -305,10 +350,10 @@
         this.tempo_operacao_horas = 0;
         this.mep = val_mep;
         this.men = val_men;
-        this.calcularValores();
+        this.calcularValores(dividePontos);
     }
 
-    Operacao.prototype.calcularValores = function () {
+    Operacao.prototype.calcularValores = function (dividePontos) {
         if (this.fechamento) {
             if (this.tipo == 'sell') {
                 if((this.instrumento.toLowerCase() == 'winfut' || this.instrumento.toLowerCase() == 'wdofut')){
@@ -321,9 +366,11 @@
                 if((this.instrumento.toLowerCase() == 'winfut' || this.instrumento.toLowerCase() == 'wdofut')){
                     this.pontos = (this.preco_saida - this.preco_entrada);
                 } else {
-                    this.pontos = parseInt(this.preco_entrada_str.replace(/\./gi,'').replace(/\,/gi,'.')) - parseInt(this.preco_saida_str.replace(/\./gi,'').replace(/\,/gi,'.'));
+                    this.pontos = parseInt(this.preco_saida_str.replace(/\./gi,'').replace(/\,/gi,'.')) - parseInt(this.preco_entrada_str.replace(/\./gi,'').replace(/\,/gi,'.'));
                 }
             }
+            if(dividePontos)
+                this.pontos = this.pontos / dividePontos;
 
             if( (this.pontos+'').includes('\.') ){
                 let pts = this.pontos.toFixed(2);

@@ -1,7 +1,16 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="pt-BR">
 <head>
-    <meta charset="utf-8">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-165016146-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-165016146-1');
+    </script>
+
+    <meta charset="UTF-8">
     <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- CSRF Token -->
@@ -19,23 +28,16 @@
     <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.css">
     <!-- Styles -->
 
-    <!-- Compiled and minified CSS
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">-->
-
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/all.css') }}" rel="stylesheet">
-    <!--<link rel="stylesheet" href="http://davidstutz.de/bootstrap-multiselect/dist/css/bootstrap-multiselect.css">-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-
-<!--<script src="http://demos.codexworld.com/multi-select-dropdown-list-with-checkbox-jquery/multiselect/jquery.multiselect.js"></script>
--->
 </head>
 <body>
     <div id="app" class="wrapper">
         @include('layouts.side-bar')
 
-        <div id="content" class="{{ Auth::check() ? '' : 'active' }}">
+        <div id="content">
 
             @include('layouts.top-bar')
             <div class="container">
@@ -58,15 +60,27 @@
         </div>
     </div>
 
+
      <!--Scripts -->
+     <script>
+         if (typeof(Storage) !== "undefined") {
+                // Save the state of the sidebar as "open"
+                if(localStorage.getItem("sidebar") == 'close' || $('#sidebar').hasClass('hidde-me')){
+                    $('#sidebar').addClass('active');
+                    $('#content').addClass('active');
+                    $('#brand-app-name').removeClass('hidde-me');
+                } else {
+                    $('#sidebar').removeClass('active');
+                    $('#content').removeClass('active');
+                    $('#brand-app-name').addClass('hidde-me');
+                }
+            }
+     </script>
     <script src="{{ asset('js/app.js') }}" ></script>
     <script src="{{ asset('js/Chart.min.js') }}"></script>
     <script src="{{ asset('js/jquery-dateformat.min.js') }}"></script>
     <script src="{{ asset('js/common.js') }}" ></script>
 
-    <!-- Compiled and minified JavaScript
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
--->
     @yield('page-script')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 
@@ -77,5 +91,6 @@
     <script>
         Popper.Defaults.modifiers.computeStyle.gpuAcceleration = !(window.devicePixelRatio < 1.5 && /Win/.test(navigator.platform));
      </script>
+
 </body>
 </html>
