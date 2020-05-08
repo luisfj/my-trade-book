@@ -253,6 +253,31 @@ class OperacoesService
                 ->get();
     }
 
+    public function getResultadoHoraDoDia($ativosSelecionado, $corretorasSelecionada, $dataInicial, $dataFinal)
+    {
+        return $this->repository
+                ->where('usuario_id', Auth::user()->id)
+                ->where(function ($query) use($ativosSelecionado, $corretorasSelecionada, $dataInicial, $dataFinal) {
+                    if($ativosSelecionado != null && count($ativosSelecionado) > 0){
+                        $query->whereIn('instrumento_id', $ativosSelecionado);
+                    }
+                    if($corretorasSelecionada != null && count($corretorasSelecionada) > 0){
+                        $query->whereIn('conta_corretora_id', $corretorasSelecionada);
+                    }
+                    if($dataInicial != null){
+                        $query->whereDate('abertura', '>=', $dataInicial);
+                    }
+                    if($dataFinal != null){
+                        $query->whereDate('abertura', '<=', $dataFinal);
+                    }
+                })
+                ->selectRaw('HOUR(abertura) as horaDoDia, COUNT(id) as nrOperacoes, COUNT(IF(resultado >= 0, 1, NULL)) as nrGains, COUNT(IF(resultado < 0, 1, NULL)) as nrLosses,
+                        SUM(IF(resultado >= 0, resultado, 0)) as totalGainsValor, SUM(IF(resultado < 0, resultado, 0)) as totalLossesValor')
+                ->orderBy('horaDoDia')
+                ->groupby('horaDoDia')
+                ->get();
+    }
+
     public function getByMesEAno($data, $ativosSelecionado, $corretorasSelecionada)
     {
         if(!$data)

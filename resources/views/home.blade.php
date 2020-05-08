@@ -50,6 +50,7 @@
 
         @include('modulos.dashboards.operacoes.resultadosDiasDaSemana')
         @include('modulos.dashboards.operacoes.resultadosPorSemanaDoMes')
+        @include('modulos.dashboards.operacoes.resultadosPorHoraDoDia')
 
     </div>
 

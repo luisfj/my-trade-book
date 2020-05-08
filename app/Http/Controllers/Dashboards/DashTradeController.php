@@ -118,6 +118,37 @@ class DashTradeController extends Controller
         }
     }
 
+    public function buscarDashResultadoPorHoraDoDia(Request $request)
+    {
+        $filtros = $request->all();
+        try {
+            $ativosSelecionado = null;
+            $corretorasSelecionada = null;
+            $dataInicial = null;
+            $dataFinal = null;
+
+            if (array_key_exists("ativoSelecionadoHDD", $filtros)) {
+                $ativosSelecionado = $filtros['ativoSelecionadoHDD'];
+            }
+            if (array_key_exists("corretoraSelecionadaHDD", $filtros)) {
+                $corretorasSelecionada = $filtros['corretoraSelecionadaHDD'];
+            }
+            if (array_key_exists("dataInicial", $filtros)) {
+                $dataInicial = $filtros['dataInicial'];
+            }
+            if (array_key_exists("dataFinal", $filtros)) {
+                $dataFinal = $filtros['dataFinal'];
+            }
+
+            $resultado = $this->service->getResultadoHoraDoDia($ativosSelecionado, $corretorasSelecionada, $dataInicial, $dataFinal);
+
+            return response()->json(compact(['resultado', 'filtros']));
+        } catch(\Throwable $th) {
+            $error = $th->getMessage();
+            return response()->json(compact(['th', 'error', 'filtros']));
+        }
+    }
+
     public function buscarDashEvolucaoAnualDoSaldo(Request $request)
     {
         $filtros = $request->all();

@@ -175,6 +175,7 @@ Route::middleware('auth')->group(function () {
     Route::post(   'dashEvolucaoMensalDoSaldo',     'Dashboards\DashTradeController@buscarDashEvolucaoMensalDoSaldo')->name('dash.evolucao.mensal.do.saldo');
     Route::post(   'dashResultadosPorDiaDaSemana',  'Dashboards\DashTradeController@buscarDashResultadoDiasDaSemana')->name('dash.dias.da.semana');
     Route::post(   'dashResultadosPorSemanaDoMes',  'Dashboards\DashTradeController@buscarDashResultadoPorSemanaDoMes')->name('dash.semana.do.mes');
+    Route::post(   'dashResultadosPorHoraDoDia',    'Dashboards\DashTradeController@buscarDashResultadoPorHoraDoDia')->name('dash.hora.do.dia');
 
     Route::post(   'dashHistoricoContaCorretora','Dashboards\DashResumosController@buscarHistoricoContaCorretora')->name('dash.historico.conta.corretora');
     Route::post(   'dashEstatisticasAvancadas'  ,'Dashboards\DashResumosController@buscarEstatisticasAvancadasContaCorretora')->name('dash.est.ava.conta.corretora');
