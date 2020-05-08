@@ -48,6 +48,9 @@
             </div>
         </div>
 
+        @include('modulos.dashboards.operacoes.resultadosDiasDaSemana')
+        @include('modulos.dashboards.operacoes.resultadosPorSemanaDoMes')
+
     </div>
 
 @endsection

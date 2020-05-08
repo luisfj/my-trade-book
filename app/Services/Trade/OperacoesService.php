@@ -202,7 +202,58 @@ class OperacoesService
                 ->select('conta_corretora_id')->distinct()->get();
     }
 
-    public function getByMesEAno($data)
+    public function getResultadoDiasDaSemana($ativosSelecionado, $corretorasSelecionada, $dataInicial, $dataFinal)
+    {
+        return $this->repository
+                ->where('usuario_id', Auth::user()->id)
+                ->where(function ($query) use($ativosSelecionado, $corretorasSelecionada, $dataInicial, $dataFinal) {
+                    if($ativosSelecionado != null && count($ativosSelecionado) > 0){
+                        $query->whereIn('instrumento_id', $ativosSelecionado);
+                    }
+                    if($corretorasSelecionada != null && count($corretorasSelecionada) > 0){
+                        $query->whereIn('conta_corretora_id', $corretorasSelecionada);
+                    }
+                    if($dataInicial != null){
+                        $query->whereDate('abertura', '>=', $dataInicial);
+                    }
+                    if($dataFinal != null){
+                        $query->whereDate('abertura', '<=', $dataFinal);
+                    }
+                })
+                ->selectRaw('dayname(abertura) as diaDaSemana,  WEEKDAY(abertura) as nrDiaSemana, COUNT(id) as nrOperacoes, COUNT(IF(resultado >= 0, 1, NULL)) as nrGains, COUNT(IF(resultado < 0, 1, NULL)) as nrLosses,
+                        SUM(IF(resultado >= 0, resultado, 0)) as totalGainsValor, SUM(IF(resultado < 0, resultado, 0)) as totalLossesValor')
+                ->orderBy('nrDiaSemana')
+                ->groupby('diaDaSemana', 'nrDiaSemana')
+                ->get();
+    }
+
+    public function getResultadoPorSemanaDoMes($ativosSelecionado, $corretorasSelecionada, $dataInicial, $dataFinal)
+    {
+        return $this->repository
+                ->where('usuario_id', Auth::user()->id)
+                ->where(function ($query) use($ativosSelecionado, $corretorasSelecionada, $dataInicial, $dataFinal) {
+                    if($ativosSelecionado != null && count($ativosSelecionado) > 0){
+                        $query->whereIn('instrumento_id', $ativosSelecionado);
+                    }
+                    if($corretorasSelecionada != null && count($corretorasSelecionada) > 0){
+                        $query->whereIn('conta_corretora_id', $corretorasSelecionada);
+                    }
+                    if($dataInicial != null){
+                        $query->whereDate('abertura', '>=', $dataInicial);
+                    }
+                    if($dataFinal != null){
+                        $query->whereDate('abertura', '<=', $dataFinal);
+                    }
+                })
+                ->selectRaw('(WEEK(abertura,5) - WEEK(DATE_SUB(abertura, INTERVAL DAYOFMONTH(abertura) - 1 DAY),5) + 1) as diaDaSemana,
+                        COUNT(id) as nrOperacoes, COUNT(IF(resultado >= 0, 1, NULL)) as nrGains, COUNT(IF(resultado < 0, 1, NULL)) as nrLosses,
+                        SUM(IF(resultado >= 0, resultado, 0)) as totalGainsValor, SUM(IF(resultado < 0, resultado, 0)) as totalLossesValor')
+                ->orderBy('diaDaSemana')
+                ->groupby('diaDaSemana')
+                ->get();
+    }
+
+    public function getByMesEAno($data, $ativosSelecionado, $corretorasSelecionada)
     {
         if(!$data)
             return null;
@@ -212,6 +263,16 @@ class OperacoesService
 
         return $this->repository->with('instrumento')->with('moeda')->with('contaCorretora.corretora')
                 ->where('usuario_id', Auth::user()->id)
+                ->where(function ($query) use($ativosSelecionado, $corretorasSelecionada) {
+                    if($ativosSelecionado != null && count($ativosSelecionado) > 0){
+                        $query->whereIn('instrumento_id', $ativosSelecionado);
+                    }
+                    if($corretorasSelecionada != null && count($corretorasSelecionada) > 0){
+                        $query->whereIn('conta_corretora_id', $corretorasSelecionada);
+                    } else {
+                        $query->where('conta_corretora_id', 0);
+                    }
+                })
                 ->whereYear('fechamento', '=', $dataArr[1])
                 ->whereMonth('fechamento', '=', $dataArr[0])
                 ->orderBy('fechamento')

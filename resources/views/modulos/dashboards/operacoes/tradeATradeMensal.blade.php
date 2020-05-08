@@ -30,7 +30,7 @@
                             <div class="input-group-prepend">
                                 <div class="input-group-text">Ativo</div>
                             </div>
-                            <select id="ativoSelecionado" name="ativoSelecionado" class="custom-select">
+                            <select id="ativoSelecionado" name="ativoSelecionado[]" style="display: none;" multiple>
                             </select>
                         </div>
                     </div>
@@ -80,6 +80,15 @@
                 choice_selected:'text-warning',
             }
         });
+
+        $('#ativoSelecionado').bsMultiSelect({
+            useCssPatch: true,
+            css: {
+                choices:'dropdown-menu',
+                choice_hover:'hover',
+                choice_selected:'text-warning',
+            }
+        });
     }
 
     var label = [];
@@ -91,25 +100,28 @@
     var atualizouMes = false;
 
     var url = $('#formFiltroMensal').attr('target'); //'http://localhost:8000/dashTradeATrade';
-    var urlMesesOperados = url.replace('dashTradeATrade', 'buscarMesesOperados');// 'http://localhost:8000/buscarMesesOperados';
 
-    $('#ativoSelecionado')
-                .find('option')
-                .remove()
-                .end();
-    $('#corretoraSelecionada')
-                .find('option')
-                .remove()
-                .end();
-    $('#mesSelecionado')
-                .find('option')
-                .remove()
-                .end();
+
 
 
 //buscar e atualizar a lista de meses operados
+    registrarQueroMesesOperados(atualizarMesesTAT);
 
-    $.get(urlMesesOperados, function(data){
+    function atualizarMesesTAT(data){
+
+        $('#ativoSelecionado')
+                .find('option')
+                .remove()
+                .end();
+        $('#corretoraSelecionada')
+                .find('option')
+                .remove()
+                .end();
+        $('#mesSelecionado')
+                .find('option')
+                .remove()
+                .end();
+
         var now = new Date();
         var mesHoje = now.getMonth();
         var anoHoje = now.getFullYear();
@@ -134,20 +146,20 @@
                     }));
         }
         $('#mesSelecionado').val(mesAnoHohe);
-        $('#iFiltroPeriodoTaT').html(converteMesNumParaString(mesHoje) + "-" + anoHoje);
         /* fim Meses Operados */
+
         /* inicio Ativos */
+        var atvSel = [];
         $.each(data.ativosOperados, function(indice, ativo){
+            atvSel[indice] = ativo.instrumento_id;
             $('#ativoSelecionado').append($('<option>', {
                         value: ativo.instrumento_id,
                         text : ativo.instrumento.sigla
                     }));
-            if(ativo.instrumento.sigla == 'XAUUSD'){
-                $('#ativoSelecionado').val(ativo.instrumento_id);
-                $('#iFiltroInstrumentosTaT').html(ativo.instrumento.sigla);
-            }
         });
+        $('#ativoSelecionado').val(atvSel);
         /* fim Ativos */
+
         /* inicio Corretoras */
         var selectionCorr = [];
         var selectionCorrStr = '';
@@ -159,14 +171,13 @@
                         text : conta.corretora.nome.substr(0, 5) + ' (' + conta.identificador + ')'
                     }));
         });
-        $('#corretoraSelecionada').val(selectionCorr);
-        $('#iFiltroCorretorasTaT').html(selectionCorrStr);
 
         atualizarListaMulti();
         /* fim Corretoras */
+        atualizarDescricaoFiltros();
 
-        atualizarDados();
-    });
+        //atualizarDados();
+    }
 
 //ao alterar um mes deve buscar os dados
     function alterouFiltro() {
@@ -211,10 +222,19 @@
 
         $('#iFiltroCorretorasTaT').html(corrSelDs);
 
-        var atvSel = $('#ativoSelecionado option:selected').text();
+        var atvSel = $('#ativoSelecionado').bsMultiSelect()[0].selectedOptions;
+        var atvSelDs = '';
+        if(atvSel.length == $('#ativoSelecionado').bsMultiSelect()[0].length){
+            atvSelDs = 'Todos';
+        } else {
+            $.each(atvSel, function(indice, opt){
+                atvSelDs += (atvSelDs.length > 0 ? ', ' : '') + opt.text.substring(0,6);
+            });
+        }
+
         var mesSel = $('#mesSelecionado option:selected').text();
 
-        $('#iFiltroInstrumentosTaT').html(atvSel);
+        $('#iFiltroInstrumentosTaT').html(atvSelDs);
         $('#iFiltroPeriodoTaT').html(mesSel);
     }
 
@@ -226,26 +246,21 @@
 
         label = [];
         dataVal = [];
-        if(atualizouMes){
-            operacoes = null;
-            $.post( url, $('#formFiltroMensal').serialize(), function(data) {
-                operacoes = data.operacoes;
-                atualizouMes = false;
-                atualizaDadosFiltrar();
-            },
-            'json' // I expect a JSON response
-            );
-        } else {
+
+        operacoes = null;
+        $.post( url, $('#formFiltroMensal').serialize(), function(data) {
+            operacoes = data.operacoes;
+            atualizouMes = false;
             atualizaDadosFiltrar();
-        }
+        },
+        'json' // I expect a JSON response
+        );
+
     }
 
     function atualizaDadosFiltrar() {
-        var ativoSel = $('#ativoSelecionado').val();
-        var corretorasSels = $('#corretoraSelecionada').val();
 
-        operacoesFiltradas = operacoes == null ? null :
-                    operacoes.filter(oper => oper.instrumento_id == ativoSel && corretorasSels.includes(''+oper.conta_corretora_id));
+        operacoesFiltradas = operacoes;
         if(operacoesFiltradas != null){
             $.each(operacoesFiltradas, function(id, res) {
                 label[id] = (id + 1);

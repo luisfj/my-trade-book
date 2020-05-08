@@ -30,7 +30,7 @@
                             <div class="input-group-prepend">
                                 <div class="input-group-text">Ativo</div>
                             </div>
-                            <select id="ativoSelecionadoEvoMes" name="ativosSelecionadosEvoMes[]" style="display: none;" multiple>
+                            <select id="ativoSelecionadoEvoMes" name="ativoSelecionadoEvoMes[]" style="display: none;" multiple>
                             </select>
                         </div>
                     </div>
@@ -97,25 +97,26 @@
     var ctxEvoMes = $('#chartEvoMes');
 
     var urlEvoMes = $('#formFiltroEvoMes').attr('target');
-    var urlEvoMesMesesOperados = urlEvoMes.replace('dashEvolucaoMensalDoSaldo', 'buscarMesesOperados');
-
-    $('#ativoSelecionadoEvoMes')
-                .find('option')
-                .remove()
-                .end();
-    $('#corretorasSelecionadasEvoMes')
-                .find('option')
-                .remove()
-                .end();
-    $('#mesSelecionadoEvoMes')
-                .find('option')
-                .remove()
-                .end();
-
 
 //buscar e atualizar a lista de meses operados
 
-    $.get(urlEvoMesMesesOperados, function(data){
+    registrarQueroMesesOperados(atualizarMesesEvoMesSaldo);
+
+    function atualizarMesesEvoMesSaldo(data){
+
+        $('#ativoSelecionadoEvoMes')
+                .find('option')
+                .remove()
+                .end();
+        $('#corretorasSelecionadasEvoMes')
+                .find('option')
+                .remove()
+                .end();
+        $('#mesSelecionadoEvoMes')
+                .find('option')
+                .remove()
+                .end();
+
         var now = new Date();
         var mesHoje = now.getMonth();
         var anoHoje = now.getFullYear();
@@ -162,13 +163,13 @@
                         text : conta.corretora.nome.substr(0, 15) + ' (' + conta.identificador + ')'
                     }));
         });
-        $('#corretorasSelecionadasEvoMes').val(selectionCorr);
+        //$('#corretorasSelecionadasEvoMes').val(selectionCorr);
 
         atualizarListaMultiEvoMes();
         /* fim Corretoras */
 
-        atualizarDadosEvoMes();
-    });
+        //atualizarDadosEvoMes();
+    }
 
 //ao alterar um mes deve buscar os dados
     function alterouFiltroEvoMes() {

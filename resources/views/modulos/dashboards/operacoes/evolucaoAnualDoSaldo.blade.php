@@ -107,21 +107,24 @@
 
     var urlEvo = $('#formFiltroEvolucaoAnual').attr('target'); //'http://localhost:8000/dashTradeATrade';
 
-    $('#evoAtivoSelecionado')
+    registrarQueroMesesOperados(atualizarMesesEvoAnualDoSaldo);
+
+    function atualizarMesesEvoAnualDoSaldo(data) {
+        $('#evoAtivoSelecionado')
                 .find('option')
                 .remove()
                 .end();
-    $('#evoCorretoraSelecionada')
+        $('#evoCorretoraSelecionada')
                 .find('option')
                 .remove()
                 .end();
-    $('#evoAnoSelecionado')
+        $('#evoAnoSelecionado')
                 .find('option')
                 .remove()
                 .end();
 
-    $.post( urlEvo, $('#formFiltroEvolucaoAnual').serialize(), function(data) {
-/* inicio Anos Operados */
+
+        /* inicio Anos Operados */
         var anosSel = [];
         $.each(data.anosOperados, function(indice, ano){
             anosSel[indice] = ano.ano;
@@ -155,13 +158,11 @@
                         text : conta.corretora.nome.substr(0, 5) + ' (' + conta.identificador + ')'
                     }));
         });
-        $('#evoCorretoraSelecionada').val(selectionCorr);
+        //$('#evoCorretoraSelecionada').val(selectionCorr);
 
         atualizarListaMultiEvo();
         /* fim Corretoras */
-        operacoesEvo = data.operacoes;
-        atualizarDadosEvo();
-    });
+    }
 
 //ao alterar um mes deve buscar os dados
     function alterouFiltroEvo() {
@@ -198,6 +199,7 @@
         $('#confirmarEvoSaldoBtn').removeClass('btn-warning');
         $('#confirmarEvoSaldoBtn').addClass('btn-secondary');
     }
+
     function atualizarDescricaoFiltrosEvo(){
         var corretorasSelec = $('#evoCorretoraSelecionada').bsMultiSelect()[0].selectedOptions;
         var corrSelDs = '';

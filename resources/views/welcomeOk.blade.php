@@ -13,28 +13,28 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <title>Diário de Trade</title>
+        <title>{{ config('app.name', 'Diário de Trade') }}</title>
 
         <meta name="description" content="Diário de Trade. Gerencie suas operações de trade de forma automatizada, somente importando seu relatório de performance, sem planilhas, online e gratuito.">
         <link rel="canonical" href="https://diario.trade/">
         <meta property="og:locale" content="pt_BR">
         <meta property="og:type" content="website">
-        <meta property="og:title" content="Diário de Trade">
+        <meta property="og:title" content="{{ config('app.name', 'Diário de Trade') }}">
         <meta property="og:description" content="Diário de Trade. Gerencie suas operações de trade de forma automatizada, somente importando seu relatório de performance, sem planilhas, online e gratuito.">
         <meta property="og:url" content="https://diario.trade/">
         <meta property="og:site_name" content="Diário de Trade">
 
-        <meta property="article:modified_time" content="2020-05-07T05:00:12+00:00">
+        <meta property="article:modified_time" content="2020-04-30T05:00:12+00:00">
 
         <!-- Bootstrap core CSS -->
-        <link href="/css/bootstrap.min.css" rel="stylesheet">
+        <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
         <!-- Styles -->
-        <link href="/css/grayscale.min.css" rel="stylesheet">
+        <link href="{{ asset('css/grayscale.min.css') }}" rel="stylesheet">
     </head>
     <body id="page-top">
 
@@ -51,12 +51,22 @@
                 <li class="nav-item">
                   <a class="nav-link" href="#sobre">Sobre</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/register">Registrar</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/login"><strong>Login</strong></a>
-                </li>
+                @if (Route::has('login'))
+                    @auth
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('/home') }}"><strong>Entrar</strong></a>
+                        </li>
+                    @else
+                        @if (Route::has('register'))
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('register') }}">Registrar</a>
+                            </li>
+                        @endif
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('login') }}"><strong>Login</strong></a>
+                        </li>
+                    @endauth
+                @endif
               </ul>
             </div>
           </div>
@@ -87,7 +97,7 @@
                 </p>
               </div>
             </div>
-            <img src="/img/completo.PNG" class="img-fluid" alt="">
+            <img src="{{ asset('img/completo.PNG') }}" class="img-fluid" alt="">
           </div>
         </section>
 
@@ -98,7 +108,7 @@
             <!-- Featured Project Row -->
             <div class="row align-items-center no-gutters mb-4 mb-lg-5">
               <div class="col-xl-8 col-lg-7">
-                <img class="img-fluid mb-3 mb-lg-0" src="/img/Importacao.PNG" alt="">
+                <img class="img-fluid mb-3 mb-lg-0" src="{{ asset('img/Importacao.PNG') }}" alt="">
               </div>
               <div class="col-xl-4 col-lg-5">
                 <div class="featured-text text-center text-lg-left">
@@ -111,7 +121,7 @@
             <!-- Project One Row -->
             <div class="row justify-content-center no-gutters mb-5 mb-lg-0">
               <div class="col-lg-6">
-                <img class="img-fluid" src="/img/EvoMensal.PNG" alt="">
+                <img class="img-fluid" src="{{ asset('img/EvoMensal.PNG') }}" alt="">
               </div>
               <div class="col-lg-6">
                 <div class="bg-black text-center h-100 project">
@@ -129,7 +139,7 @@
             <!-- Project Two Row -->
             <div class="row justify-content-center no-gutters">
               <div class="col-lg-6">
-                <img class="img-fluid" src="/img/EvoAnual.PNG" alt="">
+                <img class="img-fluid" src="{{ asset('img/EvoAnual.PNG') }}" alt="">
               </div>
               <div class="col-lg-6 order-lg-first">
                 <div class="bg-black text-center h-100 project">
@@ -156,7 +166,7 @@
                 <i class="far fa-paper-plane fa-2x mb-2 text-white"></i>
                 <h2 class="text-white mb-5">Automatize seu diário de trade!</h2>
 
-                <a href="/register" class="btn btn-primary mx-auto">Registre-se</a>
+                <a href="{{ route('register') }}" class="btn btn-primary mx-auto">Registre-se</a>
 
               </div>
             </div>
@@ -232,13 +242,13 @@
 
         <!-- Bootstrap core JavaScript -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="/js/bootstrap.bundle.min.js"></script>
+        <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
 
         <!-- Plugin JavaScript -->
-        <script src="/js/jquery.easing.min.js"></script>
+        <script src="{{ asset('js/jquery.easing.min.js') }}"></script>
 
         <!-- Custom scripts for this template -->
-        <script src="/js/grayscale.min.js"></script>
+        <script src="{{ asset('js/grayscale.min.js') }}"></script>
 
       </body>
 

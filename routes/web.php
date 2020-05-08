@@ -169,14 +169,16 @@ Route::middleware('auth')->group(function () {
     Route::put(   'transacao-edit/{id}'   , 'Transacoes\TransacoesContaController@atualizar')->name('transacao.update');
     Route::post(   'transacao'            , 'Transacoes\TransacoesContaController@salvar')->name('transacao.create');
 
-    Route::post(   'dashTradeATrade',         'Dashboards\DashTradeController@buscarDashTradeATrade')->name('dash.trade.a.trade');
-    Route::get(    'buscarMesesOperados',     'Dashboards\DashTradeController@buscarMesesOperados')->name('meses.operados');
-    Route::post(   'dashEvolucaoAnualDoSaldo','Dashboards\DashTradeController@buscarDashEvolucaoAnualDoSaldo')->name('dash.evolucao.anual.do.saldo');
-    Route::post(   'dashEvolucaoMensalDoSaldo','Dashboards\DashTradeController@buscarDashEvolucaoMensalDoSaldo')->name('dash.evolucao.mensal.do.saldo');
+    Route::post(   'dashTradeATrade',               'Dashboards\DashTradeController@buscarDashTradeATrade')->name('dash.trade.a.trade');
+    Route::get(    'buscarMesesOperados',           'Dashboards\DashTradeController@buscarMesesOperados')->name('meses.operados');
+    Route::post(   'dashEvolucaoAnualDoSaldo',      'Dashboards\DashTradeController@buscarDashEvolucaoAnualDoSaldo')->name('dash.evolucao.anual.do.saldo');
+    Route::post(   'dashEvolucaoMensalDoSaldo',     'Dashboards\DashTradeController@buscarDashEvolucaoMensalDoSaldo')->name('dash.evolucao.mensal.do.saldo');
+    Route::post(   'dashResultadosPorDiaDaSemana',  'Dashboards\DashTradeController@buscarDashResultadoDiasDaSemana')->name('dash.dias.da.semana');
+    Route::post(   'dashResultadosPorSemanaDoMes',  'Dashboards\DashTradeController@buscarDashResultadoPorSemanaDoMes')->name('dash.semana.do.mes');
 
     Route::post(   'dashHistoricoContaCorretora','Dashboards\DashResumosController@buscarHistoricoContaCorretora')->name('dash.historico.conta.corretora');
     Route::post(   'dashEstatisticasAvancadas'  ,'Dashboards\DashResumosController@buscarEstatisticasAvancadasContaCorretora')->name('dash.est.ava.conta.corretora');
-    Route::get(    'testeget','Dashboards\DashResumosController@buscarEstatisticasAvancadasContaCorretora')->name('dash.evolucao.anual.do.saldo.get');
+    //Route::get(    'testeget','Dashboards\DashResumosController@buscarEstatisticasAvancadasContaCorretora')->name('dash.evolucao.anual.do.saldo.get');
 
 
 });

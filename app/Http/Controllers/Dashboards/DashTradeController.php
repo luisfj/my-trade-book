@@ -26,11 +26,96 @@ class DashTradeController extends Controller
     }
 
     public function buscarDashTradeATrade(Request $request){
-        $mesSelecionado = $request->all()['mesSelecionado'];
+        $filtros = $request->all();
+        try {
+            $operacoes = [];
 
-        $operacoes = $this->service->getByMesEAno($mesSelecionado);
+            $mesSelecionado = null;
+            $corretorasSelecionada = null;
+            $ativosSelecionado = null;
 
-        return response()->json(compact(['operacoes']));
+            if (array_key_exists("mesSelecionado", $filtros)) {
+                $mesSelecionado = $filtros['mesSelecionado'];
+            } else {
+                return response()->json(compact(['operacoes']));
+            }
+
+            if (array_key_exists("ativoSelecionado", $filtros)) {
+                $ativosSelecionado = $filtros['ativoSelecionado'];
+            }
+            if (array_key_exists("corretoraSelecionada", $filtros)) {
+                $corretorasSelecionada = $filtros['corretoraSelecionada'];
+            }
+
+            $operacoes = $this->service->getByMesEAno($mesSelecionado, $ativosSelecionado, $corretorasSelecionada);
+
+            return response()->json(compact(['operacoes']));
+        } catch(\Throwable $th) {
+            $error = $th->getMessage();
+            return response()->json(compact(['th', 'error', 'filtros']));
+        }
+    }
+
+    public function buscarDashResultadoDiasDaSemana(Request $request)
+    {
+        $filtros = $request->all();
+        try {
+            $ativosSelecionado = null;
+            $corretorasSelecionada = null;
+            $dataInicial = null;
+            $dataFinal = null;
+
+            if (array_key_exists("ativoSelecionadoDDS", $filtros)) {
+                $ativosSelecionado = $filtros['ativoSelecionadoDDS'];
+            }
+            if (array_key_exists("corretoraSelecionadaDDS", $filtros)) {
+                $corretorasSelecionada = $filtros['corretoraSelecionadaDDS'];
+            }
+            if (array_key_exists("dataInicial", $filtros)) {
+                $dataInicial = $filtros['dataInicial'];
+            }
+            if (array_key_exists("dataFinal", $filtros)) {
+                $dataFinal = $filtros['dataFinal'];
+            }
+
+            $resultado = $this->service->getResultadoDiasDaSemana($ativosSelecionado, $corretorasSelecionada, $dataInicial, $dataFinal);
+
+            return response()->json(compact(['resultado', 'filtros']));
+        } catch(\Throwable $th) {
+            $error = $th->getMessage();
+            return response()->json(compact(['th', 'error', 'filtros']));
+        }
+    }
+
+    public function buscarDashResultadoPorSemanaDoMes(Request $request)
+    {
+        $filtros = $request->all();
+        try {
+            $ativosSelecionado = null;
+            $corretorasSelecionada = null;
+            $dataInicial = null;
+            $dataFinal = null;
+
+            if (array_key_exists("ativoSelecionadoSDM", $filtros)) {
+                $ativosSelecionado = $filtros['ativoSelecionadoSDM'];
+            }
+            if (array_key_exists("corretoraSelecionadaSDM", $filtros)) {
+                $corretorasSelecionada = $filtros['corretoraSelecionadaSDM'];
+            }
+            if (array_key_exists("dataInicial", $filtros)) {
+                $dataInicial = $filtros['dataInicial'];
+            }
+            if (array_key_exists("dataFinal", $filtros)) {
+                $dataFinal = $filtros['dataFinal'];
+            }
+
+            $resultado = $this->service->getResultadoPorSemanaDoMes($ativosSelecionado, $corretorasSelecionada, $dataInicial, $dataFinal);
+
+            return response()->json(compact(['resultado', 'filtros']));
+        } catch(\Throwable $th) {
+            $error = $th->getMessage();
+            return response()->json(compact(['th', 'error', 'filtros']));
+        }
     }
 
     public function buscarDashEvolucaoAnualDoSaldo(Request $request)
@@ -51,13 +136,9 @@ class DashTradeController extends Controller
                 $anos = $filtros['evoAnoSelecionado'];
             }
 
-            $anosOperados = $this->service->getAnosOperados();
-            $ativosOperados = $this->service->getAtivosOperados();
-            $corretorasOperadas = $this->contaCorretoraService->getAllByUser();//$this->service->getCorretorasOperadas();
-
             $operacoes = $this->service->getEvolucaoDeSaldoAnual($ativosSelecionado, $corretorasSelecionada, $anos);
 
-            return response()->json(compact(['operacoes', 'anosOperados', 'ativosOperados', 'corretorasOperadas']));
+            return response()->json(compact(['operacoes']));
         } catch(\Throwable $th) {
             $error = $th->getMessage();
             return response()->json(compact(['th', 'error', 'filtros']));
@@ -72,8 +153,8 @@ class DashTradeController extends Controller
             $corretorasSelecionada = null;
             $mesSelecionado = null;
 
-            if (array_key_exists("ativosSelecionadosEvoMes", $filtros)) {
-                $ativosSelecionado = $filtros['ativosSelecionadosEvoMes'];
+            if (array_key_exists("ativoSelecionadoEvoMes", $filtros)) {
+                $ativosSelecionado = $filtros['ativoSelecionadoEvoMes'];
             }
             if (array_key_exists("corretorasSelecionadasEvoMes", $filtros)) {
                 $corretorasSelecionada = $filtros['corretorasSelecionadasEvoMes'];
@@ -99,7 +180,9 @@ class DashTradeController extends Controller
         $mesesOperados = $this->service->getMesesOperados();
         $ativosOperados = $this->service->getAtivosOperados();
         $corretorasOperadas = $this->contaCorretoraService->getAllByUser();//$this->service->getCorretorasOperadas();
-        return response()->json(compact(['mesesOperados', 'ativosOperados', 'corretorasOperadas']));
+        $anosOperados = $this->service->getAnosOperados();
+
+        return response()->json(compact(['mesesOperados', 'ativosOperados', 'corretorasOperadas', 'anosOperados']));
     }
 
 }

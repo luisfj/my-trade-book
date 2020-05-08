@@ -13,6 +13,32 @@ function callEventosRegitradosAlteracaoCorretora(corretora) {
     }
 }
 
+var queroMesesOperadosCallBacks = [];
+var mesesOperadosVar = null;
+
+function registrarQueroMesesOperados(evento){
+    if(mesesOperadosVar){
+        evento(mesesOperadosVar);
+    } else
+        if(evento && typeof evento == "function"){
+            queroMesesOperadosCallBacks[queroMesesOperadosCallBacks.length] = evento;
+        }
+}
+
+function callQueroMesesOperados() {
+    if(queroMesesOperadosCallBacks.length > 0){
+        for(var i = 0; i < queroMesesOperadosCallBacks.length; i++){
+            queroMesesOperadosCallBacks[i](mesesOperadosVar);
+        }
+        queroMesesOperadosCallBacks = [];
+    }
+}
+
+$.get('/buscarMesesOperados', function(data){
+    mesesOperadosVar = data;
+    callQueroMesesOperados();
+});
+
 function toValidDate(data) {
     if(!data || !(data+'').includes('/')) return new Date(data);
 
