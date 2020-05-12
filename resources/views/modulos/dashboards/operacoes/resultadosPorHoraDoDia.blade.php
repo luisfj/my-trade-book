@@ -40,6 +40,12 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <div class="mb3">
+                                        <label>Salvar ativo como padrão</label>
+                                        <input type="checkbox" id="salvarComoPadraoAtivoHDD" name="salvarComoPadraoAtivoHDD">
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <div class="input-group input-group-sm ">
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Período de:</div>
@@ -162,7 +168,15 @@
                         text : ativo.instrumento.sigla
                     }));
         });
-        $('#ativoSelecionadoHDD').val(atvSel);
+
+        var filtroPadraoAtivo = data.filtrosPadrao ?
+            $.grep( data.filtrosPadrao, function( n ) { return n.tela === 'dashResultadoPorHoraDoDia' && n.campo === 'ativo' })
+            : null;
+
+        if(!filtroPadraoAtivo || filtroPadraoAtivo.length <= 0)
+            $('#ativoSelecionadoHDD').val(atvSel);
+        else
+            $('#ativoSelecionadoHDD').val(filtroPadraoAtivo[0].filtro.split(','));
         /* fim Ativos */
 
         /* inicio Corretoras */
@@ -312,7 +326,7 @@
                 options: {
                     title: {
                         display: true,
-                        text: 'Ganhos e Perdas por Hora do Dia'
+                        text: 'Nº de Operações por Hora do Dia'
                     },
                     hover: {
                         mode: 'nearest',

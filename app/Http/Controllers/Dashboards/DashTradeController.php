@@ -8,6 +8,7 @@ use App\Models\Moeda;
 use App\Services\Trade\ContaCorretoraService;
 use App\Services\Trade\InstrumentoService;
 use App\Services\Trade\OperacoesService;
+use App\Services\Trade\FiltroPadraoService;
 
 
 class DashTradeController extends Controller
@@ -16,13 +17,16 @@ class DashTradeController extends Controller
     private $moeda_tb;
     private $contaCorretoraService;
     private $instrumentoService;
+    private $filtroService;
 
-    public function __construct(OperacoesService $service, ContaCorretoraService $contaCorretoraService, InstrumentoService $instrumentoService, Moeda $moeda_tb)
+    public function __construct(OperacoesService $service, ContaCorretoraService $contaCorretoraService, InstrumentoService $instrumentoService,
+                                Moeda $moeda_tb, FiltroPadraoService $filtroService)
     {
         $this->service   = $service;
         $this->moeda_tb  = $moeda_tb;
         $this->contaCorretoraService =  $contaCorretoraService;
         $this->instrumentoService    =  $instrumentoService;
+        $this->filtroService = $filtroService;
     }
 
     public function buscarDashTradeATrade(Request $request){
@@ -46,7 +50,11 @@ class DashTradeController extends Controller
             if (array_key_exists("corretoraSelecionada", $filtros)) {
                 $corretorasSelecionada = $filtros['corretoraSelecionada'];
             }
-
+            if(array_key_exists("salvarComoPadraoAtivoTaT", $filtros)){
+                if($filtros['salvarComoPadraoAtivoTaT']){
+                    $this->filtroService->adicionaOuAtualiza('dashTradeATrade', 'ativo', $ativosSelecionado);
+                }
+            }
             $operacoes = $this->service->getByMesEAno($mesSelecionado, $ativosSelecionado, $corretorasSelecionada);
 
             return response()->json(compact(['operacoes']));
@@ -76,6 +84,11 @@ class DashTradeController extends Controller
             }
             if (array_key_exists("dataFinal", $filtros)) {
                 $dataFinal = $filtros['dataFinal'];
+            }
+            if(array_key_exists("salvarComoPadraoAtivoDDS", $filtros)){
+                if($filtros['salvarComoPadraoAtivoDDS']){
+                    $this->filtroService->adicionaOuAtualiza('dashResultadoDiasDaSemana', 'ativo', $ativosSelecionado);
+                }
             }
 
             $resultado = $this->service->getResultadoDiasDaSemana($ativosSelecionado, $corretorasSelecionada, $dataInicial, $dataFinal);
@@ -108,7 +121,11 @@ class DashTradeController extends Controller
             if (array_key_exists("dataFinal", $filtros)) {
                 $dataFinal = $filtros['dataFinal'];
             }
-
+            if(array_key_exists("salvarComoPadraoAtivoSDM", $filtros)){
+                if($filtros['salvarComoPadraoAtivoSDM']){
+                    $this->filtroService->adicionaOuAtualiza('dashResultadoPorSemanaDoMes', 'ativo', $ativosSelecionado);
+                }
+            }
             $resultado = $this->service->getResultadoPorSemanaDoMes($ativosSelecionado, $corretorasSelecionada, $dataInicial, $dataFinal);
 
             return response()->json(compact(['resultado', 'filtros']));
@@ -138,6 +155,11 @@ class DashTradeController extends Controller
             }
             if (array_key_exists("dataFinal", $filtros)) {
                 $dataFinal = $filtros['dataFinal'];
+            }
+            if(array_key_exists("salvarComoPadraoAtivoHDD", $filtros)){
+                if($filtros['salvarComoPadraoAtivoHDD']){
+                    $this->filtroService->adicionaOuAtualiza('dashResultadoPorHoraDoDia', 'ativo', $ativosSelecionado);
+                }
             }
 
             $resultado = $this->service->getResultadoHoraDoDia($ativosSelecionado, $corretorasSelecionada, $dataInicial, $dataFinal);
@@ -212,8 +234,9 @@ class DashTradeController extends Controller
         $ativosOperados = $this->service->getAtivosOperados();
         $corretorasOperadas = $this->contaCorretoraService->getAllByUser();//$this->service->getCorretorasOperadas();
         $anosOperados = $this->service->getAnosOperados();
+        $filtrosPadrao = $this->filtroService->getFiltrosDosDashboards();
 
-        return response()->json(compact(['mesesOperados', 'ativosOperados', 'corretorasOperadas', 'anosOperados']));
+        return response()->json(compact(['mesesOperados', 'ativosOperados', 'corretorasOperadas', 'anosOperados', 'filtrosPadrao']));
     }
 
 }

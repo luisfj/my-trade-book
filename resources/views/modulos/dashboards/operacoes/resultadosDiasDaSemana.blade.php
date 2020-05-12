@@ -40,6 +40,12 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <div class="mb3">
+                                        <label>Salvar ativo como padrão</label>
+                                        <input type="checkbox" id="salvarComoPadraoAtivoDDS" name="salvarComoPadraoAtivoDDS">
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <div class="input-group input-group-sm ">
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Período de:</div>
@@ -160,7 +166,14 @@
                         text : ativo.instrumento.sigla
                     }));
         });
-        $('#ativoSelecionadoDDS').val(atvSel);
+        var filtroPadraoAtivo = data.filtrosPadrao ?
+            $.grep( data.filtrosPadrao, function( n ) { return n.tela === 'dashResultadoDiasDaSemana' && n.campo === 'ativo' })
+            : null;
+
+        if(!filtroPadraoAtivo || filtroPadraoAtivo.length <= 0)
+            $('#ativoSelecionadoDDS').val(atvSel);
+        else
+            $('#ativoSelecionadoDDS').val(filtroPadraoAtivo[0].filtro.split(','));
         /* fim Ativos */
 
         /* inicio Corretoras */
@@ -334,7 +347,7 @@
                 options: {
                     title: {
                         display: true,
-                        text: 'Ganhos e Perdas por Dia da Semana'
+                        text: 'Nº de Operações por Dia da Semana'
                     },
                     hover: {
                         mode: 'nearest',

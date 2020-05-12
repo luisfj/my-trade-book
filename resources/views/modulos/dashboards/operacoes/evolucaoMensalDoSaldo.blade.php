@@ -118,7 +118,7 @@
                 .end();
 
         var now = new Date();
-        var mesHoje = now.getMonth();
+        var mesHoje = (now.getMonth()+1);
         var anoHoje = now.getFullYear();
         var mesAnoHohe = mesHoje + '-' + anoHoje;
         var essemestem = false;

@@ -35,6 +35,12 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <div class="mb3">
+                            <label>Salvar ativo como padrão</label>
+                            <input type="checkbox" id="salvarComoPadraoAtivoTaT" name="salvarComoPadraoAtivoTaT">
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <div class="input-group input-group-sm ">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">Mês</div>
@@ -123,15 +129,15 @@
                 .end();
 
         var now = new Date();
-        var mesHoje = now.getMonth();
+        var mesHoje = (now.getMonth()+1);
         var anoHoje = now.getFullYear();
-        var mesAnoHohe = mesHoje + '-' + anoHoje;
+        var mesAnoHohe = (mesHoje + '-' + anoHoje);
         var essemestem = false;
         atualizouMes = true;
 
 /* inicio Meses Operados */
         $.each(data.mesesOperados, function(indice, mes){
-            if(mes.mes_ano == mesAnoHohe)
+            if(mes.mes_ano === mesAnoHohe)
                 essemestem = true;
 
             $('#mesSelecionado').append($('<option>', {
@@ -157,7 +163,15 @@
                         text : ativo.instrumento.sigla
                     }));
         });
-        $('#ativoSelecionado').val(atvSel);
+
+        var filtroPadraoAtivo = data.filtrosPadrao ?
+            $.grep( data.filtrosPadrao, function( n ) { return n.tela === 'dashTradeATrade' && n.campo === 'ativo' })
+            : null;
+
+        if(!filtroPadraoAtivo || filtroPadraoAtivo.length <= 0)
+            $('#ativoSelecionado').val(atvSel);
+        else
+            $('#ativoSelecionado').val(filtroPadraoAtivo[0].filtro.split(','));
         /* fim Ativos */
 
         /* inicio Corretoras */

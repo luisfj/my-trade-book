@@ -40,6 +40,12 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <div class="mb3">
+                                        <label>Salvar ativo como padrão</label>
+                                        <input type="checkbox" id="salvarComoPadraoAtivoSDM" name="salvarComoPadraoAtivoSDM">
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <div class="input-group input-group-sm ">
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Período de:</div>
@@ -162,7 +168,15 @@
                         text : ativo.instrumento.sigla
                     }));
         });
-        $('#ativoSelecionadoSDM').val(atvSel);
+
+        var filtroPadraoAtivo = data.filtrosPadrao ?
+            $.grep( data.filtrosPadrao, function( n ) { return n.tela === 'dashResultadoPorSemanaDoMes' && n.campo === 'ativo' })
+            : null;
+
+        if(!filtroPadraoAtivo || filtroPadraoAtivo.length <= 0)
+            $('#ativoSelecionadoSDM').val(atvSel);
+        else
+            $('#ativoSelecionadoSDM').val(filtroPadraoAtivo[0].filtro.split(','));
         /* fim Ativos */
 
         /* inicio Corretoras */
@@ -312,7 +326,7 @@
                 options: {
                     title: {
                         display: true,
-                        text: 'Ganhos e Perdas por Semana do Mês'
+                        text: 'Nº de Operações por Semana do Mês'
                     },
                     hover: {
                         mode: 'nearest',
