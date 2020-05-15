@@ -74,7 +74,7 @@
                 <div class="tab-pane fade show active" id="nav-dados-HDD" role="tabpanel" aria-labelledby="nav-dados-HDD-tab">
                     <div id="spinnerHDD" class="spinner-border text-success"></div>
                     <div class="row justify-content-center">
-                        <div class="col-md-6 marb-10 noPadding-with-lr-5">
+                        <div class="col-12 col-md-12 col-xl-6 marb-10 noPadding-with-lr-5">
                             <div class="altura-min-100p">
                                 {{-- <div class="card-header">Dashboard</div> --}}
                                 <div class="card-body">
@@ -82,7 +82,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 marb-10 noPadding-with-lr-5">
+                        <div class="col-12 col-md-12 col-xl-6 marb-10 noPadding-with-lr-5">
                             <div class="marb-5 altura-min-100p">
                                 {{-- <div class="card-header">Dashboard</div> --}}
                                 <div class="card-body">

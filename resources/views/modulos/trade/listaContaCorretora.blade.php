@@ -19,21 +19,20 @@
     </div>
 
     <hr class="bg-warning">
-
+<div class="table-responsive">
     <table class="table table-primary table-sm">
         <thead>
           <tr>
             <th scope="col">Identificador</th>
             <th scope="col"></th>
-            <th scope="col">Tipo Conta</th>
-            <th scope="col">Corretora</th>
-            <th class="text-center" scope="col">Abertura</th>
-            <th class="text-center" scope="col">Status</th>
-            <th scope="col">Tipo Corretora</th>
-            <th scope="col">Moeda</th>
-            <th class="text-right" scope="col">Depositos</th>
-            <th class="text-right" scope="col">Saques</th>
-            <th class="text-right" scope="col">Saldo</th>
+            <th scope="col" class="show-over-500">Tipo Conta</th>
+            <th scope="col" class="show-over-500">Corretora</th>
+            <th class="text-center show-over-1200" scope="col">Status</th>
+            <th scope="col" class="show-over-1200">Tipo Corretora</th>
+            <th scope="col" class="show-over-1200">Moeda</th>
+            <th class="text-right show-over-800" scope="col">Depositos</th>
+            <th class="text-right show-over-800" scope="col">Saques</th>
+            <th class="text-right show-over-500" scope="col">Saldo</th>
             <th class="text-right" scope="col">Ações</th>
           </tr>
         </thead>
@@ -43,17 +42,16 @@
 
                         <th scope="row">{{ $conta->identificador }}</th>
                         <td><label class="badge badge-success fs13 {{ $conta->padrao ? '' : 'hidde-me' }}">P</label></td>
-                        <td><label class='{{$conta->real_demo ? $conta->real_demo == 'D'  ? 'badge badge-warning fs13' : 'badge badge-info fs13' :''}}'>
+                        <td class="show-over-500"><label class='{{$conta->real_demo ? $conta->real_demo == 'D'  ? 'badge badge-warning fs13' : 'badge badge-info fs13' :''}}'>
                             {{ $conta->real_demo ? $conta->real_demo == 'D' ? 'Demo' : 'Real' : '' }}
                         </label></td>
-                        <td>{{ $conta->corretora ? $conta->corretora->nome : '' }}</td>
-                        <td class="text-center">{{ $conta->dtabertura_formatado }}</td>
-                        <td class='{{ $conta->ativa ? 'text-info' : 'text-warning'}} text-center'>{{ $conta->ativa ? 'Ativa' : 'Inativa' }}</td>
-                        <td>{{ $conta->tipo == 'C' ? 'Nacional' : 'Internacional' }}</td>
-                        <td>{{ $conta->moeda ? $conta->moeda->full_name : '' }}</td>
-                        <td class="text-success text-right">{{ $conta->entradas_formatado }}</td>
-                        <td class="text-warning text-right">{{ $conta->saidas_formatado }}</td>
-                        <td class="{{ ($conta->saldo > 0) ? 'text-success' : (($conta->saldo < 0) ? 'text-warning' : '') }} text-right">
+                        <td class="show-over-500">{{ $conta->corretora ? $conta->corretora->nome : '' }}</td>
+                        <td class='{{ $conta->ativa ? 'text-info' : 'text-warning'}} text-center show-over-1200'>{{ $conta->ativa ? 'Ativa' : 'Inativa' }}</td>
+                        <td class="show-over-1200">{{ $conta->tipo == 'C' ? 'Nacional' : 'Internacional' }}</td>
+                        <td class="show-over-1200">{{ $conta->moeda ? $conta->moeda->full_name : '' }}</td>
+                        <td class="text-success text-right show-over-800">{{ $conta->entradas_formatado }}</td>
+                        <td class="text-warning text-right show-over-800">{{ $conta->saidas_formatado }}</td>
+                        <td class="{{ ($conta->saldo > 0) ? 'text-success' : (($conta->saldo < 0) ? 'text-warning' : '') }} text-right show-over-500">
                             {{ $conta->saldo_formatado }}
                         </td>
                         <td class="text-right">
@@ -100,5 +98,7 @@
                 @endforelse
         </tbody>
       </table>
+    </div>
+
       @include('modulos.trade.modais.contaCorretora')
 @endsection

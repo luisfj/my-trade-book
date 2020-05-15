@@ -237,7 +237,7 @@ g text {
 .label-filtros-dash-md5 {
     margin-top: -15px !important;
     padding-left: 10px !important;
-    max-width: 450px !important;
+    max-width: 67% !important;
 }
 .label-filtros-dash-md7 {
     margin-top: -15px !important;
@@ -295,7 +295,7 @@ g text {
 .table-scroll tbody {
     position: absolute;
     overflow-y: scroll;
-    height: 120px;
+    height: 75%;
 }
 
 .table-scroll tr {
@@ -306,6 +306,100 @@ g text {
 
 .table-scroll thead > tr > th {
     border: none;
+}
+.img-100px{
+    width: 100px !important;
+}
+.img-90px{
+    width: 90px !important;
+}
+.img-75px{
+    width: 75px !important;
+}
+.img-140px{
+    width: 140px !important;
+}
+.img-85px{
+    width: 85px !important;
+}
+@media (max-width: 500px) {
+    .label-filtros-dash-md5 {
+        max-width: 57% !important;
+    }
+    .label-filtros-dash-md7 {
+        max-width: 57% !important;
+    }
+}
+@media (max-width: 992px) {
+    .padb-5-500 {
+        padding-bottom: 5px !important;
+    }
+    .img-100px{
+        width: calc(0.75 * 100px) !important;
+    }
+    .img-90px{
+        width: calc(0.75 * 90px) !important;
+    }
+    .img-75px{
+        width: calc(0.75 * 75px) !important;
+    }
+    .img-140px{
+        width: calc(0.75 * 140px) !important;
+    }
+    .img-85px{
+        width: calc(0.75 * 85px) !important;
+    }
+}
+@media (min-width: 992px) and (max-width: 1200px) {
+    #content:not(.active) .img-100px{
+        width: calc(0.75 * 100px) !important;
+    }
+    #content:not(.active) .img-90px{
+        width: calc(0.75 * 90px) !important;
+    }
+    #content:not(.active) .img-75px{
+        width: calc(0.75 * 75px) !important;
+    }
+    #content:not(.active) .img-140px{
+        width: calc(0.75 * 140px) !important;
+    }
+    #content:not(.active) .img-85px{
+        width: calc(0.75 * 85px) !important;
+    }
+}
+
+@media (min-width: 700px) and (max-width: 800px) {
+    .estAva-row {
+        padding-right: 2px !important;
+        padding-left: 3px !important;
+    }
+}
+@media (min-width: 800px) and (max-width: 1500px) {
+    #content:not(.active) .estAva-row {
+        padding-right: 2px !important;
+        padding-left: 3px !important;
+    }
+    #content:not(.active) .show-over-1200{
+        display: none !important;
+    }
+    #content:not(.active) .show-over-800{
+        display: none !important;
+    }
+}
+@media (max-width: 1200px){
+    .show-over-1200{
+        display: none !important;
+    }
+}
+@media (max-width: 800px){
+    .show-over-800{
+        display: none !important;
+    }
+}
+@media (max-width: 500px){
+    .show-over-500{
+        display: none !important;
+    }
 }
 /*Fim CSS tabela scroll com cabeçalho fixo*/
 /* Configuração do scrool do site para dark*/

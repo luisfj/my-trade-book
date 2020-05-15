@@ -10,24 +10,24 @@
         </form>
 
         <div class="row fs11">
-            <div class="col-sm-4 col-md-4 col-lg-4 padb-5" >
+            <div class="col-4 col-sm-4 col-md-4 col-lg-4 padb-5" >
                 <label class="marb-0 fs12">Tipo:</label>
             </div>
-            <div class="col-sm-8 col-md-8 col-lg-8 padb-5 text-right" >
+            <div class="col-8 col-sm-8 col-md-8 col-lg-8 padb-5 text-right" >
                 <label id="resCorrTipo" class="marb-0 fs12 fbold">-</label>
             </div>
 
-            <div class="col-sm-4 col-md-4 col-lg-4" >
+            <div class="col-4 col-sm-4 col-md-4 col-lg-4" >
                 <label class="marb-0">Abertura:</label>
             </div>
-            <div class="col-sm-8 col-md-8 col-lg-8 text-right" >
+            <div class="col-8 col-sm-8 col-md-8 col-lg-8 text-right" >
                 <label id="resCorrDtAbert" class="marb-0">-</label>
             </div>
 
-            <div class="col-sm-4 col-md-4 col-lg-4" >
+            <div class="col-4 col-sm-4 col-md-4 col-lg-4" >
                 <label class="marb-0">1° Trade:</label>
             </div>
-            <div class="col-sm-8 col-md-8 col-lg-8 text-right" >
+            <div class="col-8 col-sm-8 col-md-8 col-lg-8 text-right" >
                 <label id="resCorrPrimTrade" class="marb-0">-</label>
             </div>
         </div>
@@ -35,19 +35,19 @@
         <hr class="hr3 mar-5" width="100%">
 
         <div class="row fs11">
-            <div class="col-sm-7 col-md-7 col-lg-7" >
+            <div class="col-7 col-sm-7 col-md-7 col-lg-7" >
                 <label class="marb-0">% Retorno:</label>
             </div>
-            <div class="col-sm-5 col-md-5 col-lg-5 text-right" >
+            <div class="col-5 col-sm-5 col-md-5 col-lg-5 text-right" >
                 <label id="resCorrGain" class="marb-0">-</label>
             </div>
 
-            <div class="col-sm-7 col-md-7 col-lg-7" id="lucAbsResConCor"
+            <div class="col-7 col-sm-7 col-md-7 col-lg-7" id="lucAbsResConCor"
                 data-toggle="tooltip" data-placement="top"
                 title="Retorno do investimento é a porcentagem do total de depósitos. Por definição, novos depósitos afetam o ganho absoluto." >
                 <label class="marb-0 pontilhado">GANHO ABS:</label>
             </div>
-            <div class="col-sm-5 col-md-5 col-lg-5 text-right" >
+            <div class="col-5 col-sm-5 col-md-5 col-lg-5 text-right" >
                 <label id="resCorrGainAbs" class="marb-0">-</label>
             </div>
         </div>
@@ -55,17 +55,17 @@
         <hr class="hr3 mar-5" width="100%">
 
         <div class="row fs11">
-            <div class="col-sm-4 col-md-4 col-lg-4" >
+            <div class="col-4 col-sm-4 col-md-4 col-lg-4" >
                 <label class="marb-0">Diário:</label>
             </div>
-            <div class="col-sm-8 col-md-8 col-lg-8 text-right" >
+            <div class="col-8 col-sm-8 col-md-8 col-lg-8 text-right" >
                 <label id="resCorrPercDiaria" class="marb-0">-</label>
             </div>
 
-            <div class="col-sm-4 col-md-4 col-lg-4" >
+            <div class="col-4 col-sm-4 col-md-4 col-lg-4" >
                 <label class="marb-0">Mensal:</label>
             </div>
-            <div class="col-sm-8 col-md-8 col-lg-8 text-right" >
+            <div class="col-8 col-sm-8 col-md-8 col-lg-8 text-right" >
                 <label id="resCorrPercMensal" class="marb-0">-</label>
             </div>
         </div>
@@ -73,24 +73,24 @@
         <hr class="hr3 mar-5" width="100%">
 
         <div class="row fs11">
-            <div class="col-sm-3 col-md-3 col-lg-3" >
+            <div class="col-3 col-sm-3 col-md-3 col-lg-3" >
                 <label class="marb-0 fs12 fbold">Saldo:</label>
             </div>
-            <div class="col-sm-9 col-md-9 col-lg-9 text-right" >
+            <div class="col-9 col-sm-9 col-md-9 col-lg-9 text-right" >
                 <label id="resCorrSaldo" class="marb-0 fs12 fbold">-</label>
             </div>
 
-            <div class="col-sm-3 col-md-3 col-lg-3" >
+            <div class="col-3 col-sm-3 col-md-3 col-lg-3" >
                 <label class="marb-0">Máximo:</label>
             </div>
-            <div class="col-sm-9 col-md-9 col-lg-9 text-right">
+            <div class="col-9 col-sm-9 col-md-9 col-lg-9 text-right">
                 <label id="resCorrMaxSaldo" class="marb-0">-</label>
             </div>
 
-            <div class="col-sm-3 col-md-3 col-lg-3" >
+            <div class="col-3 col-sm-3 col-md-3 col-lg-3" >
                 <label class="marb-0 fs12">Lucro:</label>
             </div>
-            <div class="col-sm-9 col-md-9 col-lg-9 text-right">
+            <div class="col-9 col-sm-9 col-md-9 col-lg-9 text-right">
                 <label id="resCorrLucro" class="marb-0 fs12 fbold">-</label>
             </div>
         </div>
@@ -98,17 +98,17 @@
         <hr class="hr3 mar-5" width="100%">
 
         <div class="row fs11">
-            <div class="col-sm-4 col-md-4 col-lg-4" >
+            <div class="col-4 col-sm-4 col-md-4 col-lg-4" >
                 <label class="marb-0">Depositos:</label>
             </div>
-            <div class="col-sm-8 col-md-8 col-lg-8 text-right" >
+            <div class="col-8 col-sm-8 col-md-8 col-lg-8 text-right" >
                 <label id="resCorrDepositos" class="marb-0">-</label>
             </div>
 
-            <div class="col-sm-4 col-md-4 col-lg-4" >
+            <div class="col-4 col-sm-4 col-md-4 col-lg-4" >
                 <label class="marb-0">Retiradas:</label>
             </div>
-            <div class="col-sm-8 col-md-8 col-lg-8 text-right" >
+            <div class="col-8 col-sm-8 col-md-8 col-lg-8 text-right" >
                 <label id="resCorrRetiradas" class="marb-0">-</label>
             </div>
         </div>

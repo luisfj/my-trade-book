@@ -20,89 +20,76 @@
             </div>
         </div>
     </div>
-
-    <div class="nav nav-tabs fs12" id="nav-tab-evo-mes" role="tablist">
-
-        <ul class="nav flex-column">
-            <li class="nav-item">
-                <a class="nav-link " id="nav-imp-mt4-lnk" data-toggle="tab" href="#nav-imp-mt4" role="tab"
-                    aria-controls="nav-imp-mt4" aria-selected="false">
-                    <img src="{{ asset('img/mt4.jpg') }}" alt="..." class="img-fluid rounded" width="100px">
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link"  id="nav-imp-mt5-lnk" data-toggle="tab" href="#nav-imp-mt5" role="tab"
-                    aria-controls="nav-imp-mt5" aria-selected="false">
-                    <img src="{{ asset('img/mt5.jpg') }}" alt="..." class="img-fluid rounded" width="100px">
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link"  id="nav-imp-ctrader-lnk" data-toggle="tab" href="#nav-imp-ctrader" role="tab"
-                    aria-controls="nav-imp-ctrader" aria-selected="false">
-                    <img src="{{ asset('img/ctrader.png') }}" alt="..." class="img-fluid rounded" width="100px">
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link"  id="nav-imp-ninja-lnk" data-toggle="tab" href="#nav-imp-ninja" role="tab"
-                    aria-controls="nav-imp-ninja" aria-selected="false">
-                    <img src="{{ asset('img/ninja.jpg') }}" alt="..." class="img-fluid rounded" width="100px">
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="nav-imp-profit-lnk" data-toggle="tab" href="#nav-imp-profit" role="tab"
-                    aria-controls="nav-imp-profit" aria-selected="false">
-                    <img src="{{ asset('img/profit2.jpg') }}" alt="..." class="img-fluid rounded" width="100px">
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="nav-imp-tryd-lnk" data-toggle="tab" href="#nav-imp-tryd" role="tab"
-                    aria-controls="nav-imp-tryd" aria-selected="false">
-                    <img src="{{ asset('img/tryd.png') }}" alt="..." class="img-fluid rounded" width="100px">
-                </a>
-            </li>
-            @if(Auth::check() && Auth::User()->is_admin())
+    <nav>
+        <div class="nav nav-tabs fs12" id="nav-tab-evo-mes" role="tablist">
+            <ul class="nav">
                 <li class="nav-item">
-                    <a class="nav-link" id="nav-imp-myFx-lnk" data-toggle="tab" href="#nav-imp-myFx" role="tab"
-                        aria-controls="nav-imp-myFx" aria-selected="false">
-                        MyFxBook
+                    <a class="nav-link altura-100p" id="nav-imp-mt4-lnk" data-toggle="tab" href="#nav-imp-mt4" role="tab"
+                        aria-controls="nav-imp-mt4" aria-selected="false">
+                        <img src="{{ asset('img/mt4.jpg') }}" alt="..." class="img-fluid rounded img-100px">
                     </a>
                 </li>
-            @endif
-            <li class="nav-item hidde-me">
-                <a class="nav-link" id="nav-imp-default-lnk" data-toggle="tab" href="#nav-imp-default" role="tab"
-                    aria-controls="nav-imp-default" aria-selected="false">
-                    Default
-                </a>
-            </li>
 
-        </ul>
-
+                <li class="nav-item">
+                    <a class="nav-link altura-100p"  id="nav-imp-mt5-lnk" data-toggle="tab" href="#nav-imp-mt5" role="tab"
+                        aria-controls="nav-imp-mt5" aria-selected="false">
+                        <img src="{{ asset('img/mt5.jpg') }}" alt="..." class="img-fluid rounded img-100px">
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link altura-100p"  id="nav-imp-ctrader-lnk" data-toggle="tab" href="#nav-imp-ctrader" role="tab"
+                        aria-controls="nav-imp-ctrader" aria-selected="false">
+                        <img src="{{ asset('img/ctrader.png') }}" alt="..." class="img-fluid rounded img-90px">
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link altura-100p"  id="nav-imp-ninja-lnk" data-toggle="tab" href="#nav-imp-ninja" role="tab"
+                        aria-controls="nav-imp-ninja" aria-selected="false">
+                        <img src="{{ asset('img/ninja.jpg') }}" alt="..." class="img-fluid rounded img-75px">
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link altura-100p" id="nav-imp-profit-lnk" data-toggle="tab" href="#nav-imp-profit" role="tab"
+                        aria-controls="nav-imp-profit" aria-selected="false">
+                        <img src="{{ asset('img/profit2.jpg') }}" alt="..." class="img-fluid rounded img-140px">
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link altura-100p" id="nav-imp-tryd-lnk" data-toggle="tab" href="#nav-imp-tryd" role="tab"
+                        aria-controls="nav-imp-tryd" aria-selected="false">
+                        <img src="{{ asset('img/tryd.png') }}" alt="..." class="img-fluid rounded img-85px">
+                    </a>
+                </li>
+                @if(Auth::check() && Auth::User()->is_admin())
+                    <li class="nav-item">
+                        <a class="nav-link altura-100p" id="nav-imp-myFx-lnk" data-toggle="tab" href="#nav-imp-myFx" role="tab"
+                            aria-controls="nav-imp-myFx" aria-selected="false">
+                            MyFxBook
+                        </a>
+                    </li>
+                @endif
+                <li class="nav-item hidde-me">
+                    <a class="nav-link" id="nav-imp-default-lnk" data-toggle="tab" href="#nav-imp-default" role="tab"
+                        aria-controls="nav-imp-default" aria-selected="false">
+                        Default
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
         <div class="tab-content card card-body" id="nav-tabContentDefault">
             <div class="tab-pane fade active show" id="nav-imp-default" role="tabpanel" aria-labelledby="nav-imp-default-tab" role="tabpanel">
 
                 <div class="row justify-content-left">
-                    <div class="col-md-2 marb-10 noPadding-with-lr-5">
-                        <span class="material-icons text-warning">
-                            keyboard_backspace
-                        </span>
-                    </div>
+
                 </div>
 
                 <div class="row justify-content-left padt-20">
-                    <div class="col-md-2 marb-10 noPadding-with-lr-5">
-                        <span class="material-icons text-warning">
-                            keyboard_backspace
-                        </span>
-                    </div>
+
                 </div>
 
                 <div class="row justify-content-left padt-20">
-                    <div class="col-md-2 marb-10 noPadding-with-lr-5">
-                        <span class="material-icons text-warning">
-                            keyboard_backspace
-                        </span>
-                    </div>
+
                     <div class="col-md-1 marb-10 noPadding-with-lr-5">
                     </div>
                     <div class="col-md-9 noPadding-with-lr-5 fs18 fbold text-warning">
@@ -111,27 +98,14 @@
                 </div>
 
                 <div class="row justify-content-left padt-25">
-                    <div class="col-md-2 marb-10 noPadding-with-lr-5">
-                        <span class="material-icons text-warning">
-                            keyboard_backspace
-                        </span>
-                    </div>
                 </div>
 
                 <div class="row justify-content-left padt-20">
-                    <div class="col-md-2 marb-10 noPadding-with-lr-5">
-                        <span class="material-icons text-warning">
-                            keyboard_backspace
-                        </span>
-                    </div>
+
                 </div>
 
                 <div class="row justify-content-left padt-20">
-                    <div class="col-md-2 marb-10 noPadding-with-lr-5">
-                        <span class="material-icons text-warning">
-                            keyboard_backspace
-                        </span>
-                    </div>
+
                 </div>
             </div>
 
@@ -165,7 +139,7 @@
             @endif
 
         </div>
-    </div>
+
 
         <div class="mb-5"></div>
 @endsection

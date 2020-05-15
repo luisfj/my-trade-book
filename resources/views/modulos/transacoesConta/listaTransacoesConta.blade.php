@@ -59,9 +59,9 @@
           <tr>
             <th scope="col">Tipo</th>
             <th scope="col">Data</th>
-            <th scope="col">Conta</th>
-            <th scope="col">Ticket</th>
-            <th scope="col">Código da Transacao</th>
+            <th scope="col" class="show-over-500">Conta</th>
+            <th scope="col" class="show-over-500">Ticket</th>
+            <th scope="col" class="show-over-500">Código da Transacao</th>
             <th scope="col">Valor</th>
             <th scope="col">Ações</th>
           </tr>
@@ -79,9 +79,9 @@
                             @endif
                         </th>
                         <td>{{ date('d/m/Y H:i:s', strtotime($transacao->data)) }}</td>
-                        <td>{{ Str::limit($transacao->conta->pluck_name, 80) }}</td>
-                        <td>{{ $transacao->ticket }}</td>
-                        <td>{{ Str::limit($transacao->codigo_transacao, 16) }}</td>
+                        <td class="show-over-500">{{ Str::limit($transacao->conta->pluck_name, 80) }}</td>
+                        <td class="show-over-500">{{ $transacao->ticket }}</td>
+                        <td class="show-over-500">{{ Str::limit($transacao->codigo_transacao, 16) }}</td>
                         <td>
                             {{ $transacao->valor }}
                         </td>

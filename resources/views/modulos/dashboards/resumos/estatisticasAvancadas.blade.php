@@ -5,17 +5,17 @@
     </div>
 </nav>
 
-<div class="tab-content" id="nav-tabContentEstAva">
-    <div class="tab-pane fade show active" id="nav-operacoes-est-ava" role="tabpanel" aria-labelledby="nav-operacoes-tab-est-ava">
+<div class="tab-content d-flex flex-column flex-grow-1" id="nav-tabContentEstAva">
+    <div class="tab-pane fade show active d-flex flex-column flex-grow-1" id="nav-operacoes-est-ava" role="tabpanel" aria-labelledby="nav-operacoes-tab-est-ava">
 
         <div class="row" style="padding-top:10px;">
             <div class="col-sm-12 col-md-6 col-lg-6 fs12 " >
                 <div class="row">
-                    <div class="col-sm-7 col-md-7 col-lg-7 padb-5">Operações:</div>
-                    <div id="nrOperacoesEstAva" class="col-sm-5 col-md-5 col-lg-5 text-right">-</div>
+                    <div class="col-7 col-sm-7 col-md-7 col-lg-7 padb-5 estAva-row">Operações:</div>
+                    <div id="nrOperacoesEstAva" class="col-5 col-sm-5 col-md-5 col-lg-5 text-right estAva-row">-</div>
 
-                    <div class="col-sm-7 col-md-7 col-lg-7 padb-5">Ganhos/Perdas:</div>
-                    <div class="col-sm-5 col-md-5 col-lg-5 text-right">
+                    <div class="col-7 col-sm-7 col-md-7 col-lg-7 padb-5 estAva-row">Ganhos/Perdas:</div>
+                    <div class="col-5 col-sm-5 col-md-5 col-lg-5 text-right estAva-row">
                         <div class="progress" id="gainLossBarEstAva" data-toggle="tooltip" data-placement="top"
                         title="-">
                             <div class="progress-bar bg-success" role="progressbar" id="gainBarEstAva"
@@ -25,48 +25,48 @@
                           </div>
                     </div>
 
-                    <div class="col-sm-7 col-md-7 col-lg-7 padb-5">Pontos:</div>
-                    <div id="pontosSaldoEstAva" class="col-sm-5 col-md-5 col-lg-5 text-right">-</div>
+                    <div class="col-7 col-sm-7 col-md-7 col-lg-7 padb-5 estAva-row">Pontos:</div>
+                    <div id="pontosSaldoEstAva" class="col-5 col-sm-5 col-md-5 col-lg-5 text-right estAva-row">-</div>
 
-                    <div class="col-sm-4 col-md-4 col-lg-4 padb-5">Média Ganho:</div>
-                    <div id="medGanhoEstAva" class="col-sm-8 col-md-8 col-lg-8 text-right">-</div>
+                    <div class="col-4 col-sm-4 col-md-4 col-lg-4 padb-5 estAva-row">Média Ganho:</div>
+                    <div id="medGanhoEstAva" class="col-8 col-sm-8 col-md-8 col-lg-8 text-right estAva-row">-</div>
 
-                    <div class="col-sm-4 col-md-4 col-lg-4 padb-5">Média Perda:</div>
-                    <div id="medPerdaEstAva" class="col-sm-8 col-md-8 col-lg-8 text-right">-</div>
+                    <div class="col-4 col-sm-4 col-md-4 col-lg-4 padb-5 estAva-row">Média Perda:</div>
+                    <div id="medPerdaEstAva" class="col-8 col-sm-8 col-md-8 col-lg-8 text-right estAva-row">-</div>
 
-                    <div class="col-sm-7 col-md-7 col-lg-7 padb-5">Comissões:</div>
-                    <div id="comissoesEstAva" class="col-sm-5 col-md-5 col-lg-5 text-right">-</div>
+                    <div class="col-7 col-sm-7 col-md-7 col-lg-7 padb-5 estAva-row">Comissões:</div>
+                    <div id="comissoesEstAva" class="col-5 col-sm-5 col-md-5 col-lg-5 text-right estAva-row">-</div>
                 </div>
             </div>
             <div class="col-sm-12 col-md-6 col-lg-6 fs12 " >
                 <div class="row">
-                    <div class="col-sm-7 col-md-7 col-lg-7 padb-5 fbold"
+                    <div class="col-7 col-sm-7 col-md-7 col-lg-7 padb-5 fbold estAva-row"
                         id="ftLcEstAvLabel" data-toggle="tooltip" data-placement="top"
                         title="O FATOR DE LUCRO mostra quantas vezes o lucro bruto (Soma de todas as negociações vencedoras) excede a perda bruta (Soma de todas as negociações perdedoras). Quanto maior o valor, melhor."
                         ><b class="pontilhado">Fator de Lucro:</b></div>
-                    <div id="fatorLucroEstAva" class="col-sm-5 col-md-5 col-lg-5 text-right fbold">-</div>
+                    <div id="fatorLucroEstAva" class="col-5 col-sm-5 col-md-5 col-lg-5 text-right fbold estAva-row">-</div>
 
-                    <div class="col-sm-5 col-md-5 col-lg-5 padb-5">Melhor Trade($):</div>
-                    <div id="melhorOperValorEstAva" class="col-sm-7 col-md-7 col-lg-7 text-right" >-</div>
+                    <div class="col-5 col-sm-5 col-md-5 col-lg-5 padb-5 estAva-row">Melhor Trade($):</div>
+                    <div id="melhorOperValorEstAva" class="col-7 col-sm-7 col-md-7 col-lg-7 text-right estAva-row" >-</div>
 
-                    <div class="col-sm-5 col-md-5 col-lg-5 padb-5">Pior Trade($):</div>
-                    <div id="piorOperValorEstAva" class="col-sm-7 col-md-7 col-lg-7 text-right" >-</div>
+                    <div class="col-5 col-sm-5 col-md-5 col-lg-5 padb-5 estAva-row">Pior Trade($):</div>
+                    <div id="piorOperValorEstAva" class="col-7 col-sm-7 col-md-7 col-lg-7 text-right estAva-row" >-</div>
 
-                    <div class="col-sm-5 col-md-5 col-lg-5 padb-5">Melhor Trade(Pts):</div>
-                    <div id="melhorOperPontosEstAva" class="col-sm-7 col-md-7 col-lg-7 text-right" >-</div>
+                    <div class="col-5 col-sm-5 col-md-5 col-lg-5 padb-5 estAva-row">Melhor Trade(Pts):</div>
+                    <div id="melhorOperPontosEstAva" class="col-7 col-sm-7 col-md-7 col-lg-7 text-right estAva-row" >-</div>
 
-                    <div class="col-sm-5 col-md-5 col-lg-5 padb-5">Pior Trade(Pts):</div>
-                    <div id="piorOperPontosEstAva" class="col-sm-7 col-md-7 col-lg-7 text-right" >-</div>
+                    <div class="col-5 col-sm-5 col-md-5 col-lg-5 padb-5 estAva-row">Pior Trade(Pts):</div>
+                    <div id="piorOperPontosEstAva" class="col-7 col-sm-7 col-md-7 col-lg-7 text-right estAva-row" >-</div>
 
-                    <div class="col-sm-5 col-md-5 col-lg-5 padb-5">Duração Média:</div>
-                    <div id="durMediaEstAva" class="col-sm-7 col-md-7 col-lg-7 text-right" >-</div>
+                    <div class="col-5 col-sm-5 col-md-5 col-lg-5 padb-5 estAva-row">Duração Média:</div>
+                    <div id="durMediaEstAva" class="col-7 col-sm-7 col-md-7 col-lg-7 text-right estAva-row" >-</div>
                 </div>
             </div>
         </div>
 
         <hr class="hr3 mar-5" width="100%">
 
-        <div class="row" style="padding-top:10px;">
+        <div class="row flex-grow-1" style="padding-top:10px; overflow: hidden; min-height: 100px;">
             <div class="col-sm-12 col-md-12 col-lg-12 fs12 " >
                 <div class="row">
                     <table id="tableAtivosEstAva" class="table table-sm table-striped table-scroll text-center fbold">

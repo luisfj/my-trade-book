@@ -52,14 +52,14 @@
         <thead>
           <tr>
             <th scope="col" class="text-center">Data Importação</th>
-            <th scope="col">Arquivo</th>
-            <th scope="col" class="text-right">N° Operações</th>
-            <th scope="col" class="text-right">$ Operações</th>
-            <th scope="col" class="text-right">Nº Depósitos/Saques</th>
-            <th scope="col" class="text-right">$ Depósitos/Saques</th>
-            <th scope="col" class="text-center">Primeira Operação</th>
-            <th scope="col" class="text-center">Ultima Operação</th>
-            <th scope="col">Corretora</th>
+            <th scope="col" class="show-over-800">Arquivo</th>
+            <th scope="col" class="text-right ">N° Operações</th>
+            <th scope="col" class="text-right show-over-800">$ Operações</th>
+            <th scope="col" class="text-right show-over-1200">Nº Depósitos/Saques</th>
+            <th scope="col" class="text-right show-over-1200">$ Depósitos/Saques</th>
+            <th scope="col" class="text-center show-over-500">Primeira Operação</th>
+            <th scope="col" class="text-center show-over-800">Ultima Operação</th>
+            <th scope="col" class="show-over-500">Corretora</th>
             <th scope="col">Ações</th>
           </tr>
         </thead>
@@ -69,14 +69,14 @@
                         <th scope="row" class="text-center">
                             {{ $importacao->data_importacao_formatado }}
                         </th>
-                        <td>{{ $importacao->arquivo }}</td>
-                        <td class="text-right">{{ $importacao->numero_operacoes }}</td>
-                        <td class="text-right">{{ $importacao->valor_operacoes_formatado }}</td>
-                        <td class="text-right">{{ $importacao->numero_transferencias }}</td>
-                        <td class="text-right">{{ $importacao->valor_transferencias_formatado }}</td>
-                        <td class="text-center">{{ $importacao->data_primeiro_registro_formatado }}</td>
-                        <td class="text-center">{{ $importacao->data_ultimo_registro_formatado }}</td>
-                        <td>{{ $importacao->contaCorretora->corretora->nome }}</td>
+                        <td class="show-over-800">{{ $importacao->arquivo }}</td>
+                        <td class="text-right ">{{ $importacao->numero_operacoes }}</td>
+                        <td class="text-right show-over-800">{{ $importacao->valor_operacoes_formatado }}</td>
+                        <td class="text-right show-over-1200">{{ $importacao->numero_transferencias }}</td>
+                        <td class="text-right show-over-1200">{{ $importacao->valor_transferencias_formatado }}</td>
+                        <td class="text-center show-over-500">{{ $importacao->data_primeiro_registro_formatado }}</td>
+                        <td class="text-center show-over-800">{{ $importacao->data_ultimo_registro_formatado }}</td>
+                        <td class="show-over-500">{{ $importacao->contaCorretora->corretora->nome }}</td>
                         <td>
                             <a href="#" onclick="
                             swal({

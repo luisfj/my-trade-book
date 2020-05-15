@@ -52,13 +52,13 @@
         <thead>
           <tr>
             <th scope="col">Abertura</th>
-            <th scope="col">Ticket</th>
-            <th scope="col">Tipo</th>
+            <th scope="col" class="show-over-800">Ticket</th>
+            <th scope="col" class="show-over-500">Tipo</th>
             <th scope="col">Instrumento</th>
-            <th scope="col">Lotes</th>
-            <th scope="col">Conta Corretora</th>
+            <th scope="col" class="show-over-500">Lotes</th>
+            <th scope="col" class="show-over-500">Conta Corretora</th>
             <th scope="col">Fechamento</th>
-            <th scope="col">Tempo</th>
+            <th scope="col" class="show-over-800">Tempo</th>
             <th scope="col">Resultado</th>
           </tr>
         </thead>
@@ -73,13 +73,13 @@
                             @endif
                             {{ $operacao->abertura_formatado }}
                         </th>
-                        <td>{{ $operacao->ticket }}</td>
-                    <td class="{{ $operacao->tipo == 'buy' ? 'text-info' : 'text-warning' }}">{{ $operacao->tipo }}</td>
+                        <td class="show-over-800">{{ $operacao->ticket }}</td>
+                        <td class="{{ $operacao->tipo == 'buy' ? 'text-info' : 'text-warning' }} show-over-500">{{ $operacao->tipo }}</td>
                         <td>{{ $operacao->instrumento->nome }}</td>
-                        <td>{{ $operacao->lotes }}</td>
-                        <td>{{ $operacao->contaCorretora->corretora->nome }}</td>
+                        <td class="show-over-500">{{ $operacao->lotes }}</td>
+                        <td class="show-over-500">{{ $operacao->contaCorretora->corretora->nome }}</td>
                         <td>{{ $operacao->fechamento_formatado }}</td>
-                        <td>{{ $operacao->duracao_trade_formatado }}</td>
+                        <td class="show-over-800">{{ $operacao->duracao_trade_formatado }}</td>
                         <td class="fbold">
                             {{ $operacao->resultado }}
                         </td>

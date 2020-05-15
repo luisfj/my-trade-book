@@ -4,7 +4,7 @@
 
     <div class="row justify-content-center">
 
-        <div class="col-md-2 marb-10 noPadding-with-lr-5 fs13">
+        <div class="col-12 col-md-4 col-xl-2 marb-10 noPadding-with-lr-5 fs13">
             <div class="card marb-5 altura-min-100p">
                 {{-- <div class="card-header">Dashboard</div> --}}
                 <div class="card-body">
@@ -13,16 +13,16 @@
             </div>
         </div>
 
-        <div class="col-md-5 marb-10 noPadding-with-lr-5">
+        <div class="col-12 col-md-8 col-xl-5 marb-10 noPadding-with-lr-5">
             <div class="card marb-5 altura-min-100p">
                 {{-- <div class="card-header">Dashboard</div> --}}
-                <div class="card-body">
+                <div class="card-body d-flex flex-column">
                     @include('modulos.dashboards.resumos.estatisticasAvancadas')
                 </div>
             </div>
         </div>
 
-        <div class="col-md-5 marb-10 noPadding-with-lr-5">
+        <div class="col-12 col-md-12 col-xl-5 marb-10 noPadding-with-lr-5">
             <div class="card marb-5 altura-min-100p">
                 <div class="card-body">
                     @include('modulos.dashboards.operacoes.evolucaoAnualDoSaldo')
@@ -30,7 +30,7 @@
             </div>
         </div>
 
-        <div class="col-md-7 marb-10 noPadding-with-lr-5">
+        <div class="col-12 col-md-12 col-xl-7 marb-10 noPadding-with-lr-5">
             <div class="card marb-5 altura-min-100p">
                 {{-- <div class="card-header">Dashboard</div> --}}
                 <div class="card-body">
@@ -39,7 +39,7 @@
             </div>
         </div>
 
-        <div class="col-md-5 marb-10 noPadding-with-lr-5">
+        <div class="col-12 col-md-12 col-xl-5 marb-10 noPadding-with-lr-5">
             <div class="card marb-5 altura-min-100p">
                 {{-- <div class="card-header">Dashboard</div> --}}
                 <div class="card-body">

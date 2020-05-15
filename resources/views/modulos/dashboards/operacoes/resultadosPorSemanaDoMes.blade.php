@@ -1,4 +1,4 @@
-<div class="col-md-6 marb-10 noPadding-with-lr-5">
+<div class="col-12 col-md-12 col-xl-6 marb-10 noPadding-with-lr-5">
     <div class="card marb-5 altura-min-100p">
         {{-- <div class="card-header">Dashboard</div> --}}
         <div class="card-body">
