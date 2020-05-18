@@ -60,9 +60,7 @@
 @parent
 <script>
 Chart.plugins.register({
-
     afterLayout: function(chart, options) {
-console.log('afterDatasetDraw');
         if(chart.canvas.id === 'chartEvolucaoSaldoAnual'){
             if(chart.width < 300){
                 chart.aspectRatio = 1.2;
