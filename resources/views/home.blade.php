@@ -64,15 +64,27 @@ Chart.plugins.register({
         if(chart.canvas.id === 'chartEvolucaoSaldoAnual'){
             if(chart.width < 300){
                 chart.aspectRatio = 1.2;
+            } else if(chart.width > 700){
+                chart.aspectRatio = 2.2;
+            } else if(chart.width > 500){
+                chart.aspectRatio = 1.7;
             } else {
                 chart.aspectRatio = 1.5;
             }
             chart.resize();
         } else if(chart.canvas.id === 'myChart'){
-            chart.aspectRatio = 1.9;
+            if(chart.width < 300){
+                chart.aspectRatio = 1.2;
+            } else {
+                chart.aspectRatio = 1.8;
+            }
             chart.resize();
         } else if(chart.canvas.id === 'chartEvoMes'){
-            chart.aspectRatio = 1.2;
+            if(chart.width < 600){
+                chart.aspectRatio = 1.2;
+            } else {
+                chart.aspectRatio = 1.2;
+            }
             chart.resize();
         } else if(chart.canvas.id === 'chartResultadosHDD' || chart.canvas.id === 'chartPontosHDD'){
             chart.aspectRatio = 1.7;
