@@ -55,3 +55,32 @@
     </div>
 
 @endsection
+
+@section('page-script')
+@parent
+<script>
+Chart.plugins.register({
+
+    afterLayout: function(chart, options) {
+console.log('afterDatasetDraw');
+        if(chart.canvas.id === 'chartEvolucaoSaldoAnual'){
+            if(chart.width < 300){
+                chart.aspectRatio = 1.2;
+            } else {
+                chart.aspectRatio = 1.5;
+            }
+            chart.resize();
+        } else if(chart.canvas.id === 'myChart'){
+            chart.aspectRatio = 1.9;
+            chart.resize();
+        } else if(chart.canvas.id === 'chartEvoMes'){
+            chart.aspectRatio = 1.2;
+            chart.resize();
+        } else if(chart.canvas.id === 'chartResultadosHDD' || chart.canvas.id === 'chartPontosHDD'){
+            chart.aspectRatio = 1.7;
+            chart.resize();
+        }
+    },
+});
+</script>
+@stop

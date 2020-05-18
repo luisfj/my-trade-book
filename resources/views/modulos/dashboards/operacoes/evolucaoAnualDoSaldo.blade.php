@@ -53,7 +53,7 @@
     </div>
     <div class="tab-pane fade show active" id="nav-dados-evo" role="tabpanel" aria-labelledby="nav-dados-tab-evo">
         <div id="spinnerEvo" class="spinner-border text-success"></div>
-        <canvas id="chartEvolucaoSaldoAnual" height="100px" width="200px" class="hidde-me"></canvas>
+        <canvas id="chartEvolucaoSaldoAnual" class="hidde-me"></canvas>
     </div>
 </div>
 
