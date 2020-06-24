@@ -23,9 +23,8 @@ class UsersController extends Controller
             throw new Exception("Sem autorização!");
         else
             $users = $this->users_tb
-                ->orderBy('role', 'asc')
-                ->orderBy('name', 'asc')
-                ->orderBy('created_at', 'asc')->paginate(10);
+                ->orderBy('role', 'desc')
+                ->orderBy('created_at', 'desc')->paginate(20);
 
         return view('modulos.admin.listaUsuarios', compact('users'));
     }

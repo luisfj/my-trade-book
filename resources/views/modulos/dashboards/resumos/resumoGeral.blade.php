@@ -192,7 +192,6 @@
         //$('#resCorrPercDiaria').html();
         //$('#resCorrPercMensal').html();
 
-
         $('#resCorrSaldo').html(formatarValor(contaCorretora.saldo, contaCorretora));
         if(data.maiorSaldoDiario){
             $('#resCorrMaxSaldo').html('<i class="fs10">(' +
@@ -213,7 +212,6 @@
             addTextSuccess($('#resCorrLucro'));
         else
             addTextDanger($('#resCorrLucro'));
-
 
         $('#resCorrDepositos').html(formatarValor(data.totalDepositos, contaCorretora));
         $('#resCorrRetiradas').html(formatarValor(data.totalSaques, contaCorretora));

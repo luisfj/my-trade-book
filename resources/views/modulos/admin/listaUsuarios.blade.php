@@ -4,13 +4,15 @@
     <h1>Listagem dos usuários do sistema</h1>
     <hr class="bg-warning">
 
-    <table class="table table-primary">
+    <table class="table table-primary table-sm">
         <thead>
           <tr>
             <th scope="col">Id</th>
             <th scope="col">Nome</th>
             <th scope="col">Email</th>
             <th scope="col">Email Verificado</th>
+            <th scope="col">C. Corretoras</th>
+            <th scope="col">Operações</th>
             <th scope="col">Criação</th>
             @if(Auth::user()->is_super_admin())
                 <th scope="col">Role</th>
@@ -26,6 +28,8 @@
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->email_verified_at }}</td>
+                        <td>{{ $user->contaCorretoraCount }}</td>
+                        <td>{{ $user->OperacoesCount }}</td>
                         <td>{{ $user->created_at }}</td>
                         @if(Auth::user()->is_super_admin())
                             <td>{{ $user->role }}</td>

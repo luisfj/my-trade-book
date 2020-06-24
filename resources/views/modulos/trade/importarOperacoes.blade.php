@@ -148,6 +148,8 @@
 @parent
 <script>
     var listaDeContas = [];
+    var listaDeEstrategias = [];
+    var comboEstrategiasDs = '';
 
     function calcularTotalResultado(array){
         return array.map(function (row) {
@@ -233,6 +235,15 @@
         atualizouConta();
     });
 
+    $.get('/estrategias-ativas', function(data){
+        listaDeEstrategias = data.estrategiasAtivas;
+        comboEstrategiasDs = '<select name="estrategia_id">';
+        $.each(listaDeEstrategias, function (id, nome) {
+            comboEstrategiasDs += '<option value="' + id + '">' + nome + '</option>';
+        });
+        comboEstrategiasDs += '<option value="null" selected>-- Selecione --</option></select>'
+    });
+
     function loadTextFromFile(ev, callbackText) {
         let file = ev.target.files[0];
         let reader = new FileReader();
@@ -294,6 +305,16 @@
         return instrumento;
     }
 
+    function estrategiaColumnFormatter(value, row){
+        return comboEstrategiasDs;
+    }
+
+    window.estrategiaInputEvents = {
+        'change select': function (e, value, row, index) {
+            row.estrategia_id = $(e.target).prop('value');
+        }
+    }
+
     function Transferencia(ticket, data, codigo, valor, tipo = null) {
             this.tipo = tipo == null ? ((valor * 1) > 0 ? 'D' : 'S' ) : tipo;
             this.ticket = ticket;
@@ -301,6 +322,7 @@
             this.codigo = codigo;
             this.valor = valor;
             this.dataFormatada = formatarDataHora(this.data);
+            this.capExt = false;
     }
 
     function Operacao(tipo, ticket, abertura, contratos, instrumento, preco_entrada, fechamento, preco_saida, comissao, impostos, swap, resultado, val_mep, val_men, dividePontos) {
@@ -322,6 +344,7 @@
         this.pontos = 0;
         this.tempo_operacao_dias = 0;
         this.tempo_operacao_horas = 0;
+        this.estrategia_id = 'null';
         this.mep = val_mep;
         this.men = val_men;
         this.calcularValores(dividePontos);

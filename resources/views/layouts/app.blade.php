@@ -41,6 +41,33 @@
 
             @include('layouts.top-bar')
             <div class="container">
+                <div aria-live="polite" aria-atomic="true" style="position: absolute; min-height: 200px; right: 10px; width: inherit; z-index: -100;">
+                    <!-- Position it -->
+                    <div style="position: absolute; top: 0; right: 0; text-align: -webkit-right;">
+                        <div class="toast" id="toast-success" data-delay="6000" style="width: fit-content;">
+                            <!--<div class="toast-header">
+                            <strong class="mr-auto">Atenção</strong>
+                            <small>11 mins ago</small>
+                            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            </div>-->
+                            <div class="toast-body btn-success">
+                                Ops. Um erro foi detectado, tente novamente em instantes!!
+                            </div>
+                        </div>
+                        <div class="toast" id="toast-error" data-delay="6000" style="width: fit-content;" >
+                            <div class="toast-body btn-danger">
+                                Ops. Um erro foi detectado, tente novamente em instantes!!
+                            </div>
+                        </div>
+                        <div class="toast" id="toast-info" data-delay="6000" style="width: fit-content;" >
+                            <div class="toast-body btn-info">
+                                Informação!!
+                            </div>
+                        </div>
+                    </div>
+                </div>
                     @if(session('success'))
                     <div class="alert alert-success">
                         <b>{{ session('success')['messages'] }}</b>

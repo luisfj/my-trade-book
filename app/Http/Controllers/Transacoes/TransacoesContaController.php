@@ -87,10 +87,11 @@ class TransacoesContaController extends Controller
 
     public function atualizar(Request $request, int $transacao_id){
         try {
-            $dados = $request->except(['_token', '_method', 'conta_id']);
+            $compoemCapAlocExt = $request->capExt;
+            $dados = $request->except(['_token', '_method', 'conta_id', 'capExt']);
 
             DB::beginTransaction();
-            $this->service->atualizaTransacao($dados, $transacao_id);
+            $this->service->atualizaTransacao($dados, $transacao_id, $compoemCapAlocExt);
             DB::commit();
 
             session()->flash('success', [
@@ -109,9 +110,10 @@ class TransacoesContaController extends Controller
 
     public function salvar(Request $request){
         try {
-            $dados = $request->except(['_token', '_method']);
+            $compoemCapAlocExt = $request->capExt;
+            $dados = $request->except(['_token', '_method', 'capExt']);
             DB::beginTransaction();
-            $transacao = $this->service->adicionarTransferencia($dados);
+            $transacao = $this->service->adicionarTransferencia($dados, $compoemCapAlocExt);
             DB::commit();
             session()->flash('success', [
                 'messages' => 'Transação adicionada com sucesso!',

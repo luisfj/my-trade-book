@@ -13,7 +13,7 @@ class ContaCorretora extends Model
     use Sluggable;
 
     protected $fillable = ['identificador','entradas','saidas','saldo','dtabertura','ativa','tipo','exibirnopainel','moeda_id','corretora_id', 'usuario_id',
-            'operacoes_abertas', 'operacoes_fechadas', 'padrao', 'real_demo', 'slug'];
+            'operacoes_abertas', 'operacoes_fechadas', 'padrao', 'real_demo', 'slug', 'capitalAlocado_id'];
 
     public function sluggable()
     {
@@ -48,6 +48,7 @@ class ContaCorretora extends Model
     public function transacoes(){
         return $this->hasMany(DepositoEmConta::class, 'conta_id');
     }
+
 
     public function getPluckNameAttribute()
     {

@@ -1,8 +1,8 @@
-<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editarCorretora"  aria-hidden="true">
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editarEstrategia"  aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Editar Depósito/Saque</h4>
+                <h4 class="modal-title">Editar Estratégia</h4>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -12,10 +12,10 @@
                 <b></b>
             </div>
 
-            <form id="formEdit" method="PUT" action="{{ route('transacao.update', -1) }}">
+            <form id="formEdit" method="PUT" action="{{ route('estrategias.update', -1) }}">
                 {{ csrf_field() }}
                 <div class="modal-body">
-                    @include('modulos.transacoesConta.templates.formTransacao')
+                    @include('modulos.trade.templates.formEstrategias')
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-warning" data-dismiss="modal">Fechar</button>
@@ -26,11 +26,11 @@
     </div>
 </div>
 
-<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="adicionarCorretora"  aria-hidden="true">
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="adicionarEstrategia"  aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Adicionar Depósito/Saque</h4>
+                <h4 class="modal-title">Adicionar Estratégia</h4>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -40,10 +40,10 @@
                 <b></b>
             </div>
 
-            <form id="formAdd" method="POST" action="{{ route('transacao.create') }}">
+            <form id="formAdd" method="POST" action="{{ route('estrategias.create') }}">
                 {{ csrf_field() }}
                 <div class="modal-body">
-                    @include('modulos.transacoesConta.templates.formTransacao')
+                    @include('modulos.trade.templates.formEstrategias')
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-warning" data-dismiss="modal">Fechar</button>
@@ -59,20 +59,6 @@
     $(document).ready(function(){
         let cId = null;
 
-        function changeTipo(tipo, modal){
-            if(tipo.val() == 'D') {//se Deposito
-                modal.find('#iconDeposito').removeClass('hidde-me');
-                modal.find('#iconSaque').addClass('hidde-me');
-                tipo.addClass('text-success');
-                tipo.removeClass('text-warning');
-            } else if(tipo.val() == 'S'){ //se Saque
-                modal.find('#iconDeposito').addClass('hidde-me');
-                modal.find('#iconSaque').removeClass('hidde-me');
-                tipo.removeClass('text-success');
-                tipo.addClass('text-warning');
-            }
-        }
-
         $('#btnSalvarNovo').on('click', function (event) {
             if(!$('#errorMessage').hasClass('hidde-me'))
                 $('#errorMessage').addClass('hidde-me');
@@ -87,7 +73,7 @@
             $.post( $('#formAdd').attr('action'), $('#formAdd').serialize(), function(data) {
                 if(data.success){
                     location.reload(true);
-                } else {
+                } else {console.log(data);
                     $('#errorMessage').removeClass('hidde-me');
                     $('#errorMessage b').html(data.error);
                 }
@@ -112,7 +98,6 @@
                 type: 'PUT',
                 data: $('#formEdit').serialize(),
                 success: function(data) {
-                    console.log(data);
                     if(data.success){
                         location.reload(true);
                     } else {
@@ -120,25 +105,16 @@
                         $('#errorMessageEdit b').html(data.error);
                     }
                 }
-            });
+                });
 
         });
 
         function validarFormulario(formulario, isUpdate = false) {
             let erros = '';
-            if(!$(formulario[0].data).val())
-                erros += '<li>Data deve ser informada!</li>';
-            if(!$(formulario[0].valor).val())
-                erros += '<li>Valor deve ser informado!</li>';
-            if(!$(formulario[0].conta_id).val() && !isUpdate)
-                erros += '<li>Deve selecionar uma conta válida no filtro para adicionar transações!</li>';
-            if(!erros){
-                let valor = $(formulario[0].valor).val().replace(',', '.') * 1;
-                let tipo  = $(formulario[0].tipo).val();
-                if(tipo == 'D' && valor < 0 || tipo == 'S' && valor > 0){
-                    $(formulario[0].valor).val((valor * -1));
-                }
-            }
+            if(!$(formulario[0].nome).val())
+                erros += '<li>Nome deve ser informado!</li>';
+            else
+                $(formulario[0].nome).val( $(formulario[0].nome).val().toUpperCase() );
             return erros ? '<ul>'+erros+'</ul>' : null;
         }
 
@@ -154,31 +130,20 @@
             var modal = $(this)
             //modal.find('.modal-title').text('Editar url = ' + urlEdit)
 
-            $.getJSON(urlEdit , function(data){
-                modal.find("#corretora_nm").html(' - (' + data.transacao.conta.identificador +') ' + data.transacao.conta.corretora.nome);
+            $.getJSON(urlEdit , function(data){console.log(data);
+                modal.find('#nome').val(data.estrategia.nome);
+                modal.find('#descricao').val(data.estrategia.descricao);
 
-                modal.find('#data').val($.format.date(data.transacao.data, "yyyy-MM-ddTHH:mm:ss"));//.toJSON().slice(0,19)
-                modal.find('#ticket').val(data.transacao.ticket);
-                modal.find('#codigo_transacao').val(data.transacao.codigo_transacao);
-                modal.find('#valor').val(data.transacao.valor);
-                modal.find('#tipo').val(data.transacao.tipo);
-
-                if(data.transacao.capitalAlocado_id)
-                    modal.find('#capExt').attr('checked', 'checked');
+                if(data.estrategia.ativa)
+                    modal.find('#ativa').attr('checked', 'checked');
                 else
-                    modal.find('#capExt').removeAttr('checked');
+                    modal.find('#ativa').removeAttr('checked');
 
-                cId = data.transacao.id;
+                cId = data.estrategia.id;
 
                 var actUrl = modal.find('#formEdit').attr('action');
                 actUrl = actUrl.replace('-1', cId);
                 modal.find('#formEdit').attr('action', actUrl);
-
-                changeTipo(modal.find("#tipo"), modal);
-            });
-
-            modal.find("#tipo").on('change', function name(event) {
-                changeTipo(modal.find("#tipo"), modal);
             });
         });
 
@@ -188,26 +153,13 @@
                 $('#errorMessage').addClass('hidde-me');
 
             var button = $(event.relatedTarget) // Button that triggered the modal
-            var conta_id = button.data('conta_id') // Extract info from data-* attributes
             // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
             // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
             var modal = $(this)
             //modal.find('.modal-title').text('Editar url = ' + urlEdit)
-
-            $.getJSON( ('conta-corretora-id/' + conta_id) , function(data){
-                modal.find("#corretora_nm").html(' - (' + data.conta.identificador +') ' + data.conta.corretora.nome);
-            });
-
-            modal.find('#conta_id').val(conta_id);
-            modal.find('#capExt').removeAttr('checked');
-
-            changeTipo(modal.find("#tipo"), modal);
-
-            modal.find("#tipo").on('change', function name(event) {
-                changeTipo(modal.find("#tipo"), modal);
-            });
-
+            modal.find('#ativa').attr('checked', 'checked');
         });
     });
+
     </script>
 @endsection

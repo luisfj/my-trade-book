@@ -11,11 +11,13 @@ class DepositoEmContaService
 {
     private $repository;
     private $contaService;
+    private $capAlocadoService;
 
-    public function __construct(DepositoEmConta $repository, ContaCorretoraService $contaService)
+    public function __construct(DepositoEmConta $repository, ContaCorretoraService $contaService, CapitalAlocadoService $capAlocadoService)
     {
         $this->repository = $repository;
         $this->contaService = $contaService;
+        $this->capAlocadoService = $capAlocadoService;
     }
 
     public function create($dados)
@@ -68,16 +70,23 @@ class DepositoEmContaService
         return $dep;
     }
 
-    public function adicionarTransferencia($dados)
+    public function adicionarTransferencia($dados, $capExterno)
     {
         $conta_obj = $this->contaService->getById($dados['conta_id']);
+        if($capExterno){
+            $dados['capitalAlocado_id'] = $this->capAlocadoService->getByUserOrCreate()->id;
+        } else {
+            $dados['capitalAlocado_id'] = null;
+        }
         $conta_obj->transacoes()->create($dados);
         $this->contaService->atualizarSaldoContaPorTransferencia($conta_obj, $dados['valor']);
     }
 
-    public function adicionarSeNaoExistir($tipo, $ticket, $data, $codigo, $valor, $conta_obj, $regImport)
+    public function adicionarSeNaoExistir($tipo, $ticket, $data, $codigo, $valor, $conta_obj, $regImport, $capExt)
     {
         $deposito = $conta_obj->transacoes()->where('ticket', $ticket)->first();
+        $capAlocado = ($capExt ? $this->capAlocadoService->getByUserOrCreate()->id : null);
+
         if(!$deposito){
             $conta_obj->transacoes()->create(
                 ['tipo' => $tipo,
@@ -86,7 +95,9 @@ class DepositoEmContaService
                  'codigo_transacao' => $codigo,
                  'valor' => $valor,
                  'conta_id' => $conta_obj->id,
-                 'registro_importacao_id' => $regImport->id]
+                 'registro_importacao_id' => $regImport->id,
+                 'capitalAlocado_id' => $capAlocado
+                 ]
             );
             $this->contaService->atualizarSaldoContaPorTransferencia($conta_obj, $valor);
             return true;
@@ -119,9 +130,14 @@ class DepositoEmContaService
         $transacao->delete();
     }
 
-    public function atualizaTransacao($dados, $id)
+    public function atualizaTransacao($dados, $id, $capExterno)
     {
         $transacao = $this->getById($id);
+        if($capExterno){
+            $transacao->capitalAlocado_id = $transacao->conta->capitalAlocado_id;
+        } else {
+            $transacao->capitalAlocado_id = null;
+        }
         $ticket_original = $transacao->ticket;
         $contraparte = $transacao->contraparte;
         $diferencaValor = ValoresHelper::converterStringParaValor($transacao->valor);

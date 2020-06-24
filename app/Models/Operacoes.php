@@ -13,10 +13,14 @@ class Operacoes extends Model
         'precoentrada', 'precosaida', 'tipo', 'lotes', 'comissao', 'impostos', 'swap',
         'resultadobruto', 'resultado', 'pips', 'importacao', 'moeda_id', 'instrumento_id',
         'conta_corretora_id', 'usuario_id', 'tempo_operacao_dias', 'tempo_operacao_horas',
-        'mep', 'men', 'registro_importacao_id'];
+        'mep', 'men', 'registro_importacao_id', 'estrategia_id'];
 
     public function instrumento(){
         return $this->belongsTo(Instrumento::class, 'instrumento_id');
+    }
+
+    public function estrategia(){
+        return $this->belongsTo(Estrategia::class, 'estrategia_id');
     }
 
     public function moeda(){

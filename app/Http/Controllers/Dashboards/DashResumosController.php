@@ -8,6 +8,7 @@ use App\Models\Moeda;
 use App\Services\Trade\ContaCorretoraService;
 use App\Services\Trade\InstrumentoService;
 use App\Services\Trade\OperacoesService;
+use App\Services\Trade\CapitalAlocadoService;
 
 class DashResumosController extends Controller
 {
@@ -15,13 +16,16 @@ class DashResumosController extends Controller
     private $moeda_tb;
     private $contaCorretoraService;
     private $instrumentoService;
+    private $capitalAlocadoService;
 
-    public function __construct(OperacoesService $operacoesService, ContaCorretoraService $contaCorretoraService, InstrumentoService $instrumentoService, Moeda $moeda_tb)
+    public function __construct(OperacoesService $operacoesService, ContaCorretoraService $contaCorretoraService, InstrumentoService $instrumentoService,
+                                Moeda $moeda_tb, CapitalAlocadoService $capitalAlocadoService)
     {
         $this->operacoesService   = $operacoesService;
         $this->moeda_tb  = $moeda_tb;
         $this->contaCorretoraService =  $contaCorretoraService;
         $this->instrumentoService    =  $instrumentoService;
+        $this->capitalAlocadoService = $capitalAlocadoService;
     }
 
     public function buscarHistoricoContaCorretora(Request $request)
@@ -34,18 +38,18 @@ class DashResumosController extends Controller
                 $contaCorretorasSelecionada = $filtros['resCorrSelecionada'];
             }
 
-            $dataPrimeiroTrade = null;
-            $maiorSaldoDiario  = null;
-            $resultadoTotal    = null;
-            $totalDepositos    = null;
-            $totalSaques       = null;
+            $dataPrimeiroTrade   = null;
+            $maiorSaldoDiario    = null;
+            $resultadoTotal      = null;
+            $totalDepositos      = null;
+            $totalSaques         = null;
 
             if($contaCorretorasSelecionada != null) {
-                $dataPrimeiroTrade  = $this->operacoesService->getDataPrimeiraOperacao($contaCorretorasSelecionada);
-                $maiorSaldoDiario   = $this->operacoesService->getMaiorSaldoDiario($contaCorretorasSelecionada);
-                $resultadoTotal     = $this->operacoesService->getResultadoDaConta($contaCorretorasSelecionada);
-                $totalDepositos     = $this->contaCorretoraService->getTotalDepositos($contaCorretorasSelecionada);
-                $totalSaques        = $this->contaCorretoraService->getTotalSaques($contaCorretorasSelecionada);
+                $dataPrimeiroTrade   = $this->operacoesService->getDataPrimeiraOperacao($contaCorretorasSelecionada);
+                $maiorSaldoDiario    = $this->operacoesService->getMaiorSaldoDiario($contaCorretorasSelecionada);
+                $resultadoTotal      = $this->operacoesService->getResultadoDaConta($contaCorretorasSelecionada);
+                $totalDepositos      = $this->contaCorretoraService->getTotalDepositos($contaCorretorasSelecionada);
+                $totalSaques         = $this->contaCorretoraService->getTotalSaques($contaCorretorasSelecionada);
             }
 
             return response()->json(compact(['dataPrimeiroTrade', 'maiorSaldoDiario', 'resultadoTotal', 'totalDepositos', 'totalSaques']));

@@ -12,10 +12,10 @@
                 <b></b>
             </div>
 
-            <form id="formEdit" method="PUT" action="{{ route('transacao.update', -1) }}">
+            <form id="formEdit" method="PUT" action="{{ route('capital.alocado.update', -1) }}">
                 {{ csrf_field() }}
                 <div class="modal-body">
-                    @include('modulos.transacoesConta.templates.formTransacao')
+                    @include('modulos.capitalAlocado.templates.formTransacaoAlocado')
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-warning" data-dismiss="modal">Fechar</button>
@@ -40,10 +40,10 @@
                 <b></b>
             </div>
 
-            <form id="formAdd" method="POST" action="{{ route('transacao.create') }}">
+            <form id="formAdd" method="POST" action="{{ route('capital.alocado.create') }}">
                 {{ csrf_field() }}
                 <div class="modal-body">
-                    @include('modulos.transacoesConta.templates.formTransacao')
+                    @include('modulos.capitalAlocado.templates.formTransacaoAlocado')
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-warning" data-dismiss="modal">Fechar</button>
@@ -78,7 +78,7 @@
                 $('#errorMessage').addClass('hidde-me');
 
             let erros = validarFormulario($('#formAdd'));
-            if(erros){
+            if(erros){ console.log("deu erro");
                 $('#errorMessage').removeClass('hidde-me');
                 $('#errorMessage b').html(erros);
                 return;
@@ -88,6 +88,7 @@
                 if(data.success){
                     location.reload(true);
                 } else {
+                    console.log(data);
                     $('#errorMessage').removeClass('hidde-me');
                     $('#errorMessage b').html(data.error);
                 }
@@ -112,7 +113,6 @@
                 type: 'PUT',
                 data: $('#formEdit').serialize(),
                 success: function(data) {
-                    console.log(data);
                     if(data.success){
                         location.reload(true);
                     } else {
@@ -120,7 +120,7 @@
                         $('#errorMessageEdit b').html(data.error);
                     }
                 }
-            });
+                });
 
         });
 
@@ -130,8 +130,7 @@
                 erros += '<li>Data deve ser informada!</li>';
             if(!$(formulario[0].valor).val())
                 erros += '<li>Valor deve ser informado!</li>';
-            if(!$(formulario[0].conta_id).val() && !isUpdate)
-                erros += '<li>Deve selecionar uma conta válida no filtro para adicionar transações!</li>';
+
             if(!erros){
                 let valor = $(formulario[0].valor).val().replace(',', '.') * 1;
                 let tipo  = $(formulario[0].tipo).val();
@@ -155,18 +154,11 @@
             //modal.find('.modal-title').text('Editar url = ' + urlEdit)
 
             $.getJSON(urlEdit , function(data){
-                modal.find("#corretora_nm").html(' - (' + data.transacao.conta.identificador +') ' + data.transacao.conta.corretora.nome);
+                //modal.find("#corretora_nm").html(' - (' + data.transacao.conta.identificador +') ' + data.transacao.conta.corretora.nome);
 
                 modal.find('#data').val($.format.date(data.transacao.data, "yyyy-MM-ddTHH:mm:ss"));//.toJSON().slice(0,19)
-                modal.find('#ticket').val(data.transacao.ticket);
-                modal.find('#codigo_transacao').val(data.transacao.codigo_transacao);
                 modal.find('#valor').val(data.transacao.valor);
                 modal.find('#tipo').val(data.transacao.tipo);
-
-                if(data.transacao.capitalAlocado_id)
-                    modal.find('#capExt').attr('checked', 'checked');
-                else
-                    modal.find('#capExt').removeAttr('checked');
 
                 cId = data.transacao.id;
 
@@ -188,18 +180,13 @@
                 $('#errorMessage').addClass('hidde-me');
 
             var button = $(event.relatedTarget) // Button that triggered the modal
-            var conta_id = button.data('conta_id') // Extract info from data-* attributes
+            var conta_id = button.data('capitalalocado_id') // Extract info from data-* attributes
             // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
             // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
             var modal = $(this)
             //modal.find('.modal-title').text('Editar url = ' + urlEdit)
 
-            $.getJSON( ('conta-corretora-id/' + conta_id) , function(data){
-                modal.find("#corretora_nm").html(' - (' + data.conta.identificador +') ' + data.conta.corretora.nome);
-            });
-
-            modal.find('#conta_id').val(conta_id);
-            modal.find('#capExt').removeAttr('checked');
+            modal.find('#capitalAlocado_id').val(conta_id);
 
             changeTipo(modal.find("#tipo"), modal);
 

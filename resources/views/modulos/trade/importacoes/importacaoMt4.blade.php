@@ -61,12 +61,12 @@
                         <th data-field="tipo" data-formatter="tipoTradeColumnMt4Formatter">(Res) Tipo</th>
                         <th data-field="instrumento">Ativo</th>
                         <th data-field="ticket">Ticket</th>
-                        <th data-field="codigo">Código</th>
                         <th data-field="abertura" data-halign="center" data-align="center" data-formatter="dataComSegundosColumnMt4Formatter">Abertura</th>
                         <th data-field="fechamento" data-halign="center" data-align="center" data-formatter="dataComSegundosColumnMt4Formatter">Fechamento</th>
                         <th data-field="tempo_operacao_horas" data-formatter="tempoTradeColumnMt4Formatter">Tempo</th>
                         <th data-field="contratos" data-footer-formatter="footerTotalDescricaoMt4"
                                 data-halign="right" data-align="right">Contratos</th>
+                        <th data-field="estrategia" data-formatter="estrategiaColumnFormatter" data-events="estrategiaInputEvents">Estratégia</th>
                         <th data-field="pontos" data-footer-formatter="pontosTotalMt4Formatter"
                                 data-halign="right" data-align="right">Pontos</th>
                         <th data-field="resultado" data-formatter="valorTradeColumnMt4Formatter" data-footer-formatter="valorTotalMt4Formatter"
@@ -95,6 +95,7 @@
                     <th data-field="dataFormatada" data-halign="center" data-align="center">Data</th>
                     <th data-field="ticket">Ticket</th>
                     <th data-field="codigo">Código</th>
+                    <th data-field="capExt" data-formatter="capExtColumnMt4Formatter" data-events="capExtInputEvents">Cap. Ext.?</th>
                     <th data-field="valor" data-formatter="valorColumnMt4Formatter" data-footer-formatter="valorTotalMt4Formatter"
                         data-halign="right" data-align="right">Valor</th>
                 </tr>
@@ -227,7 +228,7 @@
                 }
 
         $.post('/operacoes/importar', {dados: JSON.stringify(head)}, function(data) {
-                if(data.error){
+                if(data.error){console.log(data.error);
                     $('#spinnerImpSaveMt4').addClass('hidde-me');
                     $('#resImportMt4').removeClass('hidde-me');
                     $('#resImportMt4').removeClass('text-success');
@@ -437,6 +438,21 @@
     function tipoColumnMt4Formatter(tipo, row){
         return tipo == 'D' ? '<div class="text-success"><i class="material-icons md-18">save_alt</i> Depósito</div>'
                 : '<div class="text-warning"><i class="material-icons md-18">reply_all</i> Saque</div>';
+    }
+
+    function capExtColumnMt4Formatter(value){
+        var checked = value ? 'checked' : ''
+        return '<input name="capExt" type="checkbox" ' + checked + ' />'
+    }
+
+    window.capExtInputEvents = {
+        'change :checkbox': function (e, value, row, index) {
+            row.capExt = $(e.target).prop('checked');
+            $('#tableTransferencias').bootstrapTable('updateRow', {
+                index: index,
+                row: row
+            });
+        }
     }
 
     function valorTradeColumnMt4Formatter(valor, row){

@@ -51,11 +51,11 @@
                         <th data-field="tipo" data-formatter="tipoTradeColumnTrydFormatter">(Res) Tipo</th>
                         <th data-field="instrumento">Ativo</th>
                         <th data-field="ticket">Ticket</th>
-                        <th data-field="codigo">Código</th>
                         <th data-field="abertura" data-halign="center" data-align="center" data-formatter="dataComSegundosColumnTrydFormatter">Abertura</th>
                         <th data-field="fechamento" data-halign="center" data-align="center" data-formatter="dataComSegundosColumnTrydFormatter">Fechamento</th>
                         <th data-field="tempo_operacao_horas" data-formatter="tempoTradeColumnTrydFormatter">Tempo</th>
                         <th data-field="contratos" data-halign="right" data-align="right">Contratos</th>
+                        <th data-field="estrategia" data-formatter="estrategiaColumnFormatter" data-events="estrategiaInputEvents">Estratégia</th>
                         <th data-field="pontos" data-footer-formatter="footerTotalDescricaoTryd"
                                 data-halign="right" data-align="right">Pontos</th>
                         <th data-field="resultado" data-formatter="valorTradeColumnTrydFormatter" data-footer-formatter="valorTotalTrydFormatter"
@@ -318,7 +318,9 @@
 
         $.each(csv, function( index, row ) {
             if(index == 1){//cabeçalho
-                row[0].split(',').forEach(function (label, idx) {
+                let arrVal = (row[0].includes(',') ? row[0].split(',') : row);
+
+                arrVal.forEach(function (label, idx) {
                     if(label.toLowerCase().includes('data')){
                         indexData = idx;
                     } else if(label.toLowerCase().includes('papel')){
@@ -335,7 +337,7 @@
                         indexPrecoCompra = idx;
                     } else if(label.toLowerCase().includes('dio vda')){//preco medio venda
                         indexPrecoVenda = idx;
-                    } else if(label.toLowerCase().includes('result fech')){
+                    } else if(label.toLowerCase().includes('res. tot.')){
                         indexResultado = idx;
                     } else if(label.toLowerCase().includes('result aber')) {
                         indexResulAberto = idx;
@@ -346,10 +348,10 @@
                     }
                 });
             } else if(index > 1){
+                let linha = (row[0].includes(',') ? row[0].split(',"') : row);
+                let csvCorreto = !row[0].includes(',');
 
-                var linha = row[0].split(',"');
-
-                if(row[0] && linha && linha[indexResulAberto].includes('0,00')){
+                if(linha[indexResulAberto] && linha && (linha[indexResulAberto].includes('0,00') || linha[indexResulAberto].includes('0 pts')) ){
                     var val_abertura     = linha[indexData].replace('"','')+' '+linha[indexHoraAbertura].replace('"',''),
                         val_tipo         = converteCompraVendaEmBuySell(linha[indexTipo]),//converter em buy sell
                         val_contratos_aber = linha[indexContratos].replace('"',''),

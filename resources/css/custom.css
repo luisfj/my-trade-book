@@ -1,7 +1,12 @@
+.material-icons.md-15 { font-size: 15px; vertical-align: text-bottom;}
 .material-icons.md-18 { font-size: 18px; vertical-align: middle; }
 .material-icons.md-24 { font-size: 24px; vertical-align: middle; }
 .material-icons.md-36 { font-size: 36px; vertical-align: middle; }
 .material-icons.md-48 { font-size: 48px; vertical-align: middle; }
+.button-grid-sm {
+    padding: 0.1rem 0.25rem !important;
+    vertical-align: top !important;
+}
 .custom-control-input:disabled ~ .custom-control-label {
     color: #f8f9fa !important;
 }
@@ -132,6 +137,24 @@ g text {
 }
 .marr-25 {
     margin-right: 25px !important;
+}
+.marl-0 {
+    margin-left: 0px !important;
+}
+.marl-5 {
+    margin-left: 5px !important;
+}
+.marl-10 {
+    margin-left: 10px !important;
+}
+.marl-15 {
+    margin-left: 15px !important;
+}
+.marl-20 {
+    margin-left: 20px !important;
+}
+.marl-25 {
+    margin-left: 25px !important;
 }
 .mar-0 {
     margin: 0px !important;
@@ -411,3 +434,7 @@ g text {
 ::-webkit-scrollbar-corner { background-color: #646464;}
 ::-webkit-resizer { background-color: #666;}
 /* FIM Configuração do scrool do site para dark*/
+
+.table-com-detalhe-primary .detail-view {
+    background-color: #32383e !important;
+}

@@ -51,11 +51,11 @@
                         <th data-field="tipo" data-formatter="tipoTradeColumnNinjaFormatter">(Res) Tipo</th>
                         <th data-field="instrumento">Ativo</th>
                         <th data-field="ticket">Ticket</th>
-                        <th data-field="codigo">Código</th>
                         <th data-field="abertura" data-halign="center" data-align="center" data-formatter="dataComSegundosColumnNinjaFormatter">Abertura</th>
                         <th data-field="fechamento" data-halign="center" data-align="center" data-formatter="dataComSegundosColumnNinjaFormatter">Fechamento</th>
                         <th data-field="tempo_operacao_horas" data-formatter="tempoTradeColumnNinjaFormatter">Tempo</th>
                         <th data-field="contratos" data-halign="right" data-align="right">Contratos</th>
+                        <th data-field="estrategia" data-formatter="estrategiaColumnFormatter" data-events="estrategiaInputEvents">Estratégia</th>
                         <th data-field="pontos" data-footer-formatter="footerTotalDescricaoNinja"
                                 data-halign="right" data-align="right">Pontos</th>
                         <th data-field="resultado" data-formatter="valorTradeColumnNinjaFormatter" data-footer-formatter="valorTotalNinjaFormatter"

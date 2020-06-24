@@ -61,11 +61,11 @@
                         <th data-field="tipo" data-formatter="tipoTradeColumnCtraderFormatter">(Res) Tipo</th>
                         <th data-field="instrumento">Ativo</th>
                         <th data-field="ticket">Ticket</th>
-                        <th data-field="codigo">Código</th>
                         <th data-field="abertura" data-halign="center" data-align="center" data-formatter="dataComSegundosColumnCtraderFormatter">Abertura</th>
                         <th data-field="fechamento" data-halign="center" data-align="center" data-formatter="dataComSegundosColumnCtraderFormatter">Fechamento</th>
                         <th data-field="tempo_operacao_horas" data-formatter="tempoTradeColumnCtraderFormatter">Tempo</th>
                         <th data-field="contratos" data-halign="right" data-align="right">Contratos</th>
+                        <th data-field="estrategia" data-formatter="estrategiaColumnFormatter" data-events="estrategiaInputEvents">Estratégia</th>
                         <th data-field="pontos" data-footer-formatter="footerTotalDescricaoCtrader"
                                 data-halign="right" data-align="right">Pontos</th>
                         <th data-field="resultado" data-formatter="valorTradeColumnCtraderFormatter" data-footer-formatter="valorTotalCtraderFormatter"
@@ -94,6 +94,7 @@
                         <th data-field="dataFormatada" data-halign="center" data-align="center">Data</th>
                         <th data-field="ticket">Ticket</th>
                         <th data-field="codigo">Código</th>
+                        <th data-field="capExt" data-formatter="capExtColumnCTraderFormatter" data-events="capExtInputEventsCTrader">Cap. Ext.?</th>
                         <th data-field="valor" data-formatter="valorColumnCtraderFormatter" data-footer-formatter="valorTotalCtraderFormatter"
                             data-halign="right" data-align="right">Valor</th>
                     </tr>
@@ -543,6 +544,21 @@
 
     function dataComSegundosColumnCtraderFormatter(data, row) {
         return formatarDataHoraSegundos(data);
+    }
+
+    function capExtColumnCTraderFormatter(value){
+        var checked = value ? 'checked' : ''
+        return '<input name="capExt" type="checkbox" ' + checked + ' />'
+    }
+
+    window.capExtInputEventsCTrader = {
+        'change :checkbox': function (e, value, row, index) {
+            row.capExt = $(e.target).prop('checked');
+            $('#tableTransferenciasCtrader').bootstrapTable('updateRow', {
+                index: index,
+                row: row
+            });
+        }
     }
 
 </script>

@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
     <div class="row">
         <div class="col-lg-9 col-md-9 col-sm-12">
             <h1>
@@ -59,6 +60,7 @@
             <th scope="col" class="show-over-500">Conta Corretora</th>
             <th scope="col">Fechamento</th>
             <th scope="col" class="show-over-800">Tempo</th>
+            <th scope="col">Estratégia</th>
             <th scope="col">Resultado</th>
           </tr>
         </thead>
@@ -80,6 +82,24 @@
                         <td class="show-over-500">{{ $operacao->contaCorretora->corretora->nome }}</td>
                         <td>{{ $operacao->fechamento_formatado }}</td>
                         <td class="show-over-800">{{ $operacao->duracao_trade_formatado }}</td>
+                        <td>
+                            <form id="form-operacao-{{$operacao->id}}" method="POST" action="{{ route('operacao.estrategia.update') }}">
+                                {{ csrf_field() }}
+                                <span>{{ ($operacao->estrategia ? $operacao->estrategia->nome : '-') }}</span>
+                                <input type="hidden" name="operacaoId" value="{{$operacao->id}}">
+                                {!! Form::select('estrategia_id', $estrategia_lista, ($operacao->estrategia ? $operacao->estrategia->id : 'null'),
+                                    ['class' => 'form-control form-control-sm hidde-me'])  !!}
+                                <button type="button" name="editButton" onclick="editarEstrategia({{$operacao->id}})" class="btn btn-info btn-sm button-grid-sm">
+                                    <i class="material-icons md-15">edit</i>
+                                </button>
+                                <button type="button" name="saveButton" onclick="salvarEstrategia({{$operacao->id}})" class="btn btn-success btn-sm button-grid-sm hidde-me">
+                                    <i class="material-icons md-15">save</i>
+                                </button>
+                                <button type="button" name="cancelButton" onclick="cancelarEdicaoEstrategia({{$operacao->id}})" class="btn btn-warning btn-sm button-grid-sm hidde-me">
+                                    <i class="material-icons md-15">cancel</i>
+                                </button>
+                            </form>
+                        </td>
                         <td class="fbold">
                             {{ $operacao->resultado }}
                         </td>
@@ -90,3 +110,61 @@
         </tbody>
       </table>
 @endsection
+@section('page-script')
+@parent
+<script>
+    var selectedDefault = null;
+
+    function editarEstrategia(idForm) {
+        $('#form-operacao-'+idForm).find("[name='saveButton']").removeClass('hidde-me');
+        $('#form-operacao-'+idForm).find("[name='cancelButton']").removeClass('hidde-me');
+        $('#form-operacao-'+idForm).find("[name='estrategia_id']").removeClass('hidde-me');
+        $('#form-operacao-'+idForm).find("[name='editButton']").addClass('hidde-me');
+        $('#form-operacao-'+idForm).find("span").addClass('hidde-me');
+
+        selectedDefault = $('#form-operacao-'+idForm).find('[name="estrategia_id"')[0].value;
+    }
+
+    function cancelarEdicaoEstrategia(idForm) {
+        $('#form-operacao-'+idForm).find("[name='saveButton']").addClass('hidde-me');
+        $('#form-operacao-'+idForm).find("[name='cancelButton']").addClass('hidde-me');
+        $('#form-operacao-'+idForm).find("[name='estrategia_id']").addClass('hidde-me');
+        $('#form-operacao-'+idForm).find("[name='editButton']").removeClass('hidde-me');
+        $('#form-operacao-'+idForm).find("span").removeClass('hidde-me');
+        $('#form-operacao-'+idForm).find('[name="estrategia_id"')[0].value = selectedDefault;
+
+        selectedDefault = null;
+    }
+
+    function salvarEstrategia(idForm){
+        //$('#form-operacao-'+idForm).submit();
+        $.ajax({
+                url: $('#form-operacao-'+idForm).attr('action'),
+                type: 'POST',
+                data: $('#form-operacao-'+idForm).serialize(),
+                success: function(data) {
+                    if(data.success){
+                        selectedDefault = $('#form-operacao-'+idForm).find('[name="estrategia_id"')[0].value;
+
+                        if( $('#form-operacao-'+idForm).find('[name="estrategia_id"')[0].value === 'null' ) {
+                            $('#form-operacao-'+idForm).find('span').text(' - ');
+                        } else {
+                            $('#form-operacao-'+idForm).find('span').text($('#form-operacao-'+idForm).find('[name="estrategia_id"')[0].selectedOptions[0].text);
+                        }
+                        cancelarEdicaoEstrategia(idForm);
+                        mensagemSucesso('Estratégia alterada com sucesso!');
+                    } else {
+                        $('#errorMessageEdit').removeClass('hidde-me');
+                        $('#errorMessageEdit b').html(data.error);
+                        mensagemErro('Algo deu errado!');
+                    }
+                },
+                error: function (data) {
+                    $('#errorMessageEdit').removeClass('hidde-me');
+                    $('#errorMessageEdit b').html(data.error);
+                    mensagemErro('Algo deu errado!');
+                }
+            });
+    }
+</script>
+@stop

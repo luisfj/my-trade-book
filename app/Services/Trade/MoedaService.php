@@ -21,4 +21,8 @@ class MoedaService
             ['nome' => $currency]
         );
     }
+
+    public function selectBoxList(){
+        return $this->repository->selectBoxList();
+    }
 }

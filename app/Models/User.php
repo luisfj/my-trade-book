@@ -78,12 +78,26 @@ class User extends Authenticatable
         return $this->hasMany(ContaCorretora::class, 'usuario_id');
     }
 
+    public function getContaCorretoraCountAttribute(){
+        $dep = $this->contasCorretora()->count();
+        return $dep;
+    }
+
     public function operacoes(){
         return $this->hasMany(Operacoes::class, 'usuario_id');
     }
 
+    public function getOperacoesCountAttribute(){
+        $dep = $this->operacoes()->count();
+        return $dep;
+    }
+
     public function votos_computados(){
         return $this->hasMany(VotoUser::class,'user_id');
+    }
+
+    public function capitalAlocado(){
+        return $this->hasMany(CapitalAlocado::class, 'usuario_id');
     }
 
     public function is_super_admin(){
@@ -95,8 +109,8 @@ class User extends Authenticatable
     }
 
     public function sendPasswordResetNotification($token)
-{
-    // Não esquece: use App\Notifications\ResetPassword;
-    $this->notify(new ResetPassword($token));
-}
+    {
+        // Não esquece: use App\Notifications\ResetPassword;
+        $this->notify(new ResetPassword($token));
+    }
 }

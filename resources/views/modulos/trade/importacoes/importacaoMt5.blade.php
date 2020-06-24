@@ -61,12 +61,12 @@
                         <th data-field="tipo" data-formatter="tipoTradeColumnMt5Formatter">(Res) Tipo</th>
                         <th data-field="instrumento">Ativo</th>
                         <th data-field="ticket">Ticket</th>
-                        <th data-field="codigo">Código</th>
                         <th data-field="abertura" data-halign="center" data-align="center" data-formatter="dataComSegundosColumnMt5Formatter">Abertura</th>
                         <th data-field="fechamento" data-halign="center" data-align="center" data-formatter="dataComSegundosColumnMt5Formatter">Fechamento</th>
                         <th data-field="tempo_operacao_horas" data-formatter="tempoTradeColumnMt5Formatter">Tempo</th>
                         <th data-field="contratos" data-footer-formatter="footerTotalDescricaoMt5"
                                 data-halign="right" data-align="right">Contratos</th>
+                        <th data-field="estrategia" data-formatter="estrategiaColumnFormatter" data-events="estrategiaInputEvents">Estratégia</th>
                         <th data-field="pontos" data-footer-formatter="pontosTotalMt5Formatter"
                                 data-halign="right" data-align="right">Pontos</th>
                         <th data-field="resultado" data-formatter="valorTradeColumnMt5Formatter" data-footer-formatter="valorTotalMt5Formatter"
@@ -95,6 +95,7 @@
                         <th data-field="dataFormatada" data-halign="center" data-align="center">Data</th>
                         <th data-field="ticket">Ticket</th>
                         <th data-field="codigo">Código</th>
+                        <th data-field="capExt" data-formatter="capExtColumnMt5Formatter" data-events="capExtInputEventsMt5">Cap. Ext.?</th>
                         <th data-field="valor" data-formatter="valorColumnMt5Formatter" data-footer-formatter="valorTotalMt5Formatter"
                             data-halign="right" data-align="right">Valor</th>
                     </tr>
@@ -531,5 +532,20 @@
         });
         return corretora;
     };
+
+    function capExtColumnMt5Formatter(value){
+        var checked = value ? 'checked' : ''
+        return '<input name="capExt" type="checkbox" ' + checked + ' />'
+    }
+
+    window.capExtInputEventsMt5 = {
+        'change :checkbox': function (e, value, row, index) {
+            row.capExt = $(e.target).prop('checked');
+            $('#tableTransferenciasMt5').bootstrapTable('updateRow', {
+                index: index,
+                row: row
+            });
+        }
+    }
 </script>
 @stop

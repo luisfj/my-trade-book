@@ -8,6 +8,7 @@ use App\Services\Trade\ContaCorretoraService;
 use App\Services\Trade\InstrumentoService;
 use App\Services\Trade\OperacoesService;
 use App\Services\Trade\RegistroImportacaoService;
+use App\Services\Trade\EstrategiaService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
@@ -22,9 +23,10 @@ class OperacoesController extends Controller
     private $contaCorretoraService;
     private $instrumentoService;
     private $registroImportacaoService;
+    private $estrategiaService;
 
     public function __construct(Operacoes $repository, OperacoesService $service, ContaCorretoraService $contaCorretoraService,
-        InstrumentoService $instrumentoService, Moeda $moeda_tb, RegistroImportacaoService $registroImportacaoService)
+        InstrumentoService $instrumentoService, Moeda $moeda_tb, RegistroImportacaoService $registroImportacaoService, EstrategiaService $estrategiaService)
     {
         $this->repository = $repository;
         $this->service   = $service;
@@ -32,6 +34,7 @@ class OperacoesController extends Controller
         $this->contaCorretoraService =  $contaCorretoraService;
         $this->instrumentoService    =  $instrumentoService;
         $this->registroImportacaoService = $registroImportacaoService;
+        $this->estrategiaService = $estrategiaService;
     }
 
     public function index(Request $request)
@@ -55,21 +58,24 @@ class OperacoesController extends Controller
         }
 
         $conta_lista = $this->contaCorretoraService->selectBoxList();
-
+        $estrategia_lista = $this->estrategiaService->selectBoxList();
+        $estrategia_lista['null'] = '--Selecione--';
         //$operacoes = $this->service->getAllByUser();
-        $operacoes = $this->repository->with('instrumento')->with('moeda')->with('contaCorretora')
+        $operacoes = $this->repository->with('instrumento')->with('moeda')->with('contaCorretora')->with('estrategia')
             ->where('usuario_id', Auth::user()->id)
             ->where('conta_corretora_id', $conta_id)
             ->whereBetween('fechamento', array($data_inicial, $data_final))
             ->orderByDesc('fechamento')->get();//paginate($por_pagina);
-        return view('modulos.trade.listaOperacoes', compact('operacoes','conta_lista', 'conta_id', 'data_inicial' , 'data_final', 'por_pagina'));
+        return view('modulos.trade.listaOperacoes', compact('operacoes','conta_lista', 'estrategia_lista', 'conta_id', 'data_inicial' , 'data_final', 'por_pagina'));
     }
 
     public function add(){
         $moedas_list = $this->moeda_tb->selectBoxList();
         $contacorretora_list = $this->contaCorretoraService->selectBoxList();
+        $estrategia_lista = $this->estrategiaService->selectBoxList();
+        $estrategia_lista['null'] = '--Selecione--';
         $instrumentos_list = $this->instrumentoService->selectBoxList();
-        return view('modulos.trade.adicionarOperacao', compact(['moedas_list', 'contacorretora_list', 'instrumentos_list']));
+        return view('modulos.trade.adicionarOperacao', compact(['moedas_list', 'estrategia_lista', 'contacorretora_list', 'instrumentos_list']));
     }
 
     public function edit($id){
@@ -85,8 +91,10 @@ class OperacoesController extends Controller
         }
         $moedas_list = $this->moeda_tb->selectBoxList();
         $contacorretora_list = $this->contaCorretoraService->selectBoxList();
+        $estrategia_lista = $this->estrategiaService->selectBoxList();
+        $estrategia_lista['null'] = '--Selecione--';
         $instrumentos_list = $this->instrumentoService->selectBoxList();
-        return view('modulos.trade.editarOperacao', compact(['operacao', 'moedas_list', 'contacorretora_list', 'instrumentos_list']));
+        return view('modulos.trade.editarOperacao', compact(['operacao', 'moedas_list', 'contacorretora_list', 'estrategia_lista', 'instrumentos_list']));
     }
 
     public function update(Request $request, $id){
@@ -142,6 +150,23 @@ class OperacoesController extends Controller
             ]);
         }
         return redirect()->route('operacao.index');
+    }
+
+    public function atualizarEstrategia(Request $request){
+        try {
+            $operacao = $this->service->getById($request->operacaoId);
+            $operacao->estrategia_id = $request->estrategia_id && $request->estrategia_id != 'null' ? $request->estrategia_id : null;
+            $operacao->update();
+
+            return response()->json(['success' => 'Adicionado']);
+        } catch (\Throwable $th) {
+            DB::rollback();
+            $erro = null;
+            $errors = $th;
+            if(isset($th->errorInfo) && is_array($th->errorInfo) && count($th->errorInfo) >= 3)
+                $erro = $th->errorInfo[2];
+            return response()->json(['error' => ($erro ? $erro : $errors)]);
+        }
     }
 
     public function importarOperacoesIndex()

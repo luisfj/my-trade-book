@@ -102,6 +102,7 @@ function formatarValor(valor, contaCorretora) {
     if(!valor && valor != 0)
         return '';
     var curr = (contaCorretora && contaCorretora.moeda && contaCorretora.moeda.sigla ? contaCorretora.moeda.sigla : 'BRL');
+    curr = (curr === 'BRL' && contaCorretora && contaCorretora.sigla ? contaCorretora.sigla : curr);
 
     return (valor * 1).toLocaleString('pt-BR', {
         style: 'currency',
@@ -169,4 +170,39 @@ function limparTextClass(elemento) {
     elemento.removeClass('text-info');
     elemento.removeClass('text-danger');
     elemento.removeClass('text-warning');
+}
+
+function converteMesParaString(mes){
+    switch (mes * 1) {
+        case 1: return 'Jan';
+        case 2: return 'Fev';
+        case 3: return 'Mar';
+        case 4: return 'Abr';
+        case 5: return 'Mai';
+        case 6: return 'Jun';
+        case 7: return 'Jul';
+        case 8: return 'Ago';
+        case 9: return 'Set';
+        case 10: return 'Out';
+        case 11: return 'Nov';
+        case 12: return 'Dez';
+    }
+}
+
+function mensagemSucesso(msg){
+    let icon = '<i class="material-icons md-15">check_circle</i> ';
+    $('#toast-success').find('.toast-body').html(icon + msg);
+    $('#toast-success').toast('show');
+}
+
+function mensagemErro(msg){
+    let icon = '<i class="material-icons md-15">cancel</i> ';
+    $('#toast-error').find('.toast-body').html(icon + msg);
+    $('#toast-error').toast('show');
+}
+
+function mensagemInfo(msg){
+    let icon = '<i class="material-icons md-15">info</i> ';
+    $('#toast-info').find('.toast-body').html(icon + msg);
+    $('#toast-info').toast('show');
 }

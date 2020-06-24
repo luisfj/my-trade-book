@@ -153,6 +153,7 @@ Route::middleware('auth')->group(function () {
     Route::get(     'operacao',          'Trade\OperacoesController@add')    ->name('operacao.add');
     Route::put(     'operacao-edit/{id}','Trade\OperacoesController@update') ->name('operacao.update');
     Route::post(    'operacao',          'Trade\OperacoesController@create') ->name('operacao.create');
+    Route::post(    'operacao-alterar-estrategia', 'Trade\OperacoesController@atualizarEstrategia') ->name('operacao.estrategia.update');
     Route::delete(  'operacao/{id}',     'Trade\OperacoesController@delete') ->name('operacao.delete');
     Route::get(  'operacoes/importar',     'Trade\OperacoesController@importarOperacoesIndex') ->name('operacao.importar');
     Route::post(  'operacoes/validar-importacao',     'Trade\OperacoesController@validarOperacoesImportar') ->name('operacao.validar.importar');
@@ -169,6 +170,23 @@ Route::middleware('auth')->group(function () {
     Route::put(   'transacao-edit/{id}'   , 'Transacoes\TransacoesContaController@atualizar')->name('transacao.update');
     Route::post(   'transacao'            , 'Transacoes\TransacoesContaController@salvar')->name('transacao.create');
 
+    Route::get(     'capital-alocado'             , 'Transacoes\CapitalAlocadoController@index')->name('capital.alocado.index');
+    Route::post(     'capital-alocado'             , 'Transacoes\CapitalAlocadoController@index')->name('capital.alocado.select');
+    Route::delete(   'capital-alocado'             , 'Transacoes\CapitalAlocadoController@index')->name('capital.alocado.delete');
+    Route::get(     'capital-alocado-edit/{id}'   , 'Transacoes\CapitalAlocadoController@editar')   ->name('capital.alocado.edit');
+    Route::put(     'capital-alocado-edit/{id}'   , 'Transacoes\CapitalAlocadoController@atualizar')->name('capital.alocado.update');
+    Route::post(    'capital-alocado-conta-create', 'Transacoes\CapitalAlocadoController@salvar')->name('capital.alocado.create');
+    Route::delete(  'capital-alocado/{transacao}' , 'Transacoes\CapitalAlocadoController@remover')  ->name('capital.alocado.delete');
+    Route::post(    'capital-alocado-conta'       , 'Transacoes\CapitalAlocadoController@addConta')->name('capital.alocado.add.conta');
+    Route::delete('capital-alocado-conta/{conta}' , 'Transacoes\CapitalAlocadoController@removeConta')  ->name('capital.alocado.delete.conta');
+
+    Route::get(   'estrategias'             , 'Trade\EstrategiaController@index')    ->name('estrategias.index');
+    Route::delete('estrategia/{estrategia}' , 'Trade\EstrategiaController@remover')  ->name('estrategias.delete');
+    Route::get(   'estrategia/{id}'         , 'Trade\EstrategiaController@editar')   ->name('estrategias.edit');
+    Route::put(   'estrategia/{id}'         , 'Trade\EstrategiaController@atualizar')->name('estrategias.update');
+    Route::post(   'estrategia'             , 'Trade\EstrategiaController@salvar')   ->name('estrategias.create');
+    Route::get(   'estrategias-ativas'      , 'Trade\EstrategiaController@estrategiasAtivas')   ->name('estrategias.ativas');
+
     Route::post(   'dashTradeATrade',               'Dashboards\DashTradeController@buscarDashTradeATrade')->name('dash.trade.a.trade');
     Route::get(    'buscarMesesOperados',           'Dashboards\DashTradeController@buscarMesesOperados')->name('meses.operados');
     Route::post(   'dashEvolucaoAnualDoSaldo',      'Dashboards\DashTradeController@buscarDashEvolucaoAnualDoSaldo')->name('dash.evolucao.anual.do.saldo');
@@ -179,7 +197,9 @@ Route::middleware('auth')->group(function () {
 
     Route::post(   'dashHistoricoContaCorretora','Dashboards\DashResumosController@buscarHistoricoContaCorretora')->name('dash.historico.conta.corretora');
     Route::post(   'dashEstatisticasAvancadas'  ,'Dashboards\DashResumosController@buscarEstatisticasAvancadasContaCorretora')->name('dash.est.ava.conta.corretora');
-    //Route::get(    'testeget','Dashboards\DashResumosController@buscarEstatisticasAvancadasContaCorretora')->name('dash.evolucao.anual.do.saldo.get');
 
+    Route::get(    'testeget','Dashboards\EvolucaoPercentualCapitalController@teste')->name('dash.evolucao.anual.do.saldo.get');
+    Route::get(    'evolucao-capital',          'Dashboards\EvolucaoPercentualCapitalController@index')->name('dash.evolucao.capital.index');
+    Route::get(    'evolucao-capital-anual',    'Dashboards\EvolucaoPercentualCapitalController@buscarEvolucaoMensalDoCapital')->name('dash.evolucao.capital.anual');
 
 });

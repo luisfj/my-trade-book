@@ -155,4 +155,18 @@ class ContaCorretoraService
         else
 		    return $this->repository->where('usuario_id', Auth::user()->id)->get()->pluck('pluck_name', 'id');
     }
+
+    public function buscarPorCapitalAlocadoQuery($cap_ids){
+        return $this->repository
+            ->where('usuario_id', Auth::user()->id)
+            ->whereIn('capitalAlocado_id', $cap_ids);
+    }
+
+    public function selectBoxListSemCapitalAlocado($moeda_id){
+        return $this->repository
+            ->where('usuario_id', Auth::user()->id)
+            ->where('moeda_id', $moeda_id)
+            ->whereNull('capitalAlocado_id')
+            ->get()->pluck('pluck_name', 'id');
+    }
 }

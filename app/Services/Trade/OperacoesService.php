@@ -526,6 +526,7 @@ class OperacoesService
             $pontos        = (double) $n->pontos;
             $tempo_operacao_dias  = (int) $n->tempo_operacao_dias;
             $tempo_operacao_horas = $n->tempo_operacao_horas;
+            $estrategia_id = ((!$n->estrategia_id || $n->estrategia_id == 'null') ? null : $n->estrategia_id);
             $mep           = (double) $n->mep;
             $men           = (double) $n->men;
 
@@ -562,6 +563,7 @@ class OperacoesService
                             'tempo_operacao_horas' => $tempo_operacao_horas,
                             'mep'                  => $mep,
                             'men'                  => $men,
+                            'estrategia_id'        => $estrategia_id,
                             'registro_importacao_id' => $regImport->id
                         ]);
                     $operacoesAdicionadas = $operacoesAdicionadas + 1;
@@ -593,6 +595,7 @@ class OperacoesService
                         'conta_corretora_id' => $conta_obj->id,
                         'mep'            => $mep,
                         'men'            => $men,
+                        'estrategia_id'  => $estrategia_id,
                         'registro_importacao_id' => $regImport->id
                     ]);
                 $operacoesAdicionadas = $operacoesAdicionadas + 1;
@@ -670,8 +673,9 @@ class OperacoesService
             $data = $n->data;
             $codigo = $n->codigo;
             $valor = (double) $n->valor;
+            $capExt = $n->capExt;
 
-            if($this->depositoService->adicionarSeNaoExistir($tipo, $ticket, $data, $codigo, $valor, $conta_obj, $regImport)){
+            if($this->depositoService->adicionarSeNaoExistir($tipo, $ticket, $data, $codigo, $valor, $conta_obj, $regImport, $capExt)){
                 $depositosAdicionados = $depositosAdicionados + 1;
                 $valorDepositos = $valorDepositos + $valor;
             }

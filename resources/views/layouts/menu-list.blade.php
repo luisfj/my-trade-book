@@ -14,6 +14,16 @@
             ESTATÍSTICAS
         </a>
     </li>
+
+    <li class="padb-5-500">
+        <a href="{{ route('dash.evolucao.capital.index')}}" >
+            <span class="material-icons fs18 text-info icon-v-bottom">
+                show_chart
+            </span>
+            Evolução Capital
+        </a>
+    </li>
+
     <li class="active padb-5-500">
         <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
         <ul class="collapse list-unstyled show" id="homeSubmenu">
@@ -38,7 +48,34 @@
                     </span>
                 </a>
             </li>
+            <li class="padb-5-500">
+                <a href="{{ route('transacoes.index') }}">
+                    <span class="material-icons fs18 text-success icon-v-bottom">
+                        attach_money
+                    </span>
+                    <span>
+                        Depósitos e Saques
+                    </span>
+                </a>
+            </li>
+            <li class="padb-5-500">
+                <a href="{{ route('capital.alocado.index')}}" >
+                    <span class="material-icons fs18 text-info icon-v-bottom">
+                        account_balance
+                    </span>
+                    Capital Alocado
+                </a>
+            </li>
+            <li class="padb-5-500">
+                <a href="{{ route('estrategias.index')}}" >
+                    <span class="material-icons fs18 text-success icon-v-bottom">
+                        gps_fixed
+                    </span>
+                    Estratégias
+                </a>
+            </li>
             <hr class="hr3 mar-0">
+
             <li class="padb-5-500">
                 <a href="{{ route('registros.importacoes.index') }}">
                     <span class="material-icons fs18 text-info icon-v-bottom">
@@ -59,16 +96,7 @@
                     </span>
                 </a>
             </li>
-            <li class="padb-5-500">
-                <a href="{{ route('transacoes.index') }}">
-                    <span class="material-icons fs18 text-success icon-v-bottom">
-                        attach_money
-                    </span>
-                    <span>
-                        Depósitos e Saques
-                    </span>
-                </a>
-            </li>
+
         </ul>
     </li>
     <li class="padb-5-500">

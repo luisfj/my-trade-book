@@ -63,6 +63,7 @@
             <th scope="col" class="show-over-500">Ticket</th>
             <th scope="col" class="show-over-500">Código da Transacao</th>
             <th scope="col">Valor</th>
+            <th scope="col">P/ Cap. Aloc. Ext.</th>
             <th scope="col">Ações</th>
           </tr>
         </thead>
@@ -84,6 +85,11 @@
                         <td class="show-over-500">{{ Str::limit($transacao->codigo_transacao, 16) }}</td>
                         <td>
                             {{ $transacao->valor }}
+                        </td>
+                        <td>
+                            @if($transacao->capitalAlocado_id != null)
+                                <i class="material-icons md-18 text-info">check_circle</i>
+                            @endif
                         </td>
                         <td>
                             <a href="#" data-toggle="modal"  data-target="#editModal"
