@@ -403,8 +403,6 @@ class OperacoesService
 
     public function importarOperacoes($conta_corretora_id, $transferencias, $openTrades, $closedTrades, $regImport)
     {
-        $conta       = '';
-
         $conta_obj = $this->contaService->getById($conta_corretora_id);
 
         $depadd = $this->importarDepositos($transferencias, $conta_obj, $regImport);
@@ -439,12 +437,12 @@ class OperacoesService
         $operacoesAbertas = 0;
 
         foreach($openTrades as $key => $n ) {
-            $tipo = $n->tipo;
-            $ticket = $n->ticket;
-            $abertura = $n->abertura;
-            $contratos = (double) $n->contratos;
-            $instrumento = $n->instrumento;
-            $preco_entrada = (double) $n->preco_entrada;
+            $tipo = $n['tipo'];
+            $ticket = $n['ticket'];
+            $abertura = $n['abertura'];
+            $contratos = (double) $n['contratos'];
+            $instrumento = $n['instrumento'];
+            $preco_entrada = (double) $n['preco_entrada'];
 
             $instrumento_obj = $this->instrumentoService->getBySiglaOrCreate($instrumento);
             $operacao_obj = Auth::user()->operacoes()->where('ticket', $ticket)->where('conta_corretora_id', $conta_obj->id)->first();
@@ -479,11 +477,11 @@ class OperacoesService
         $tradesAdicionar = [];
 
         foreach($openTrades as $key => $n ) {
-            $tipo = $n->tipo;
-            $ticket = $n->ticket;
-            $abertura = $n->abertura;
-            $contratos = (double) $n->contratos;
-            $preco_entrada = (double) $n->preco_entrada;
+            $tipo = $n['tipo'];
+            $ticket = $n['ticket'];
+            $abertura = $n['abertura'];
+            $contratos = (double) $n['contratos'];
+            $preco_entrada = (double) $n['preco_entrada'];
 
             $operacao_obj = Auth::user()->operacoes()->where('ticket', $ticket)->where('conta_corretora_id', $conta_id)->first();
 
@@ -510,25 +508,25 @@ class OperacoesService
         $valorOperacoes = 0;
 
         foreach($closedTrades as $key => $n ) {
-            $tipo          = $n->tipo;
-            $ticket        = $n->ticket;
-            $abertura      = $n->abertura;
-            $contratos     = (double) $n->contratos;
-            $instrumento   = $n->instrumento;
-            $preco_entrada = (double) $n->preco_entrada;
-            $fechamento    = $n->fechamento;
-            $preco_saida   = (double) $n->preco_saida;
-            $comissao      = (double) $n->comissao;
-            $impostos      = (double) $n->impostos;
-            $swap          = (double) $n->swap;
-            $resultado_bruto = (double) $n->resultado_bruto;
-            $resultado     = (double) $n->resultado;
-            $pontos        = (double) $n->pontos;
-            $tempo_operacao_dias  = (int) $n->tempo_operacao_dias;
-            $tempo_operacao_horas = $n->tempo_operacao_horas;
-            $estrategia_id = ((!$n->estrategia_id || $n->estrategia_id == 'null') ? null : $n->estrategia_id);
-            $mep           = (double) $n->mep;
-            $men           = (double) $n->men;
+            $tipo          = $n['tipo'];
+            $ticket        = $n['ticket'];
+            $abertura      = $n['abertura'];
+            $contratos     = (double) $n['contratos'];
+            $instrumento   = $n['instrumento'];
+            $preco_entrada = (double) $n['preco_entrada'];
+            $fechamento    = $n['fechamento'];
+            $preco_saida   = (double) $n['preco_saida'];
+            $comissao      = (double) $n['comissao'];
+            $impostos      = (double) $n['impostos'];
+            $swap          = (double) $n['swap'];
+            $resultado_bruto = (double) $n['resultado_bruto'];
+            $resultado     = (double) $n['resultado'];
+            $pontos        = (double) $n['pontos'];
+            $tempo_operacao_dias  = (int) $n['tempo_operacao_dias'];
+            $tempo_operacao_horas = $n['tempo_operacao_horas'];
+            $estrategia_id = ((!$n['estrategia_id'] || $n['estrategia_id'] == 'null') ? null : $n['estrategia_id']);
+            $mep           = (double) $n['mep'];
+            $men           = (double) $n['men'];
 
             $instrumento_obj = $this->instrumentoService->getBySiglaOrCreate($instrumento);
 
@@ -618,12 +616,12 @@ class OperacoesService
         $tradesFechados = [];
 
         foreach($closedTrades as $key => $n ) {
-            $tipo          = $n->tipo;
-            $ticket        = $n->ticket;
-            $abertura      = $n->abertura;
-            $preco_entrada = (double) $n->preco_entrada;
-            $fechamento    = $n->fechamento;
-            $preco_saida   = (double) $n->preco_saida;
+            $tipo          = $n['tipo'];
+            $ticket        = $n['ticket'];
+            $abertura      = $n['abertura'];
+            $preco_entrada = (double) $n['preco_entrada'];
+            $fechamento    = $n['fechamento'];
+            $preco_saida   = (double) $n['preco_saida'];
 
             $operacao_obj = Auth::user()->operacoes()
                 ->where('ticket', $ticket)
@@ -668,12 +666,12 @@ class OperacoesService
         $valorDepositos = 0;
 
         foreach($transferencias as $key => $n) {
-            $tipo = $n->tipo;
-            $ticket = $n->ticket;
-            $data = $n->data;
-            $codigo = $n->codigo;
-            $valor = (double) $n->valor;
-            $capExt = $n->capExt;
+            $tipo = $n['tipo'];
+            $ticket = $n['ticket'];
+            $data = $n['data'];
+            $codigo = $n['codigo'];
+            $valor = (double) $n['valor'];
+            $capExt = $n['capExt'];
 
             if($this->depositoService->adicionarSeNaoExistir($tipo, $ticket, $data, $codigo, $valor, $conta_obj, $regImport, $capExt)){
                 $depositosAdicionados = $depositosAdicionados + 1;
@@ -689,9 +687,9 @@ class OperacoesService
         $transferenciasAdicionar = [];
 
         foreach($transferencias as $key => $n) {
-            $ticket = $n->ticket;
-            $data = $n->data;
-            $valor = (double) $n->valor;
+            $ticket = $n['ticket'];
+            $data = $n['data'];
+            $valor = (double) $n['valor'];
 
             $jaExiste = $this->depositoService->verificarSeExisteESimilar($ticket, $data, $valor, $conta_id);
 

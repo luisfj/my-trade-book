@@ -62,25 +62,25 @@ services:
     networks:
       - app-network
 
-  # db-test:
-  #   image: mariadb:10.2
-  #   container_name: mariadb-test
-  #   restart: unless-stopped
-  #   tty: true
-  #   ports:
-  #     - "33062:3306"
-  #   environment:
-  #     MYSQL_DATABASE: my-trade-book-test
-  #     MYSQL_ROOT_PASSWORD: 123456
-  #     MYSQL_USER: appuser
-  #     MYSQL_PASSWORD: '123456'
-  #     SERVICE_TAGS: dev
-  #     SERVICE_NAME: mysql-test
-  #   volumes:
-  #     - dbdata:/var/lib/mysql-test
-  #     - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
-  #   networks:
-  #     - app-network
+  db-test:
+    image: mariadb:10.2
+    container_name: mariadb-test
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "33062:3306"
+    environment:
+      MYSQL_DATABASE: my-trade-book-test
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: '123456'
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql-test
+    volumes:
+      - dbdata:/var/lib/mysql-test
+      - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
+    networks:
+      - app-network
 
   # Adminer - Database management (lighter alternative of PHPMyAdmin)
   # If you are planning to use any other mysql client app, you may not require this

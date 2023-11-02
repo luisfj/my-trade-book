@@ -35,6 +35,8 @@ RUN apt-get install gnupg -yq \
     && apt-get install nodejs -yq \
     && curl -L https://npmjs.org/install.sh | bash
 
+RUN docker-php-ext-install intl
+
 # Clear apt cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 

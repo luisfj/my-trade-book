@@ -9,6 +9,7 @@ use App\Models\Instrumento;
 use App\Models\Moeda;
 use App\Models\Operacoes;
 use App\Models\User;
+use App\Models\RegistroImportacao;
 use App\Services\Trade\ContaCorretoraService;
 use App\Services\Trade\CorretoraService;
 use App\Services\Trade\DepositoEmContaService;
@@ -264,19 +265,23 @@ class OperacoesServiceTest extends TestCase
 
     public function test_importarOperacoes_Testar_Depositos()
     {
+        $conta = factory(ContaCorretora::class)->create();
+        $regImp = factory(RegistroImportacao::class)->create();
+
         $this->transferencia_service->shouldReceive('adicionarSeNaoExistir')
-            ->with('T1', '2019-12-31', 'XXX1', 50.30, null)
+            ->with('D', 'T1', '2019-12-31', 'XXX1', 50.30, Mockery::any(), Mockery::any(), false)
             ->once()
             ->andReturn(true);
         $this->transferencia_service->shouldReceive('adicionarSeNaoExistir')
-            ->with('T2', '2019-12-31', 'XXX2', 2000.25, null)
+            ->with('D', 'T2', '2019-12-31', 'XXX2', 2000.25, Mockery::any(), Mockery::any(), false)
             ->once()
             ->andReturn(true);
         $this->transferencia_service->shouldReceive('adicionarSeNaoExistir')
-            ->with('T3', '2019-12-31', 'XXX3', 80.45, null)
+            ->with('D', 'T3', '2019-12-31', 'XXX3', 80.45, Mockery::any(), Mockery::any(), false)
             ->once()
             ->andReturn(false);
-        $conta = $this->service->importarDepositos($this->getDepositosDemonstracao(), null);
+            
+        $conta = $this->service->importarDepositos($this->getDepositosDemonstracao(), $conta, $regImp);
         $this->assertNotNull($conta);
         $this->assertEquals(['adicionados' => 2, 'valor' => 2050.55], $conta);
     }
@@ -284,7 +289,9 @@ class OperacoesServiceTest extends TestCase
     public function test_importarOperacoes_Testar_Trades_Fechados()
     {
         $conta = factory(ContaCorretora::class)->create();
-        $tradesFechados = $this->service->importarTradesFechados($this->getOperacoesFechadasDemonstracao(), 'conta123', 'corretora_teste', '1:500', $conta);
+        $regImp = factory(RegistroImportacao::class)->create();
+
+        $tradesFechados = $this->service->importarTradesFechados($this->getOperacoesFechadasDemonstracao(), $conta, $regImp);
 
         $this->assertNotNull($tradesFechados);
 
@@ -327,9 +334,11 @@ class OperacoesServiceTest extends TestCase
     public function test_importarOperacoes_Testar_Trades_Fechados_Importando_Trades_Existentes_Nao_Deve_Adicionar()
     {
         $conta = factory(ContaCorretora::class)->create();
-        $this->service->importarTradesFechados($this->getOperacoesFechadasDemonstracao(), 'conta123', 'corretora_teste', '1:500', $conta);
+        $regImp = factory(RegistroImportacao::class)->create();
+        
+        $this->service->importarTradesFechados($this->getOperacoesFechadasDemonstracao(), $conta, $regImp);
 
-        $tradesFechados = $this->service->importarTradesFechados($this->getOperacoesFechadasDemonstracao(), 'conta123', 'corretora_teste', '1:500', $conta);
+        $tradesFechados = $this->service->importarTradesFechados($this->getOperacoesFechadasDemonstracao(), $conta, $regImp);
 
         $this->assertNotNull($tradesFechados);
 
@@ -347,7 +356,9 @@ class OperacoesServiceTest extends TestCase
     public function test_importarOperacoes_Testar_Trades_Abertos()
     {
         $conta = factory(ContaCorretora::class)->create();
-        $tradesAbertos = $this->service->importarTradesAbertos($this->getOperacoesAbertasDemonstracao(), 'conta123', 'corretora_teste', '1:500', $conta);
+        $regImp = factory(RegistroImportacao::class)->create();
+        
+        $tradesAbertos = $this->service->importarTradesAbertos($this->getOperacoesAbertasDemonstracao(), $conta, $regImp);
 
         $this->assertNotNull($tradesAbertos);
 
@@ -378,9 +389,11 @@ class OperacoesServiceTest extends TestCase
     public function test_importarOperacoes_Testar_Trades_Abertos_Importando_Trades_Existentes_Nao_Deve_Adicionar()
     {
         $conta = factory(ContaCorretora::class)->create();
-        $this->service->importarTradesAbertos($this->getOperacoesAbertasDemonstracao(), 'conta123', 'corretora_teste', '1:500', $conta);
+        $regImp = factory(RegistroImportacao::class)->create();
 
-        $tradesAbertos = $this->service->importarTradesAbertos($this->getOperacoesAbertasDemonstracao(), 'conta123', 'corretora_teste', '1:500', $conta);
+        $this->service->importarTradesAbertos($this->getOperacoesAbertasDemonstracao(), $conta, $regImp);
+
+        $tradesAbertos = $this->service->importarTradesAbertos($this->getOperacoesAbertasDemonstracao(), $conta, $regImp);
 
         $this->assertNotNull($tradesAbertos);
 
@@ -394,7 +407,9 @@ class OperacoesServiceTest extends TestCase
     public function test_importarOperacoes_Testar_Fechar_Trades_Abertos()
     {
         $conta = factory(ContaCorretora::class)->create();
-        $tradesAbertos = $this->service->importarTradesAbertos($this->getOperacoesAbertasDemonstracao(), 'conta123', 'corretora_teste', '1:500', $conta);
+        $regImp = factory(RegistroImportacao::class)->create();
+                
+        $tradesAbertos = $this->service->importarTradesAbertos($this->getOperacoesAbertasDemonstracao(), $conta, $regImp);
 
         $operacoesAdicionadas = $tradesAbertos['operacoesAdicionadas'];
         $operacoesAbertas     = $tradesAbertos['operacoesAbertas'];
@@ -402,7 +417,7 @@ class OperacoesServiceTest extends TestCase
         $this->assertEquals(2, $operacoesAdicionadas);
         $this->assertEquals(2, $operacoesAbertas);
 
-        $tradesFechados = $this->service->importarTradesFechados($this->getOperacoesFechadasDemonstracao(), 'conta123', 'corretora_teste', '1:500', $conta);
+        $tradesFechados = $this->service->importarTradesFechados($this->getOperacoesFechadasDemonstracao(), $conta, $regImp);
 
         $this->assertNotNull($tradesFechados);
 
@@ -412,7 +427,7 @@ class OperacoesServiceTest extends TestCase
         $valorOperacoes       = $tradesFechados['valorOperacoes'];
 
         $this->assertEquals(3, $operacoesAdicionadas);
-        $this->assertEquals(2, $operacoesAbertas);
+        $this->assertEquals(1, $operacoesAbertas);
         $this->assertEquals(3, $operacoesFechadas);
         $this->assertEquals(3.51, $valorOperacoes);
 
@@ -430,9 +445,11 @@ class OperacoesServiceTest extends TestCase
     public function test_importarOperacoes_Testar_Fechar_Trades_Abertos_Importando_Trades_Existentes_Nao_Deve_Adicionar()
     {
         $conta = factory(ContaCorretora::class)->create();
-        $this->service->importarTradesAbertos($this->getOperacoesAbertasDemonstracao(), 'conta123', 'corretora_teste', '1:500', $conta);
-        $this->service->importarTradesFechados($this->getOperacoesFechadasDemonstracao(), 'conta123', 'corretora_teste', '1:500', $conta);
-        $tradesFechados = $this->service->importarTradesFechados($this->getOperacoesFechadasDemonstracao(), 'conta123', 'corretora_teste', '1:500', $conta);
+        $regImp = factory(RegistroImportacao::class)->create();
+        
+        $this->service->importarTradesAbertos($this->getOperacoesAbertasDemonstracao(), $conta, $regImp);
+        $this->service->importarTradesFechados($this->getOperacoesFechadasDemonstracao(), $conta, $regImp);
+        $tradesFechados = $this->service->importarTradesFechados($this->getOperacoesFechadasDemonstracao(), $conta, $regImp);
         $this->assertNotNull($tradesFechados);
 
         $operacoesAdicionadas = $tradesFechados['operacoesAdicionadas'];
@@ -448,24 +465,27 @@ class OperacoesServiceTest extends TestCase
 
     public function test_importarOperacoes_Deve_Importar_E_Retornar_Mensagem_Dizendo()
     {
+        $regImp = factory(RegistroImportacao::class)->create();
+        $conta = factory(ContaCorretora::class)->create();
+
         $this->transferencia_service->shouldReceive('adicionarSeNaoExistir')
-            ->with('T1', '2019-12-31', 'XXX1', 50.30, Mockery::any())
+            ->with('D', 'T1', '2019-12-31', 'XXX1', 50.30, Mockery::any(), Mockery::any(), false)
             ->andReturn(true);
         $this->transferencia_service->shouldReceive('adicionarSeNaoExistir')
-            ->with('T2', '2019-12-31', 'XXX2', 2000.25, Mockery::any())
+            ->with('D', 'T2', '2019-12-31', 'XXX2', 2000.25, Mockery::any(), Mockery::any(), false)
             ->andReturn(true);
         $this->transferencia_service->shouldReceive('adicionarSeNaoExistir')
-            ->with('T3', '2019-12-31', 'XXX3', 80.45, Mockery::any())
+            ->with('D', 'T3', '2019-12-31', 'XXX3', 80.45, Mockery::any(), Mockery::any(), false)
             ->andReturn(false);
 
-        $this->conta_serviceMock->shouldReceive('getByCodigoOrCreate')
+        $this->conta_serviceMock->shouldReceive('getById')
             ->andReturn(factory(ContaCorretora::class)->create());
 
         $this->conta_serviceMock->shouldReceive('atualizarSaldoContaPorOperacoes')
             ->with(Mockery::any(), '3.51', 4, 3)
             ->once();
-
-        $retornoImportacao = $this->service->importarOperacoes('corretora_teste', $this->getCabecalhoDemonstracao(), $this->getDepositosDemonstracao(), $this->getOperacoesAbertasDemonstracao(), $this->getOperacoesFechadasDemonstracao());
+        
+        $retornoImportacao = $this->service->importarOperacoes($conta->id, $this->getDepositosDemonstracao(), $this->getOperacoesAbertasDemonstracao(), $this->getOperacoesFechadasDemonstracao(), $regImp);
 
         $this->assertNotNull($retornoImportacao);
 
@@ -474,28 +494,31 @@ class OperacoesServiceTest extends TestCase
 
     public function test_importarOperacoes_Que_Ja_Existem_Nao_Deve_Importar_E_Retornar_Mensagem_Dizendo_Zero_Importados()
     {
+        $regImp = factory(RegistroImportacao::class)->create();
+        $conta = factory(ContaCorretora::class)->create();
+
         $this->transferencia_service->shouldReceive('adicionarSeNaoExistir')
-            ->with('T1', '2019-12-31', 'XXX1', 50.30, Mockery::any())
+            ->with('D', 'T1', '2019-12-31', 'XXX1', 50.30, Mockery::any(), Mockery::any(), false)
             ->andReturn(true);
         $this->transferencia_service->shouldReceive('adicionarSeNaoExistir')
-            ->with('T2', '2019-12-31', 'XXX2', 2000.25, Mockery::any())
+            ->with('D', 'T2', '2019-12-31', 'XXX2', 2000.25, Mockery::any(), Mockery::any(), false)
             ->andReturn(true);
         $this->transferencia_service->shouldReceive('adicionarSeNaoExistir')
-            ->with('T3', '2019-12-31', 'XXX3', 80.45, Mockery::any())
+            ->with('D', 'T3', '2019-12-31', 'XXX3', 80.45, Mockery::any(), Mockery::any(), false)
             ->andReturn(false);
 
-        $this->conta_serviceMock->shouldReceive('getByCodigoOrCreate')
+        $this->conta_serviceMock->shouldReceive('getById')
             ->andReturn(factory(ContaCorretora::class)->create());
 
         $this->conta_serviceMock->shouldReceive('atualizarSaldoContaPorOperacoes')
             ->with(Mockery::any(), '3.51', 4, 3)
             ->once();
-            $this->conta_serviceMock->shouldReceive('atualizarSaldoContaPorOperacoes')
+        $this->conta_serviceMock->shouldReceive('atualizarSaldoContaPorOperacoes')
             ->with(Mockery::any(), '0.00', 0, 0)
             ->once();
-
-        $this->service->importarOperacoes('corretora_teste', $this->getCabecalhoDemonstracao(), $this->getDepositosDemonstracao(), $this->getOperacoesAbertasDemonstracao(), $this->getOperacoesFechadasDemonstracao());
-        $retornoImportacao = $this->service->importarOperacoes('corretora_teste', $this->getCabecalhoDemonstracao(), $this->getDepositosDemonstracao(), $this->getOperacoesAbertasDemonstracao(), $this->getOperacoesFechadasDemonstracao());
+        
+        $this->service->importarOperacoes($conta->id, $this->getDepositosDemonstracao(), $this->getOperacoesAbertasDemonstracao(), $this->getOperacoesFechadasDemonstracao(), $regImp);
+        $retornoImportacao = $this->service->importarOperacoes($conta->id, $this->getDepositosDemonstracao(), $this->getOperacoesAbertasDemonstracao(), $this->getOperacoesFechadasDemonstracao(), $regImp);
 
         $this->assertNotNull($retornoImportacao);
 
@@ -519,8 +542,11 @@ class OperacoesServiceTest extends TestCase
                     'resultado_bruto' => 1.20,
                     'resultado' => 1.20,
                     'pontos' => 120,
+                    'estrategia_id' => null,
                     'tempo_operacao_dias' => '0',
                     'tempo_operacao_horas' => '00:32:18',
+                    'mep' => 180,
+                    'men' => 0
                     ],
                 1 => [
                     'tipo' => 'buy',
@@ -537,8 +563,11 @@ class OperacoesServiceTest extends TestCase
                     'resultado_bruto' => -0.80,
                     'resultado' => -0.65,
                     'pontos' => -40,
+                    'estrategia_id' => null,
                     'tempo_operacao_dias' => '1',
                     'tempo_operacao_horas' => '00:32:00',
+                    'mep' => 180,
+                    'men' => 0
                 ],
                 2 => [
                     'tipo' => 'sell',
@@ -555,8 +584,11 @@ class OperacoesServiceTest extends TestCase
                     'resultado_bruto' => 3.20,
                     'resultado' => 2.96,
                     'pontos' => 160,
+                    'estrategia_id' => null,
                     'tempo_operacao_dias' => '0',
                     'tempo_operacao_horas' => '00:12:00',
+                    'mep' => 180,
+                    'men' => 0
                 ]
         ];
     }
@@ -592,18 +624,24 @@ class OperacoesServiceTest extends TestCase
     private function getDepositosDemonstracao(){
         return [
             0 => [
+                'tipo' => 'D',
+                'capExt' => false,
                 'ticket' => 'T1',
                 'data'   => '2019-12-31',
                 'codigo' => 'XXX1',
                 'valor'  => 50.30
             ],
             1 => [
+                'tipo' => 'D',
+                'capExt' => false,
                 'ticket' => 'T2',
                 'data'   => '2019-12-31',
                 'codigo' => 'XXX2',
                 'valor'  => 2000.25
             ],
             2 => [
+                'tipo' => 'D',
+                'capExt' => false,
                 'ticket' => 'T3',
                 'data'   => '2019-12-31',
                 'codigo' => 'XXX3',

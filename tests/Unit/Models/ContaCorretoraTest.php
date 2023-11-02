@@ -59,9 +59,9 @@ class ContaCorretoraTest extends TestCase
     public function testContaVerificaValoresFormatados()
     {
         $this->assertNotNull($this->conta_falsa);
-        $this->assertEquals('1.200,98', $this->conta_falsa->saldo_formatado);
-        $this->assertEquals('3,01', $this->conta_falsa->saidas_formatado);
-        $this->assertEquals('2,00', $this->conta_falsa->entradas_formatado);
+        $this->assertEquals('US$ 1.200,98', $this->conta_falsa->saldo_formatado);
+        $this->assertEquals('US$ 3,01', $this->conta_falsa->saidas_formatado);
+        $this->assertEquals('US$ 2,00', $this->conta_falsa->entradas_formatado);
     }
 
     public function testContaSetarValoresComVirgula()
@@ -74,9 +74,9 @@ class ContaCorretoraTest extends TestCase
         $this->assertEquals(3.01, $this->conta_falsa->saidas);
         $this->assertEquals(2.00, $this->conta_falsa->entradas);
 
-        $this->assertEquals('1.200,98', $this->conta_falsa->saldo_formatado);
-        $this->assertEquals('3,01', $this->conta_falsa->saidas_formatado);
-        $this->assertEquals('2,00', $this->conta_falsa->entradas_formatado);
+        $this->assertEquals('US$ 1.200,98', $this->conta_falsa->saldo_formatado);
+        $this->assertEquals('US$ 3,01', $this->conta_falsa->saidas_formatado);
+        $this->assertEquals('US$ 2,00', $this->conta_falsa->entradas_formatado);
     }
 
 }
