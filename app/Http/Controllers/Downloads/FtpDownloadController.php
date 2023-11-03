@@ -17,7 +17,7 @@ class FtpDownloadController extends Controller
          $ftp = Storage::createFtpDriver([
                         'host'     => 'ftp.myfxbook.com',
                         'username' => '3547363',
-                        'password' => 'xpt467',
+                        'password' => 'admin',
                         'port'     => '21', // your ftp port
                         'timeout'  => '30', // timeout setting
           ]);
