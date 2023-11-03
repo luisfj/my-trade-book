@@ -3,7 +3,7 @@
 </h1>
 
 <p align="center">
-<a href="https://www.linkedin.com/in/luis-fernando-johann/">
+<a href="https://www.linkedin.com/in/luis-fernando-johann/" target="_blank">
  <img src="https://img.shields.io/badge/-LinkedIn-02569B?logo=linkedin&logoColor=white&style=fot-the-badge" alt="luis-fernando-johann" />
 </a>
 </p>
