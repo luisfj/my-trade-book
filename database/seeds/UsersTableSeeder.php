@@ -11,7 +11,7 @@ class UsersTableSeeder extends Seeder
      * @return void
      */
     public function run()
-    { if(!User::where('email', 'admin@admin.com')->get()){
+    { if(!User::where('email', 'admin@admin.com')->first()){
         User::firstOrCreate([
             'name'      => 'Administrador',
             'email'     => 'admin@admin.com',
